@@ -1,4 +1,4 @@
-SRC = cub3d.c
+SRC = cub3d.c raycasting/map_drawing.c
 
 OBJ = $(SRC:.c=.o)
 
