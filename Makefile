@@ -1,4 +1,4 @@
-SRC = cub3d.c raycasting/raycasting.c 
+SRC = cub3d.c raycasting.c 
 
 OBJ = $(SRC:.c=.o)
 
