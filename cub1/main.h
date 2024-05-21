@@ -24,7 +24,7 @@ typedef struct s_movement
 }t_movement;
 typedef struct s_vars
 {
-    char *map;
+    char **map;
 }t_vars;
 
 typedef struct s_imgs
@@ -42,7 +42,7 @@ typedef struct s_position
 typedef struct s_files
 {
     int fd;
-    char *file_content;
+    char *file_name;
 }t_files;
 
 typedef struct s_player
@@ -50,6 +50,13 @@ typedef struct s_player
     int x;
     int y;
 }t_player;
+
+typedef struct s_wall
+{
+    int x;
+    int y;
+    struct s_wall *next;
+}t_wall;
 typedef struct s_mlx
 {
     void *mlx;
@@ -62,6 +69,7 @@ typedef struct s_mlx
     t_movement movement;
     t_position position;
     t_player player;
+    t_wall *wall_coordinates;
 } t_mlx;
 
 void map(t_mlx *mlx_data);

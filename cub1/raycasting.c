@@ -22,7 +22,7 @@ void player_position(t_mlx *mlx_data)
     int byte = 0;
     int x = 0;
     int y = 0;
-    mlx_data->fds.fd = open(mlx_data->fds.file_content, O_RDONLY);
+    mlx_data->fds.fd = open(mlx_data->fds.file_name, O_RDONLY);
     if (mlx_data->fds.fd == -1)
         exit(EXIT_FAILURE);
     while ((byte = read(mlx_data->fds.fd, buffer, 1)))
@@ -51,7 +51,7 @@ void map(t_mlx *mlx_data)
 
     mlx_data->position.x = 0;
     mlx_data->position.y = 0;
-    mlx_data->fds.fd = open(mlx_data->fds.file_content, O_RDONLY);
+    mlx_data->fds.fd = open(mlx_data->fds.file_name, O_RDONLY);
     if (mlx_data->fds.fd == -1)
         exit(EXIT_FAILURE);
 
