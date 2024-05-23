@@ -27,6 +27,8 @@ typedef struct s_map_info
     char *F;
     char *C;
     char **map;
+    int map_index;
+    char *line;
 }t_map_info;
 
 typedef struct s_mlx
@@ -38,7 +40,5 @@ typedef struct s_mlx
 }t_mlx;
 // parsing functions
 char	*get_next_line(int fd);
-char	*ft_strjoin_2(char *s, char *buff);
 void parsing(t_mlx *mlx_data);
-char	*ft_strchr_2(char *s, char c);
 #endif 

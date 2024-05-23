@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ousabbar <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 17:50:57 by ousabbar          #+#    #+#             */
-/*   Updated: 2023/11/01 17:51:05 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/05/23 17:13:01 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 int	word(char *s, char c)

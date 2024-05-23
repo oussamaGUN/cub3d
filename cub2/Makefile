@@ -9,7 +9,7 @@ NAME = cub
 all: $(NAME) $(LIBFT)
 
 %.o: %.c
-	$(CC)   -O3 -c $< -o $@
+	$(CC) -c $< -o $@
 
 $(NAME): $(OBJ) $(LIBFT)
 	$(CC) $(OBJ) $(LIBFT) -Lmlx_linux -lmlx_Linux  -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME) #-fsanitize=address

@@ -6,71 +6,131 @@ void file_opennig(t_mlx *mlx_data)
     if (mlx_data->map_file.fd == -1)
         printf("file error 1\n"), exit(1);
 }
-void parse_texture(char **texture, t_mlx *mlx_data)
+int parse_texture(char **texture, t_mlx *mlx_data)
 {
     if (!ft_strcmp(texture[0], "NO\n") || !ft_strcmp(texture[0], "NO"))
     {
         if (!texture[1] || !ft_strcmp(texture[1], "\n"))
             printf("no texture for NO\n"), exit(1);
         mlx_data->map_info.NO = ft_strdup(texture[1]);
+        mlx_data->map_info.map_index++;
+        return 1;
     }
     else if (!ft_strcmp(texture[0], "SO\n") || !ft_strcmp(texture[0], "SO"))
     {
         if (!texture[1] || !ft_strcmp(texture[1], "\n"))
             printf("no texture for SO\n"), exit(1);
+        mlx_data->map_info.map_index++;
         mlx_data->map_info.SO = ft_strdup(texture[1]);
+        return 1;
     }
     else if (!ft_strcmp(texture[0], "WE\n") || !ft_strcmp(texture[0], "WE"))
     {
         if (!texture[1] || !ft_strcmp(texture[1], "\n"))
             printf("no texture for WE\n"), exit(1);
+        mlx_data->map_info.map_index++;
         mlx_data->map_info.WE = ft_strdup(texture[1]);
+        return 1;
     }
     else if (!ft_strcmp(texture[0], "EA\n") || !ft_strcmp(texture[0], "EA"))
     {
         if (!texture[1] || !ft_strcmp(texture[1], "\n"))
             printf("no texture for EA\n"), exit(1);
+        mlx_data->map_info.map_index++;
         mlx_data->map_info.EA = ft_strdup(texture[1]);
+        return 1;
     }
+    return 0;
 }
-void parse_color(char **texture, t_mlx *mlx_data)
+int parse_color(char **texture, t_mlx *mlx_data)
 {
     if (!ft_strcmp(texture[0], "F\n") || !ft_strcmp(texture[0], "F"))
     {
         if (!texture[1] || !ft_strcmp(texture[1], "\n"))
             printf("no texture for F\n"), exit(1);
+        mlx_data->map_info.map_index++;
         mlx_data->map_info.F = ft_strdup(texture[1]);
+        return 1;
     }
     else if (!ft_strcmp(texture[0], "C\n") || !ft_strcmp(texture[0], "C"))
     {
         if (!texture[1] || !ft_strcmp(texture[1], "\n"))
             printf("no texture for C\n"), exit(1);
+        mlx_data->map_info.map_index++;
         mlx_data->map_info.C = ft_strdup(texture[1]);
+        return 1;
     }
+    return 0;
 }
-void pars_line(t_mlx *mlx_data, char *line)
+int contain_one_only(char *texture)
+{
+    int i;
+    i = -1;
+    while (texture[++i])
+        if (texture[i] != '1' || texture[i] != ' ')
+            return 0;
+    return 1;
+}
+void parse_map(t_mlx *mlx_data, char *line, char **texture)
+{
+    // if (!digit_check(texture[0]))
+    //     return ;
+
+    mlx_data->map_info.map[mlx_data->map_info.map_index] = ft_strdup(line);
+    mlx_data->map_info.map_index++;
+}
+void parse_line(t_mlx *mlx_data, char *line)
 {
     char **texture;
     texture = ft_split(line, ' ');
-    if (!texture)
+    if (!texture || texture[2] || !ft_strcmp(texture[2], "\n"))
         printf("Error\n"), exit(1);
-    parse_texture(texture, mlx_data);
-    parse_color(texture, mlx_data);
+    if (!parse_texture(texture, mlx_data) && !parse_color(texture, mlx_data)
+        && ft_strcmp(texture[0], "\n"))
+        printf("Error\n"),exit(1);
 }
-void file_reading(t_mlx *mlx_data)
+void reading_textures(t_mlx *mlx_data)
 {
-    char *line = NULL;
+    mlx_data->map_info.line = NULL;
+    mlx_data->map_info.map_index = 0;
     while (1)
     {
-        line = get_next_line(mlx_data->map_file.fd);
-        if (!line)
+        mlx_data->map_info.line = get_next_line(mlx_data->map_file.fd);
+        if (!mlx_data->map_info.line)
             break;
-        pars_line(mlx_data, line);
+        if (mlx_data->map_info.map_index == 6 && !contain_one_only(mlx_data->map_info.line))
+            break;
+        parse_line(mlx_data, mlx_data->map_info.line);
+    }
+    if (!mlx_data->map_info.C || !mlx_data->map_info.F
+        || !mlx_data->map_info.EA || !mlx_data->map_info.NO 
+        || !mlx_data->map_info.SO || !mlx_data->map_info.WE)
+        printf("na9ss\n"), exit(1);
+}
+void vars_init(t_mlx *mlx_data)
+{
+    mlx_data->map_info.C = NULL;
+    mlx_data->map_info.F = NULL;
+    mlx_data->map_info.EA = NULL;
+    mlx_data->map_info.NO = NULL;
+    mlx_data->map_info.SO = NULL;
+    mlx_data->map_info.WE = NULL;
+    mlx_data->map_info.map_index = 0;
+}
+void parsing_map(t_mlx *mlx_data)
+{
+    while (1)
+    {
+        printf("%s",mlx_data->map_info.line);
+        mlx_data->map_info.line = get_next_line(mlx_data->map_file.fd);
+        if (!mlx_data->map_info.line)
+            break;
     }
 }
 void parsing(t_mlx *mlx_data)
 {
+    vars_init(mlx_data);
     file_opennig(mlx_data);
-    file_reading(mlx_data);
-    // printf("%s\n", mlx_data->map_info.EA);
+    reading_textures(mlx_data);
+    parsing_map(mlx_data);
 }
