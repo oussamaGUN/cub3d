@@ -117,15 +117,52 @@ void vars_init(t_mlx *mlx_data)
     mlx_data->map_info.WE = NULL;
     mlx_data->map_info.map_index = 0;
 }
+int line_rules(t_mlx *mlx_data)
+{
+    int i;
+    i = -1;
+    while (mlx_data->map_info.line[++i])
+        if (mlx_data->map_info.line[i] != '1' && mlx_data->map_info.line[i] != '0'
+            && mlx_data->map_info.line[i] != 'S' && mlx_data->map_info.line[i] != 'N'
+            && mlx_data->map_info.line[i] != 'E' && mlx_data->map_info.line[i] != 'W'
+            && mlx_data->map_info.line[i] != '\n' && mlx_data->map_info.line[i] != ' ')
+            return 0;
+    mlx_data->map_info.map[mlx_data->map_info.map_index] = ft_strdup(mlx_data->map_info.line);
+    mlx_data->map_info.map_index++;
+    return 1;
+}
+void check_errors(t_mlx *mlx_data)
+{
+    int i;
+    if (!line_rules(mlx_data))
+    {
+        i = 0;
+        while (i < mlx_data->map_info.map_index)
+            free(mlx_data->map_info.map[i++]);
+        printf("Error\n"), exit(1);
+    }
+}
 void parsing_map(t_mlx *mlx_data)
 {
+    mlx_data->map_info.map = malloc(sizeof(char *) * 100);
+    if (!mlx_data->map_info.map)
+        printf("malloc fail\n"), exit(1);
+    mlx_data->map_info.map_index = 0;
+    while (!ft_strcmp(mlx_data->map_info.line, "\n"))
+        mlx_data->map_info.line = get_next_line(mlx_data->map_file.fd);
     while (1)
     {
-        printf("%s",mlx_data->map_info.line);
+        check_errors(mlx_data);
         mlx_data->map_info.line = get_next_line(mlx_data->map_file.fd);
         if (!mlx_data->map_info.line)
             break;
     }
+    mlx_data->map_info.map[mlx_data->map_info.map_index] = NULL;
+    for (int i = 0; mlx_data->map_info.map[i]; i++)
+    {
+        printf("%s", mlx_data->map_info.map[i]);
+    }
+    
 }
 void parsing(t_mlx *mlx_data)
 {
