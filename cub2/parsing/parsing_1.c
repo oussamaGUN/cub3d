@@ -139,8 +139,37 @@ void check_errors(t_mlx *mlx_data)
         i = 0;
         while (i < mlx_data->map_info.map_index)
             free(mlx_data->map_info.map[i++]);
+        free(mlx_data->map_info.map);
         printf("Error\n"), exit(1);
     }
+}
+int ft_arrlen(char **map)
+{
+    int i;
+    i = 0;
+    while (map[i])
+        i++;
+    return i;
+}
+void new_map(t_mlx *mlx_data)
+{
+    int arr_len = ft_arrlen(mlx_data->map_info.map) - 1;
+    while (arr_len >= 0)
+    {
+        if (ft_strcmp(mlx_data->map_info.map[arr_len], "\n"))
+            break ;
+        mlx_data->map_info.map[arr_len] = NULL;
+        arr_len--;
+    }
+}
+void map_rules(t_mlx *mlx_data)
+{
+    new_map(mlx_data);
+    for (size_t i = 0; mlx_data->map_info.map[i]; i++)
+    {
+        printf("%s",mlx_data->map_info.map[i]);
+    }
+    
 }
 void parsing_map(t_mlx *mlx_data)
 {
@@ -158,10 +187,7 @@ void parsing_map(t_mlx *mlx_data)
             break;
     }
     mlx_data->map_info.map[mlx_data->map_info.map_index] = NULL;
-    for (int i = 0; mlx_data->map_info.map[i]; i++)
-    {
-        printf("%s", mlx_data->map_info.map[i]);
-    }
+    map_rules(mlx_data);
     
 }
 void parsing(t_mlx *mlx_data)
