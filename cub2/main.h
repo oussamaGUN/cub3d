@@ -29,6 +29,9 @@ typedef struct s_map_info
     char **map;
     int map_index;
     char *line;
+    int height;
+    int width;
+    int arr_len;
 }t_map_info;
 
 typedef struct s_mlx
