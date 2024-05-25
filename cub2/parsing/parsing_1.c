@@ -237,16 +237,35 @@ void check_empty_blocks(t_mlx *mlx_data)
         }
         y++;
     }
-    puts("success");
-
 }
-
+void check_player(t_mlx *mlx_data)
+{
+    int count = 0;
+    int x;
+    int y;
+    y = 0;
+    while (y < mlx_data->map_info.height)
+    {
+        x = 0;
+        while (mlx_data->map_info.map[y][x])
+        {
+            if (mlx_data->map_info.map[y][x] == 'N' || mlx_data->map_info.map[y][x] == 'W'
+            || mlx_data->map_info.map[y][x] == 'S' || mlx_data->map_info.map[y][x] == 'E')
+                count++;
+            x++;
+        }
+        y++;
+    }
+    if (count != 1)
+        printf("too many players\n"), exit(1);
+}
 void map_rules(t_mlx *mlx_data)
 {
     new_map(mlx_data);
     mlx_data->map_info.width = map_height_width(mlx_data);
     surrounded_by_wall_check(mlx_data);
     check_empty_blocks(mlx_data);
+    check_player(mlx_data);
 }
 void parsing_map(t_mlx *mlx_data)
 {
