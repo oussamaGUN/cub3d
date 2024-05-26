@@ -42,11 +42,58 @@ int parse_texture(char **texture, t_mlx *mlx_data)
     }
     return 0;
 }
+int check_count(char **split)
+{
+    int count = 0;
+    while (split[count])
+        count++;
+    return count;
+}
+int invalid_char(char **split)
+{
+    int i = -1;
+    int j = 0;
+    while (split[++i])
+    {
+        j = 0;
+        while (split[i][j] && split[i][j] != '\n')
+        {
+            if (!ft_isdigit(split[i][j]))
+                return 0;
+            j++;
+        }
+    }
+    return 1;
+}
+int how_many_commas(char *texture)
+{
+    int i = -1;
+    int count = 0;
+    while (texture[++i])
+        if (texture[i] == ',')
+            count++;
+    if (count != 2)
+        return 0;
+    return 1;
+}
+int ft_check_rgb(char *texture)
+{
+    if (!how_many_commas(texture))
+        return 0;
+    char **split = ft_split(texture, ',');
+    if (!split)
+        printf("split faild"), exit(1);
+    if (check_count(split) != 3)
+        return 0;
+    if (!invalid_char(split))
+        return 0;
+    return 1; 
+}
 int parse_color(char **texture, t_mlx *mlx_data)
 {
     if (!ft_strcmp(texture[0], "F\n") || !ft_strcmp(texture[0], "F"))
     {
-        if (!texture[1] || !ft_strcmp(texture[1], "\n"))
+        if (!texture[1] || !ft_strcmp(texture[1], "\n") || !ft_check_rgb(texture[1]))
             printf("no texture for F\n"), exit(1);
         mlx_data->map_info.map_index++;
         mlx_data->map_info.F = ft_strdup(texture[1]);
@@ -54,7 +101,7 @@ int parse_color(char **texture, t_mlx *mlx_data)
     }
     else if (!ft_strcmp(texture[0], "C\n") || !ft_strcmp(texture[0], "C"))
     {
-        if (!texture[1] || !ft_strcmp(texture[1], "\n"))
+        if (!texture[1] || !ft_strcmp(texture[1], "\n") || !ft_check_rgb(texture[1]))
             printf("no texture for C\n"), exit(1);
         mlx_data->map_info.map_index++;
         mlx_data->map_info.C = ft_strdup(texture[1]);
@@ -190,7 +237,7 @@ void surrounded_by_wall_check(t_mlx *mlx_data)
                     length = ft_strlen(split[i]) - 2;
                 else
                     length = ft_strlen(split[i]) - 1;
-                if (split[i][x] == '0' && (x == 0 || y == 0 || x == length|| y == mlx_data->map_info.arr_len))
+                if ((split[i][x] == '0' || split[i][x] == 'N' || split[i][x] == 'S' || split[i][x] == 'E' || split[i][x] == 'W') && (x == 0 || y == 0 || x == length|| y == mlx_data->map_info.arr_len))
                     printf("mlx_data->map_info.map should be surrounded by walls %s %d %d\n", split[i], x, y), exit(1);
                 x++;
             }
@@ -212,6 +259,8 @@ int map_height_width(t_mlx *mlx_data)
             max = len;
         mlx_data->map_info.height++;
     }
+    if (mlx_data->map_info.height <= 2)
+        printf("map is so small can't fit\n"), exit(1);
     return max;
 }
 void check_empty_blocks(t_mlx *mlx_data)
@@ -251,7 +300,12 @@ void check_player(t_mlx *mlx_data)
         {
             if (mlx_data->map_info.map[y][x] == 'N' || mlx_data->map_info.map[y][x] == 'W'
             || mlx_data->map_info.map[y][x] == 'S' || mlx_data->map_info.map[y][x] == 'E')
+            {
+                if ((mlx_data->map_info.map[y + 1][x] != '1' && mlx_data->map_info.map[y + 1][x] != '0')
+                || (mlx_data->map_info.map[y - 1][x] != '1' && mlx_data->map_info.map[y - 1][x] != '0'))
+                    printf("Errrror\n"), exit(1);
                 count++;
+            }
             x++;
         }
         y++;
