@@ -28,20 +28,39 @@ typedef struct s_map_info
     char *C;
     char **map;
     int map_index;
+    int texture_number;
     char *line;
     int height;
     int width;
     int arr_len;
+    char *mapstr;
 }t_map_info;
 
+typedef struct s_vars
+{
+    int x;
+    int y;
+    int length;
+    char *ft_split;
+}t_vars;
 typedef struct s_mlx
 {
     void *mlx;
     void *mlx_win;
     t_map_file map_file;
     t_map_info map_info;
+    t_vars vars;
 }t_mlx;
 // parsing functions
 char	*get_next_line(int fd);
 void parsing(t_mlx *mlx_data);
+void reading_textures(t_mlx *mlx_data);
+void parsing_map(t_mlx *mlx_data);
+void map_rules(t_mlx *mlx_data);
+int line_rules(t_mlx *mlx_data);
+void free_split(char **split);
+void free_infos(t_mlx *mlx_data);
+int line_rules(t_mlx *mlx_data);
+void map_rules(t_mlx *mlx_data);
+int ft_arrlen(char **map);
 #endif 
