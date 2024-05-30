@@ -13,7 +13,7 @@ all: $(NAME) $(LIBFT)
 	$(CC) -c $< -o $@
 
 $(NAME): $(OBJ) $(LIBFT)
-	$(CC) $(OBJ) $(LIBFT) -Lmlx_linux -lmlx_Linux  -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME) #-fsanitize=address
+	$(CC) $(OBJ) $(LIBFT) -o $(NAME) #-fsanitize=address Lmlx_linux -lmlx_Linux  -Imlx_linux -lXext -lX11 -lm -lz 
 
 
 $(LIBFT):

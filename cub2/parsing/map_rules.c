@@ -118,7 +118,7 @@ void surrounded_by_wall_check(t_mlx *mlx_data)
                     || split[i][mlx_data->vars.x] == 'W') && (mlx_data->vars.x == 0 || mlx_data->vars.y == 0 
                     || mlx_data->vars.x == length|| mlx_data->vars.y == mlx_data->map_info.height))
                 {
-                    printf("map should be surrounded bmlx_data->vars.y walls\n");
+                    printf("map should be surrounded walls\n");
                     free_split(split);
                     free(mlx_data->map_info.mapstr);
                     free_split(mlx_data->map_info.map);
