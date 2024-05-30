@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <math.h>
-#include <mlx.h>
+// #include <mlx.h>
 #include <X11/X.h>
 #include <fcntl.h>
 #include "libft/libft.h"
