@@ -50,7 +50,7 @@ int ft_check_rgb(char *texture)
 }
 int parse_color(char **texture, t_mlx *mlx_data)
 {
-    if (!ft_strcmp(texture[0], "F\n") || !ft_strcmp(texture[0], "F"))
+    if (!ft_strncmp(texture[0], "F", 1))
     {
         if (!texture[1] || !ft_strcmp(texture[1], "\n") || !ft_check_rgb(texture[1]))
             return (printf("no texture for F "), 0);
@@ -58,7 +58,7 @@ int parse_color(char **texture, t_mlx *mlx_data)
         mlx_data->map_info.F = ft_strdup(texture[1]);
         return 1;
     }
-    else if (!ft_strcmp(texture[0], "C\n") || !ft_strcmp(texture[0], "C"))
+    else if (!ft_strncmp(texture[0], "C", 2))
     {
         if (!texture[1] || !ft_strcmp(texture[1], "\n") || !ft_check_rgb(texture[1]))
             return (printf("no texture for C "), 0);
@@ -70,7 +70,7 @@ int parse_color(char **texture, t_mlx *mlx_data)
 }
 int parse_texture(char **texture, t_mlx *mlx_data)
 {
-    if (!ft_strcmp(texture[0], "NO\n") || !ft_strcmp(texture[0], "NO"))
+    if (!ft_strncmp(texture[0], "NO", 2))
     {
         if (!texture[1] || !ft_strcmp(texture[1], "\n"))
             return (printf("no texture for NO "), 0);
@@ -78,7 +78,7 @@ int parse_texture(char **texture, t_mlx *mlx_data)
         mlx_data->map_info.texture_number++;
         return 1;
     }
-    else if (!ft_strcmp(texture[0], "SO\n") || !ft_strcmp(texture[0], "SO"))
+    if (!ft_strncmp(texture[0], "SO", 2))
     {
         if (!texture[1] || !ft_strcmp(texture[1], "\n"))
             return (printf("no texture for SO "), 0);
@@ -86,7 +86,7 @@ int parse_texture(char **texture, t_mlx *mlx_data)
         mlx_data->map_info.SO = ft_strdup(texture[1]);
         return 1;
     }
-    else if (!ft_strcmp(texture[0], "WE\n") || !ft_strcmp(texture[0], "WE"))
+    if (!ft_strncmp(texture[0], "WE", 2))
     {
         if (!texture[1] || !ft_strcmp(texture[1], "\n"))
             return (printf("no texture for WE "), 0);
@@ -94,7 +94,7 @@ int parse_texture(char **texture, t_mlx *mlx_data)
         mlx_data->map_info.WE = ft_strdup(texture[1]);
         return 1;
     }
-    else if (!ft_strcmp(texture[0], "EA\n") || !ft_strcmp(texture[0], "EA"))
+    if (!ft_strncmp(texture[0], "EA", 2))
     {
         if (!texture[1] || !ft_strcmp(texture[1], "\n"))
             return (printf("no texture for EA "), 0);
@@ -110,8 +110,17 @@ void parse_line(t_mlx *mlx_data, char *line)
         return ;
     char **texture;
     texture = ft_split(line, ' ');
-    if ((!texture || texture[2])
-        || (!parse_texture(texture, mlx_data) && !parse_color(texture, mlx_data)))
+    if (!texture)
+    {
+        printf("split failed\n");
+        free_infos(mlx_data);
+        free(line);
+        close(mlx_data->map_file.fd);
+        free(mlx_data->map_file.av);
+        free_split(texture);
+        exit(1);
+    }
+    if ((!parse_texture(texture, mlx_data) && !parse_color(texture, mlx_data)) || texture[2])
     {
         printf("invalid texture\n");
         free_infos(mlx_data);
@@ -123,6 +132,7 @@ void parse_line(t_mlx *mlx_data, char *line)
     }
     free_split(texture);
 }
+
 int contain_one_only(char *texture)
 {
     int i;

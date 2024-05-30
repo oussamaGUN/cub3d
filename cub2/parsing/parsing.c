@@ -6,6 +6,7 @@ void file_opennig(t_mlx *mlx_data)
     if (mlx_data->map_file.fd == -1)
     {
         printf("file not found\n");
+        free(mlx_data->map_file.av);
         exit(1);
     }
 }
