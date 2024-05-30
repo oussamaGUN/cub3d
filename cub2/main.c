@@ -12,5 +12,6 @@ int main(int ac, char const *av[])
     free(mlx_data.map_file.av);
     free_infos(&mlx_data);
     free(mlx_data.map_info.mapstr);
+    free_split(mlx_data.map_info.map);
     return 0;
 }
