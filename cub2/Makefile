@@ -10,19 +10,25 @@ NAME = cub
 all: $(NAME) $(LIBFT)
 
 %.o: %.c
-	$(CC) -c $< -o $@
+	@$(CC) -c $< -o $@
+	@echo "Compiled" $< "successfully"
 
-$(NAME): $(OBJ) $(LIBFT)
-	$(CC) $(OBJ) $(LIBFT) -o $(NAME) #-fsanitize=address Lmlx_linux -lmlx_Linux  -Imlx_linux -lXext -lX11 -lm -lz 
+$(NAME): $(OBJ)
+	@$(CC) $(OBJ) $(LIBFT) -o $(NAME) #-fsanitize=address Lmlx_linux -lmlx_Linux  -Imlx_linux -lXext -lX11 -lm -lz
+	@echo "Cub3D compiled"
 
 
 $(LIBFT):
 	make all -C ./libft
+	@echo "Libft compiled"
 
 clean:
-	rm -rf $(OBJ)
+	@rm -rf $(OBJ)
+	@echo "Objects removed"
 
 fclean: clean
-	rm -rf $(NAME)
+	@rm -rf $(NAME)
+	@echo "Cub3D removed"
 
 re: fclean all
+	@echo "Cub3D recompiled"
