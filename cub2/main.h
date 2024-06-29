@@ -8,7 +8,7 @@
 #include <unistd.h>
 #include <math.h>
 // #include <mlx.h>
-#include <X11/X.h>
+// #include <X11/X.h>
 #include <fcntl.h>
 #include "libft/libft.h"
 
@@ -63,4 +63,5 @@ void free_infos(t_mlx *mlx_data);
 int line_rules(t_mlx *mlx_data);
 void map_rules(t_mlx *mlx_data);
 int ft_arrlen(char **map);
+int ft_check_extension(char *str, char *ext);
 #endif 

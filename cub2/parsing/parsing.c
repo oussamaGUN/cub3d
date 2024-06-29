@@ -22,7 +22,22 @@ void vars_init(t_mlx *mlx_data)
     mlx_data->map_info.map_index = 0;
 }
 
+int ft_check_extension(char *str, char *ext)
+{
+    int i;
+    int j;
 
+    i = ft_strlen(str) - 1;
+    j = ft_strlen(ext) - 1;
+    while (i >= 0 && j >= 0)
+    {
+        if (str[i] != ext[j])
+            return (0);
+        i--;
+        j--;
+    }
+    return (1);
+}
 void parsing(t_mlx *mlx_data)
 {
     vars_init(mlx_data);
