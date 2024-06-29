@@ -79,7 +79,7 @@ void check_empty_blocks(t_mlx *mlx_data)
                     && mlx_data->map_info.map[y - 1][x] != 'N' && mlx_data->map_info.map[y - 1][x] != 'W'
                     && mlx_data->map_info.map[y - 1][x] != 'S' && mlx_data->map_info.map[y - 1][x] != 'E'))
                     {
-                        printf("invalid map\n");
+                        printf("map should be surrounded by walls\n");
                         free(mlx_data->map_info.mapstr);
                         free_split(mlx_data->map_info.map);
                         free_infos(mlx_data);
