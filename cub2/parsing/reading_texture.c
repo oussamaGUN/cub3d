@@ -104,6 +104,15 @@ int parse_texture(char **texture, t_mlx *mlx_data)
     }
     return 0;
 }
+void ft_free_one(t_mlx *mlx_data, char *line, char *parse_msg)
+{
+    printf("%s\n", parse_msg);
+    free(line);
+    free_infos(mlx_data);
+    close(mlx_data->map_file.fd);
+    free(mlx_data->map_file.av);
+    exit(1);
+}
 void parse_line(t_mlx *mlx_data, char *line)
 {
     if (!ft_strcmp(line, "\n"))
@@ -111,24 +120,11 @@ void parse_line(t_mlx *mlx_data, char *line)
     char **texture;
     texture = ft_split(line, ' ');
     if (!texture)
-    {
-        printf("split failed\n");
-        free_infos(mlx_data);
-        free(line);
-        close(mlx_data->map_file.fd);
-        free(mlx_data->map_file.av);
-        free_split(texture);
-        exit(1);
-    }
+        ft_free_one(mlx_data, line, "split failed");
     if ((!parse_texture(texture, mlx_data) && !parse_color(texture, mlx_data)) || texture[2])
     {
-        printf("invalid texture\n");
-        free_infos(mlx_data);
-        free(line);
-        close(mlx_data->map_file.fd);
-        free(mlx_data->map_file.av);
         free_split(texture);
-        exit(1);
+        ft_free_one(mlx_data, line, "invalid texture"); // get_next_line leak
     }
     free_split(texture);
 }
