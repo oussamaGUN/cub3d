@@ -64,4 +64,6 @@ int line_rules(t_mlx *mlx_data);
 void map_rules(t_mlx *mlx_data);
 int ft_arrlen(char **map);
 int ft_check_extension(char *str, char *ext);
+void ft_free_one(t_mlx *mlx_data, char *line, char *parse_msg);
+void ft_free_two(t_mlx *mlx_data, char **split);
 #endif 
