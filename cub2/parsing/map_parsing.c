@@ -20,13 +20,8 @@ void check_errors(t_mlx *mlx_data)
 {
     if (!line_rules(mlx_data))
     {
-        printf("invalid character\n");
         free(mlx_data->map_info.mapstr);
-        free_infos(mlx_data);
-        free(mlx_data->map_info.line);
-        close(mlx_data->map_file.fd);
-        free(mlx_data->map_file.av);
-        exit(1);
+        ft_free_one(mlx_data, mlx_data->map_info.line, "invalid character in map"); // get_next_line leak
     }
 }
 void parsing_map(t_mlx *mlx_data)
@@ -39,10 +34,7 @@ void parsing_map(t_mlx *mlx_data)
         mlx_data->map_info.line = get_next_line(mlx_data->map_file.fd);
     }
     if (!mlx_data->map_info.line)
-    {
-        free_infos(mlx_data);
-        printf("there is no map\n"), exit(1);
-    }
+        ft_free_one(mlx_data, mlx_data->map_info.line, "no map");
     while (1)
     {
         check_errors(mlx_data);
