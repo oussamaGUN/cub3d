@@ -15,7 +15,7 @@ all: $(NAME) $(LIBFT)
 
 $(NAME): $(OBJ)
 	@$(CC) $(OBJ) $(LIBFT) -o $(NAME) #-fsanitize=address Lmlx_linux -lmlx_Linux  -Imlx_linux -lXext -lX11 -lm -lz
-	@echo "Cub3D compiled"
+	@echo "cub compiled"
 
 
 $(LIBFT):
@@ -28,7 +28,7 @@ clean:
 
 fclean: clean
 	@rm -rf $(NAME)
-	@echo "Cub3D removed"
+	@echo "cub removed"
 
 re: fclean all
-	@echo "Cub3D recompiled"
+	@echo "cub recompiled"
