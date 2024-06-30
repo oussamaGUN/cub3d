@@ -15,7 +15,14 @@ int map_height_width(t_mlx *mlx_data)
         printf("map is so small can't fit\n"), exit(1);
     return max;
 }
-
+void check_player_count(t_mlx *mlx_data, int count)
+{
+    if (count != 1)
+    {
+        printf("invalid player count\n");
+        ft_free_two(mlx_data, mlx_data->map_info.map);
+    }
+}
 void check_player(t_mlx *mlx_data)
 {
     int count = 0;
@@ -34,13 +41,7 @@ void check_player(t_mlx *mlx_data)
                 || (mlx_data->map_info.map[y - 1][x] != '1' && mlx_data->map_info.map[y - 1][x] != '0'))
                 {
                     printf("invalid player postion\n");
-                    free(mlx_data->map_info.mapstr);
-                    free_split(mlx_data->map_info.map);
-                    free_infos(mlx_data);
-                    free(mlx_data->map_info.line);
-                    close(mlx_data->map_file.fd);
-                    free(mlx_data->map_file.av);
-                    exit(1);
+                    ft_free_two(mlx_data, mlx_data->map_info.map);
                 }
                 count++;
             }
@@ -48,19 +49,19 @@ void check_player(t_mlx *mlx_data)
         }
         y++;
     }
-    if (count != 1)
-    {
-        printf("invalid players count\n");
-        free(mlx_data->map_info.mapstr);
-        free_split(mlx_data->map_info.map);
-        free_infos(mlx_data);
-        free(mlx_data->map_info.line);
-        close(mlx_data->map_file.fd);
-        free(mlx_data->map_file.av);
-        exit(1);
-    }
+    check_player_count(mlx_data, count);
 }
 
+void ft_free_two(t_mlx *mlx_data, char **split)
+{
+    free(mlx_data->map_info.mapstr);
+    free_split(mlx_data->map_info.map);
+    free_infos(mlx_data);
+    free(mlx_data->map_info.line);
+    close(mlx_data->map_file.fd);
+    free(mlx_data->map_file.av);
+    exit(1);
+}
 void check_empty_blocks(t_mlx *mlx_data)
 {
     int x = 0;
@@ -80,14 +81,7 @@ void check_empty_blocks(t_mlx *mlx_data)
                     && mlx_data->map_info.map[y - 1][x] != 'S' && mlx_data->map_info.map[y - 1][x] != 'E'))
                     {
                         printf("map should be surrounded by walls\n");
-                        free(mlx_data->map_info.mapstr);
-                        free_split(mlx_data->map_info.map);
-                        free_infos(mlx_data);
-                        free(mlx_data->map_info.line);
-                        close(mlx_data->map_file.fd);
-                        free(mlx_data->map_file.av);
-                        exit(1);
-                    
+                        ft_free_two(mlx_data, mlx_data->map_info.map);
                     }
             }
             x++;
@@ -95,43 +89,44 @@ void check_empty_blocks(t_mlx *mlx_data)
         y++;
     }
 }
+void check_line(t_mlx *mlx_data, char **split)
+{
+    int i;
+    int length;
+    i = 0;
+    while (split[i])
+    {
+        mlx_data->vars.x = 0;
+        while (split[i][mlx_data->vars.x])
+        {
+            length = ft_strlen(split[i]) - 1;
+            if ((split[i][mlx_data->vars.x] == '0' || split[i][mlx_data->vars.x] == 'N' 
+                || split[i][mlx_data->vars.x] == 'S' || split[i][mlx_data->vars.x] == 'E' 
+                || split[i][mlx_data->vars.x] == 'W') && (mlx_data->vars.x == 0 || mlx_data->vars.y == 0 
+                || mlx_data->vars.x == length|| mlx_data->vars.y == mlx_data->map_info.height))
+            {
+                printf("map should be surrounded walls\n");
+                free_split(split);
+                ft_free_two(mlx_data, split);
+            }
+            mlx_data->vars.x++;
+        }
+        i++;
+    }
+}
 void surrounded_by_wall_check(t_mlx *mlx_data)
 {
-    mlx_data->vars.x = 0;
-    mlx_data->vars.y = 0;
-
     int length;
-    int i = 0;
+    int i;
     char **split;
+    i = 0;
+    mlx_data->vars.y = 0;
     while (mlx_data->map_info.map[mlx_data->vars.y])
     {
-        
         split = ft_split(mlx_data->map_info.map[mlx_data->vars.y], ' ');
-        while (split[i])
-        {
-            mlx_data->vars.x = 0;
-            while (split[i][mlx_data->vars.x])
-            {
-                length = ft_strlen(split[i]) - 1;
-                if ((split[i][mlx_data->vars.x] == '0' || split[i][mlx_data->vars.x] == 'N' 
-                    || split[i][mlx_data->vars.x] == 'S' || split[i][mlx_data->vars.x] == 'E' 
-                    || split[i][mlx_data->vars.x] == 'W') && (mlx_data->vars.x == 0 || mlx_data->vars.y == 0 
-                    || mlx_data->vars.x == length|| mlx_data->vars.y == mlx_data->map_info.height))
-                {
-                    printf("map should be surrounded walls\n");
-                    free_split(split);
-                    free(mlx_data->map_info.mapstr);
-                    free_split(mlx_data->map_info.map);
-                    free_infos(mlx_data);
-                    free(mlx_data->map_info.line);
-                    close(mlx_data->map_file.fd);
-                    free(mlx_data->map_file.av);
-                    exit(1);
-                }
-                mlx_data->vars.x++;
-            }
-            i++;
-        }
+        if (!split)
+            ft_free_two(mlx_data, split);
+        check_line(mlx_data, split);
         free_split(split);
         i = 0;
         mlx_data->vars.y++;
@@ -143,13 +138,8 @@ void map_rules(t_mlx *mlx_data)
     mlx_data->map_info.map = ft_split(mlx_data->map_info.mapstr, '\n');
     if (!mlx_data->map_info.map)
     {
-        printf("split fail\n");
         free(mlx_data->map_info.mapstr);
-        free_infos(mlx_data);
-        free(mlx_data->map_info.line);
-        close(mlx_data->map_file.fd);
-        free(mlx_data->map_file.av);
-        exit(1);
+        ft_free_one(mlx_data, mlx_data->map_info.mapstr, "split failed\n");
     }
     mlx_data->map_info.height = ft_arrlen(mlx_data->map_info.map) - 1;
     mlx_data->map_info.width = map_height_width(mlx_data);
