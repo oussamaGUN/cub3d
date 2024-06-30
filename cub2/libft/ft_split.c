@@ -79,7 +79,7 @@ char	**ft_split(char const *s, char c)
 	if (s == NULL)
 		return (NULL);
 	words_count = word((char *)s, c);
-	arr = (char **) ft_calloc(1, sizeof(char *) * (words_count + 1));
+	arr = (char **) malloc(sizeof(char *) * (words_count + 1));
 	if (!arr)
 		return (NULL);
 	arr = trim(s, c, arr, words_count);
