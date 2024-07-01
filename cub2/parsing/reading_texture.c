@@ -1,72 +1,98 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   reading_texture.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oussama <oussama@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/01 10:44:17 by oussama           #+#    #+#             */
+/*   Updated: 2024/07/01 10:53:29 by oussama          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../main.h"
 
 int check_count(char **split)
 {
-    int count = 0;
+    int count;
+    
+    count = 0;
     while (split[count])
         count++;
-    return count;
+    return (count);
 }
+
 int invalid_char(char **split)
 {
-    int i = -1;
-    int j = 0;
+    int i;
+    int j;
+
+    i = -1;
+    j = 0;
     while (split[++i])
     {
         j = 0;
         while (split[i][j] && split[i][j] != '\n')
         {
             if (!ft_isdigit(split[i][j]))
-                return 0;
+                return (0);
             j++;
         }
     }
-    return 1;
+    return (1);
 }
 int how_many_commas(char *texture)
 {
-    int i = -1;
-    int count = 0;
+    int i;
+    int count;
+
+    count = 0;
+    i = -1;
     while (texture[++i])
         if (texture[i] == ',')
             count++;
     if (count != 2)
-        return 0;
-    return 1;
+        return (0);
+    return (1);
 }
-int ft_check_rgb(char *texture)
+int check_rgb(char *texture)
 {
+    char **split;
+
     if (!how_many_commas(texture))
-        return 0;
-    char **split = ft_split(texture, ',');
+        return (0);
+    split = ft_split(texture, ',');
     if (!split)
-        printf("split faild"), exit(1);
+    {
+        printf("split faild");
+        exit(1);
+    }
     if (check_count(split) != 3)
-        return free(split),0;
+        return (free(split), 0);
     if (!invalid_char(split))
-        return free_split(split),0;
+        return (free_split(split), 0);
     free_split(split);
-    return 1; 
+    return (1);
 }
 int parse_color(char **texture, t_mlx *mlx_data)
 {
     if (!ft_strncmp(texture[0], "F", 1))
     {
-        if (!texture[1] || !ft_strcmp(texture[1], "\n") || !ft_check_rgb(texture[1]))
+        if (!texture[1] || !ft_strcmp(texture[1], "\n") || !check_rgb(texture[1]))
             return (printf("no texture for F "), 0);
         mlx_data->map_info.texture_number++;
         mlx_data->map_info.F = ft_strdup(texture[1]);
-        return 1;
+        return (1);
     }
     else if (!ft_strncmp(texture[0], "C", 2))
     {
-        if (!texture[1] || !ft_strcmp(texture[1], "\n") || !ft_check_rgb(texture[1]))
+        if (!texture[1] || !ft_strcmp(texture[1], "\n") || !check_rgb(texture[1]))
             return (printf("no texture for C "), 0);
         mlx_data->map_info.texture_number++;
         mlx_data->map_info.C = ft_strdup(texture[1]);
-        return 1;
+        return (1);
     }
-    return 0;
+    return (0);
 }
 int parse_texture(char **texture, t_mlx *mlx_data)
 {
@@ -116,7 +142,7 @@ void ft_free_one(t_mlx *mlx_data, char *line, char *parse_msg)
 void parse_line(t_mlx *mlx_data, char *line)
 {
     if (!ft_strcmp(line, "\n"))
-        return ;
+        return;
     char **texture;
     texture = ft_split(line, ' ');
     if (!texture)
@@ -147,7 +173,7 @@ void reading_textures(t_mlx *mlx_data)
         mlx_data->map_info.line = get_next_line(mlx_data->map_file.fd);
         if (!mlx_data->map_info.line)
             break;
-        if (mlx_data->map_info.texture_number == 6 && !contain_one_only(mlx_data->map_info.line))    
+        if (mlx_data->map_info.texture_number == 6 && !contain_one_only(mlx_data->map_info.line))
             break;
         parse_line(mlx_data, mlx_data->map_info.line);
         free(mlx_data->map_info.line);
