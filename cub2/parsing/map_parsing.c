@@ -16,14 +16,6 @@ int line_rules(t_mlx *mlx_data)
     return 1;
 }
 
-void check_errors(t_mlx *mlx_data)
-{
-    if (!line_rules(mlx_data))
-    {
-        free(mlx_data->map_info.mapstr);
-        ft_free_one(mlx_data, mlx_data->map_info.line, "invalid character in map"); // get_next_line leak
-    }
-}
 void parsing_map(t_mlx *mlx_data)
 {
     mlx_data->map_info.map_index = 0;
