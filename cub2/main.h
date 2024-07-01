@@ -42,6 +42,7 @@ typedef struct s_vars
     int y;
     int length;
     char *ft_split;
+    int count;
 }t_vars;
 typedef struct s_mlx
 {
@@ -66,4 +67,15 @@ int ft_arrlen(char **map);
 int ft_check_extension(char *str, char *ext);
 void ft_free_one(t_mlx *mlx_data, char *line, char *parse_msg);
 void ft_free_two(t_mlx *mlx_data, char **split);
+int	check_count(char **split);
+int	invalid_char(char **split);
+int how_many_commas(char *texture);
+int	check_rgb(char *texture);
+int	contain_one_only(char *texture);
+void	parse_line(t_mlx *mlx_data, char *line);
+int	map_height_width(t_mlx *mlx_data);
+void	check_player_count(t_mlx *mlx_data, int count);
+void ft_free_two(t_mlx *mlx_data, char **split);
+void check_errors(t_mlx *mlx_data);
+void	check_player_conditions(int x, int y, t_mlx *mlx_data);
 #endif 
