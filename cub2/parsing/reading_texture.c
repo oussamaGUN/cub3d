@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reading_texture.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oussama <oussama@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 10:44:17 by oussama           #+#    #+#             */
-/*   Updated: 2024/07/01 15:44:34 by oussama          ###   ########.fr       */
+/*   Updated: 2024/07/01 16:29:49 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ int	parse_texture_part_one(char **texture, t_mlx *mlx_data)
 {
 	if (!ft_strncmp(texture[0], "NO", 2))
 	{
-		if (mlx_data->map_info.NO || !texture[1] || !ft_strcmp(texture[1], "\n"))
+		if (mlx_data->map_info.NO || !texture[1]
+			|| !ft_strcmp(texture[1], "\n"))
 			return (printf("no texture for NO "), 0);
 		mlx_data->map_info.NO = ft_strdup(texture[1]);
 		mlx_data->map_info.texture_number++;
@@ -47,7 +48,8 @@ int	parse_texture_part_one(char **texture, t_mlx *mlx_data)
 	}
 	if (!ft_strncmp(texture[0], "SO", 2))
 	{
-		if (mlx_data->map_info.SO || !texture[1] || !ft_strcmp(texture[1], "\n"))
+		if (mlx_data->map_info.SO || !texture[1]
+			|| !ft_strcmp(texture[1], "\n"))
 			return (printf("no texture for SO "), 0);
 		mlx_data->map_info.texture_number++;
 		mlx_data->map_info.SO = ft_strdup(texture[1]);
@@ -60,7 +62,8 @@ int	parst_texture_part_two(char **texture, t_mlx *mlx_data)
 {
 	if (!ft_strncmp(texture[0], "WE", 2))
 	{
-		if (mlx_data->map_info.WE || !texture[1] || !ft_strcmp(texture[1], "\n"))
+		if (mlx_data->map_info.WE || !texture[1]
+			|| !ft_strcmp(texture[1], "\n"))
 			return (printf("no texture for WE "), 0);
 		mlx_data->map_info.texture_number++;
 		mlx_data->map_info.WE = ft_strdup(texture[1]);
@@ -68,7 +71,8 @@ int	parst_texture_part_two(char **texture, t_mlx *mlx_data)
 	}
 	if (!ft_strncmp(texture[0], "EA", 2))
 	{
-		if (mlx_data->map_info.EA || !texture[1] || !ft_strcmp(texture[1], "\n"))
+		if (mlx_data->map_info.EA || !texture[1]
+			|| !ft_strcmp(texture[1], "\n"))
 			return (printf("no texture for EA "), 0);
 		mlx_data->map_info.texture_number++;
 		mlx_data->map_info.EA = ft_strdup(texture[1]);
