@@ -1,5 +1,5 @@
 SRC = main.c get_next_line/get_next_line.c get_next_line/get_next_line_utils.c parsing/parsing.c parsing/reading_texture.c \
-		parsing/map_parsing.c parsing/map_rules.c parsing/parsing_tools.c
+		parsing/map_parsing.c parsing/map_rules.c parsing/parsing_tools.c parsing/parsing_tools_two.c parsing/map_parsing_tools.c
 
 OBJ = $(SRC:.c=.o)
 
