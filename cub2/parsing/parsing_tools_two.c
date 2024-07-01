@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 11:07:56 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/01 11:11:08 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/01 14:53:44 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	check_rgb(char *texture)
 		printf("split faild");
 		exit(1);
 	}
-	if (check_count(split) != 3)
+	if (check_count(split) != 3 || ft_strcmp(split[2], "\n") == 0)
 		return (free(split), 0);
 	if (!invalid_char(split))
 		return (free_split(split), 0);
