@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 12:18:02 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/01 12:48:33 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/01 16:25:06 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	map_height_width(t_mlx *mlx_data)
 	}
 	return (max);
 }
+
 void	check_player_count(t_mlx *mlx_data, int count)
 {
 	if (count != 1)
@@ -42,7 +43,7 @@ void	check_player_count(t_mlx *mlx_data, int count)
 	}
 }
 
-void ft_free_two(t_mlx *mlx_data, char **split)
+void	ft_free_two(t_mlx *mlx_data, char **split)
 {
 	free(mlx_data->map_info.mapstr);
 	free_split(mlx_data->map_info.map);
@@ -53,13 +54,14 @@ void ft_free_two(t_mlx *mlx_data, char **split)
 	exit(1);
 }
 
-void check_errors(t_mlx *mlx_data)
+void	check_errors(t_mlx *mlx_data)
 {
-    if (!line_rules(mlx_data))
-    {
-        free(mlx_data->map_info.mapstr);
-        ft_free_one(mlx_data, mlx_data->map_info.line, "invalid character in map"); // get_next_line leak
-    }
+	if (!line_rules(mlx_data))
+	{
+		free(mlx_data->map_info.mapstr);
+		ft_free_one(mlx_data, mlx_data->map_info.line,
+			"invalid character in map"); // get_next_line leak
+	}
 }
 
 void	check_player_conditions(int x, int y, t_mlx *mlx_data)

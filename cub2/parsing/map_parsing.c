@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 14:21:28 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/01 14:24:13 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/01 16:21:32 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,12 @@ int	line_rules(t_mlx *mlx_data)
 		if (!ft_strchr("10NSEW \n", mlx_data->map_info.line[i]))
 			return (0);
 	}
-	mlx_data->map_info.mapstr = ft_strjoin(mlx_data->map_info.mapstr, mlx_data->map_info.line);
+	mlx_data->map_info.mapstr = ft_strjoin(mlx_data->map_info.mapstr,
+			mlx_data->map_info.line);
 	return (1);
 }
 
-void parsing_map(t_mlx *mlx_data)
+void	parsing_map(t_mlx *mlx_data)
 {
 	mlx_data->map_info.map_index = 0;
 	mlx_data->map_info.mapstr = NULL;
@@ -43,7 +44,7 @@ void parsing_map(t_mlx *mlx_data)
 		free(mlx_data->map_info.line);
 		mlx_data->map_info.line = get_next_line(mlx_data->map_file.fd);
 		if (!mlx_data->map_info.line)
-			break;
-	} 
+			break ;
+	}
 	map_rules(mlx_data);
 }
