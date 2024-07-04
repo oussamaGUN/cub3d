@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 11:03:55 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/01 11:47:41 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/04 19:35:19 by afadouac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,31 @@ void	reading_textures(t_mlx *mlx_data)
 		free(mlx_data->map_info.line);
 	}
 }
+void check_player_direction(t_mlx *mlx_data)
+{
+    int i;
+    int j;
+
+    j = 0;
+    while (mlx_data->map_info.map[j])
+    {
+        i = 0;
+        while (mlx_data->map_info.map[j][i])
+        {
+            if (mlx_data->map_info.map[j][i] == 'N')
+                mlx_data->map_info.direction = (3 * PI) / 2;
+            else if (mlx_data->map_info.map[j][i] == 'W')
+                mlx_data->map_info.direction = PI;
+            else if (mlx_data->map_info.map[j][i] == 'S')
+                mlx_data->map_info.direction = PI / 2;
+            else if (mlx_data->map_info.map[j][i] == 'E')
+                mlx_data->map_info.direction = 0;
+            i++;
+        }
+        j++;
+    }
+    printf("%f\n", mlx_data->map_info.direction);
+}
 
 void	parsing(t_mlx *mlx_data)
 {
@@ -74,5 +99,6 @@ void	parsing(t_mlx *mlx_data)
 	file_opennig(mlx_data);
 	reading_textures(mlx_data);
 	parsing_map(mlx_data);
+	check_player_direction(mlx_data);
 	close(mlx_data->map_file.fd);
 }
