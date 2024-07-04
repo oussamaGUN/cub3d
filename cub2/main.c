@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 11:01:39 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/01 16:57:26 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/04 19:37:01 by afadouac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,13 @@ int	main(int ac, char *av[])
 		return (printf("invalid argument\n"), 1);
 	mlx_data.map_file.av = ft_strdup(av[1]);
 	parsing(&mlx_data);
-	// raycasting(mlx_data);
+    initialize(&mlx_data);
+    //mlx_key_hook(mlx_data.win, key_hook, &mlx_data);
+    StandardMap(mlx_data);
 	free(mlx_data.map_file.av);
 	free_infos(&mlx_data);
 	free(mlx_data.map_info.mapstr);
 	free_split(mlx_data.map_info.map);
+	mlx_loop(mlx_data.mlx);
 	return (0);
 }
