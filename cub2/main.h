@@ -2,15 +2,21 @@
 #define MAIN_H
 
 #  define BUFFER_SIZE 42
-#include <stdio.h>
-#include <limits.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <math.h>
-// #include <mlx.h>
-// #include <X11/X.h>
-#include <fcntl.h>
+# include <X11/X.h>
+# include <X11/keysym.h>
+# include <fcntl.h>
+# include <math.h>
+# include <mlx.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <unistd.h>
 #include "libft/libft.h"
+
+# define WIDTH 1800
+# define HEIGHT 1800
+# define SCALE 20
+# define PI 3.14159265358979
 
 typedef struct s_map_file
 {
@@ -34,6 +40,7 @@ typedef struct s_map_info
     int width;
     int arr_len;
     char *mapstr;
+    double direction;
 }t_map_info;
 
 typedef struct s_vars
@@ -46,12 +53,18 @@ typedef struct s_vars
 }t_vars;
 typedef struct s_mlx
 {
-    void *mlx;
-    void *mlx_win;
-    t_map_file map_file;
-    t_map_info map_info;
+    void        *mlx;
+    void        *win;
+	void		*img;
+	char		*addr;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
+    t_map_file  map_file;
+    t_map_info  map_info;
     t_vars vars;
-}t_mlx;
+}               t_mlx;
+
 // parsing functions
 char	*get_next_line(int fd);
 void parsing(t_mlx *mlx_data);
@@ -78,4 +91,19 @@ void	check_player_count(t_mlx *mlx_data, int count);
 void ft_free_two(t_mlx *mlx_data, char **split);
 void check_errors(t_mlx *mlx_data);
 void	check_player_conditions(int x, int y, t_mlx *mlx_data);
+
+
+// raycasting
+typedef struct s_cordonate
+{
+    double  x;
+    double  y;
+    char    view;
+}               t_cordonate;
+
+//raycasting functions
+
+void	initialize(t_mlx	*mlx);
+void    StandardMap(t_mlx mlx_data);
+void	my_mlx_pixel_put(t_mlx *data, int x, int y, int color);
 #endif 
