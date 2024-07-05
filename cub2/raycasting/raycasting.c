@@ -6,7 +6,7 @@
 /*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 17:31:10 by afadouac          #+#    #+#             */
-/*   Updated: 2024/07/04 19:33:14 by afadouac         ###   ########.fr       */
+/*   Updated: 2024/07/05 16:42:25 by afadouac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_cordonate GetPlayerPosition(char **map)
     return (pos);
 }
 
-void PlayerAdder(t_cordonate pos, t_mlx *data)
+void PlayerAdder(t_mlx *data)
 {
     int x;
     int y;
@@ -56,8 +56,8 @@ void PlayerAdder(t_cordonate pos, t_mlx *data)
     int y0;
 
     r = 2;
-    x0 = pos.x + SCALE / 2;
-    y0 = pos.y + SCALE / 2;
+    x0 = data->Player.x ;//+ SCALE / 2;
+    y0 = data->Player.y ;//+ SCALE / 2;
     y = y0 - r;
     while ( y <= y0 + r)
     {
@@ -65,39 +65,42 @@ void PlayerAdder(t_cordonate pos, t_mlx *data)
         while ( x <= x0 + r)
         {
             if ((x - x0) * (x - x0) + (y - y0) * (y - y0) <= r * r)
-                my_mlx_pixel_put(data, x, y, 0xE91111);
+                my_mlx_pixel_put(data, y, x, 0xE91111);
             x++;
         }
         y++;
     }
 }
 
-void    StandardMap(t_mlx data)
+void    StandardMap(t_mlx *data)
 {
     int         i;
     int         j;
-    t_cordonate player;
 
     i = 0;
-    while (i < data.map_info.height * SCALE)
+
+    while (i < data->map_info.height * SCALE)
     {
         j = 0;
-        while (j < data.map_info.width * SCALE)
+        while (j < data->map_info.width * SCALE)
         {
             if (i % SCALE == 0 || j % SCALE == 0)
-                 my_mlx_pixel_put(&data, i, j, 0x767676);
-            else if (data.map_info.map[i / SCALE][j / SCALE] == '1')
-                my_mlx_pixel_put(&data, i, j, 0x00ff);
-            else if (data.map_info.map[i / SCALE][j / SCALE] == '0' \
-                    || IsPlayer(data.map_info.map[i / SCALE][j / SCALE]))
-                my_mlx_pixel_put(&data, i, j, 0xFFFFFF);
+                 my_mlx_pixel_put(data, j, i, 0x767676);
+            else if (data->map_info.map[i / SCALE][j / SCALE] == '1')//
+                my_mlx_pixel_put(data, j, i, 0x00ff);
+            else if ((i / SCALE) < data->map_info.height && (j / SCALE) < data->map_info.width &&
+                 data->map_info.map[i / SCALE][j / SCALE] == '1')
+                my_mlx_pixel_put(data, j, i, 0x00ff);
+            else if (data->map_info.map[i / SCALE][j / SCALE] == '0' \
+                    || IsPlayer(data->map_info.map[i / SCALE][j / SCALE]))
+                my_mlx_pixel_put(data, j, i, 0xFFFFFF);
             else
-                my_mlx_pixel_put(&data, i , j , 0x0);
+                my_mlx_pixel_put(data, j , i , 0x0);
             j++;
         }
         i++;
     }
-    player = GetPlayerPosition(data.map_info.map);
-    PlayerAdder(player, &data);
-    mlx_put_image_to_window(data.mlx, data.win, data.img, 0, 0);
+    PlayerAdder(data);
+    
+    mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 }
