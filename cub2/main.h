@@ -18,6 +18,15 @@
 # define SCALE 20
 # define PI 3.14159265358979
 
+//////////////
+typedef struct s_cordonate
+{
+    double  x;
+    double  y;
+    char    view;
+}               t_cordonate;
+/////////////
+
 typedef struct s_map_file
 {
     int fd;
@@ -41,7 +50,7 @@ typedef struct s_map_info
     int arr_len;
     char *mapstr;
     double direction;
-}t_map_info;
+}           t_map_info;
 
 typedef struct s_vars
 {
@@ -62,7 +71,8 @@ typedef struct s_mlx
 	int			endian;
     t_map_file  map_file;
     t_map_info  map_info;
-    t_vars vars;
+    t_vars      vars;
+    t_cordonate	Player;
 }               t_mlx;
 
 // parsing functions
@@ -94,16 +104,13 @@ void	check_player_conditions(int x, int y, t_mlx *mlx_data);
 
 
 // raycasting
-typedef struct s_cordonate
-{
-    double  x;
-    double  y;
-    char    view;
-}               t_cordonate;
+
 
 //raycasting functions
 
 void	initialize(t_mlx	*mlx);
-void    StandardMap(t_mlx mlx_data);
+t_cordonate GetPlayerPosition(char **map);
+void    StandardMap(t_mlx *mlx_data);
 void	my_mlx_pixel_put(t_mlx *data, int x, int y, int color);
+int IsPlayer(char c);
 #endif 
