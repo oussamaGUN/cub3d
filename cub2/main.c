@@ -6,7 +6,7 @@
 /*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 11:01:39 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/05 16:43:14 by afadouac         ###   ########.fr       */
+/*   Updated: 2024/07/07 00:05:01 by afadouac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	CheckWalls(t_mlx data, char mv)
 	int	x;
 	int	y;
 
+    return (1); /// need apdate
 	x = (int )data.Player.x;
 	y = (int )data.Player.y;
 	if (mv == 'x')
@@ -31,38 +32,52 @@ int	CheckWalls(t_mlx data, char mv)
 		return (0);
 	return (1);
 }
-int	key_hook(int keycode, void *data1)
-{
-	t_mlx *data;
 
-	data = (t_mlx *)data1;
-	if (keycode != 119 && keycode != 100 && keycode != 115 && keycode != 97)
-		return (0);
-	printf("%d\n",keycode);
-	if (keycode == 119)//
-	{
-		if (CheckWalls(*data, 'x'))
-			data->Player.x -= 2;
-	}
-	else if (keycode == 115)
-	{
-		if (CheckWalls(*data, 'X'))	
-			data->Player.x += 2;
-	}
-	else if (keycode == 100)
-	{
-		if (CheckWalls(*data, 'Y'))
-			data->Player.y += 2;
-	}
-	else if (keycode == 97)//
-	{
-		if (CheckWalls(*data, 'y'))
-			data->Player.y -= 2;
-	}
-	mlx_clear_window(data->mlx, data->win);
-	StandardMap(data);
-    return (0);
+int key_hook(int keycode, void *data1)
+{
+    t_mlx *data;
+
+    data = (t_mlx *)data1;
+    if (keycode == 119 && CheckWalls(*data, 'x')) // up
+    {
+        data->Player.x += sin(data->map_info.direction) * PLAYERVET;
+        data->Player.y += cos(data->map_info.direction) * PLAYERVET; 
+    }
+    else if (keycode == 115 && CheckWalls(*data, 'x')) // down
+    {
+        data->Player.x -= sin(data->map_info.direction) * PLAYERVET;
+        data->Player.y -= cos(data->map_info.direction) * PLAYERVET;
+    }
+    else if (keycode == 100 && CheckWalls(*data, 'y')) // right
+    {
+        data->Player.x += sin(data->map_info.direction + M_PI / 2) * PLAYERVET;
+        data->Player.y += cos(data->map_info.direction + M_PI / 2) * PLAYERVET;
+    }
+    else if (keycode == 97 && CheckWalls(*data, 'y')) // left
+    {
+        data->Player.x += sin(data->map_info.direction - M_PI / 2) * PLAYERVET;
+        data->Player.y += cos(data->map_info.direction - M_PI / 2) * PLAYERVET;
+    }
+    else if (keycode == LEFT)
+    {
+        data->map_info.direction -= ANGLE;
+    }
+    else if (keycode == RIGHT)
+    {
+        data->map_info.direction += ANGLE;
+    }
+
+    // Normalize the direction within [0, 2 * M_PI]
+    if (data->map_info.direction >= 2 * M_PI)
+        data->map_info.direction -= 2 * M_PI;
+    else if (data->map_info.direction < 0)
+        data->map_info.direction += 2 * M_PI;
+
+    mlx_clear_window(data->mlx, data->win);
+    StandardMap(data);
+    return 0;
 }
+
 
 int	main(int ac, char *av[])
 {
