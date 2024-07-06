@@ -18,13 +18,32 @@
 # define SCALE 20
 # define PI 3.14159265358979
 
+//////// keys for key hook
+# define ANGLE 0.1
+# define UP 65362
+# define DOWN 65364
+# define RIGHT 65363
+# define LEFT 65361
+
+
+////// colors
+# define GRAY 0x767676
 //////////////
+
+//////PLAYER CARACTERS
+#define PLAYERVET 10
 typedef struct s_cordonate
 {
     double  x;
     double  y;
     char    view;
 }               t_cordonate;
+
+typedef struct s_vector
+{
+    double  x;
+    double  y;
+}              t_vector;
 /////////////
 
 typedef struct s_map_file
@@ -73,6 +92,7 @@ typedef struct s_mlx
     t_map_info  map_info;
     t_vars      vars;
     t_cordonate	Player;
+    t_cordonate ToMouve;
 }               t_mlx;
 
 // parsing functions
