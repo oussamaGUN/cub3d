@@ -6,7 +6,7 @@
 /*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 17:31:10 by afadouac          #+#    #+#             */
-/*   Updated: 2024/07/05 16:42:25 by afadouac         ###   ########.fr       */
+/*   Updated: 2024/07/07 00:03:44 by afadouac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,78 @@ void PlayerAdder(t_mlx *data)
         }
         y++;
     }
+    // playerDirection.x = cos(data->map_info.direction);
+    // playerDirection.y = sin(data->map_info.direction);
+    // if (dot(playerDirection, t_vector{1, 0}) == data->map_info.direction)
+    // {}
+
+}
+
+double dot(t_vector v1, t_vector v2)
+{
+    return (v1.x * v2.x + v1.y * v2.y);
+}
+
+t_vector Unit(t_vector vect)
+{
+    t_vector vector;
+    double magnitude = sqrt(vect.x * vect.x + vect.y * vect.y);
+    vector.x = vect.x / magnitude;
+    vector.y = vect.y / magnitude;
+    return (vector);
+}
+
+int are_angles_close(double angle1, double angle2, double diff)
+{
+    double difference = fabs(angle1 - angle2);
+    return difference < diff || fabs(difference - 2 * M_PI) < diff;
+}
+
+int	is_unit(int i, int j, t_cordonate Player)
+{
+	double	dx;
+	double	dy;
+	double	D;
+
+	dx = fabs(i - Player.x);
+	dy = fabs(j - Player.y);
+	D = dx * dx + dy * dy;
+	return (sqrt(D) <= SCALE);
+}
+
+void DirectionAdder(t_mlx *data)
+{
+    int i;
+	int j;
+    t_vector origine;
+    t_vector vect;
+	double angle;
+    double diff;
+
+	origine.x = 1;
+	origine.y = 0;
+	diff = 0.1;
+	i = 0;
+    while (i < data->map_info.height * SCALE)
+    {
+		j = 0;
+        while ( j < data->map_info.width * SCALE)
+        {
+            vect.x = j - data->Player.y;
+            vect.y = i - data->Player.x;
+            vect = Unit(vect);
+            angle = atan2(vect.y, vect.x);
+            // angle = dot(vect, origine);
+            if (is_unit(i, j, data->Player) && are_angles_close(angle, data->map_info.direction, diff))
+            {
+				data->ToMouve.x = i;
+				data->ToMouve.y = j;
+                my_mlx_pixel_put(data, j, i, GRAY);
+            }
+			j++;
+        }
+		i++;
+    }
 }
 
 void    StandardMap(t_mlx *data)
@@ -101,6 +173,6 @@ void    StandardMap(t_mlx *data)
         i++;
     }
     PlayerAdder(data);
-    
+    DirectionAdder(data);
     mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 }
