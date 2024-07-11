@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_rules.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 12:03:08 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/01 12:48:58 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/04 22:46:56 by afadouac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ void	check_line(t_mlx *mlx_data, char **split)
 
 void	surrounded_by_wall_check(t_mlx *mlx_data)
 {
-	int		length;
 	int		i;
 	char	**split;
 
