@@ -6,7 +6,7 @@
 /*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 11:03:55 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/04 19:35:19 by afadouac         ###   ########.fr       */
+/*   Updated: 2024/07/06 20:38:18 by afadouac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,11 @@ void check_player_direction(t_mlx *mlx_data)
         while (mlx_data->map_info.map[j][i])
         {
             if (mlx_data->map_info.map[j][i] == 'N')
-                mlx_data->map_info.direction = (3 * PI) / 2;
+                mlx_data->map_info.direction = (3. * M_PI) / 2.;
             else if (mlx_data->map_info.map[j][i] == 'W')
-                mlx_data->map_info.direction = PI;
+                mlx_data->map_info.direction = M_PI;
             else if (mlx_data->map_info.map[j][i] == 'S')
-                mlx_data->map_info.direction = PI / 2;
+                mlx_data->map_info.direction = M_PI / 2.;
             else if (mlx_data->map_info.map[j][i] == 'E')
                 mlx_data->map_info.direction = 0;
             i++;
