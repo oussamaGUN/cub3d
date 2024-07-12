@@ -6,57 +6,77 @@
 /*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 11:01:39 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/07 00:05:01 by afadouac         ###   ########.fr       */
+/*   Updated: 2024/07/12 18:32:21 by afadouac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-int	CheckWalls(t_mlx data, char mv)
+int	CheckWalls(char **map, t_cordonate step, int keycode)
 {
-	int	x;
-	int	y;
+    long long x;
+    long long y;
 
-    return (1); /// need apdate
-	x = (int )data.Player.x;
-	y = (int )data.Player.y;
-	if (mv == 'x')
-		x -= (2 );
-	else if (mv == 'X')
-		x += (2 );
-	else if (mv == 'y')
-		y -= (2 );
-	else if (mv == 'Y')
-		y += (2 );
-	if (data.map_info.map[x / SCALE][y / SCALE] != '0' && !IsPlayer(data.map_info.map[x / SCALE][y / SCALE]))
+	x = (long long)(step.x / SCALE);
+	y = (long long)(step.y / SCALE); 
+    if (keycode != 119 && keycode != 115 && keycode != 100 && keycode != 97)
+        return (0);
+	if (map[y][x] != '0' && !IsPlayer(map[y][x]))
 		return (0);
-	return (1);
+    return (1);
+
+
+
 }
+
+// int	CheckWalls(t_mlx data, char mv)
+// {
+// 	int	x;
+// 	int	y;
+
+//     return (1); /// need apdate
+// 	x = (int )data.Player.x;
+// 	y = (int )data.Player.y;
+// 	if (mv == 'x')
+// 		x -= (2 );
+// 	else if (mv == 'X')
+// 		x += (2 );
+// 	else if (mv == 'y')
+// 		y -= (2 );
+// 	else if (mv == 'Y')
+// 		y += (2 );
+// 	if (data.map_info.map[x / SCALE][y / SCALE] != '0' && !IsPlayer(data.map_info.map[x / SCALE][y / SCALE]))
+// 		return (0);
+// 	return (1);
+// }
 
 int key_hook(int keycode, void *data1)
 {
     t_mlx *data;
+    t_cordonate step;
 
     data = (t_mlx *)data1;
-    if (keycode == 119 && CheckWalls(*data, 'x')) // up
+    step.x = data->Player.x;
+    step.y = data->Player.y;
+    if (keycode == 119) // up
     {
-        data->Player.x += sin(data->map_info.direction) * PLAYERVET;
-        data->Player.y += cos(data->map_info.direction) * PLAYERVET; 
+        step.x += cos(data->map_info.direction) * PLAYERVET;
+        step.y += sin(data->map_info.direction) * PLAYERVET;
     }
-    else if (keycode == 115 && CheckWalls(*data, 'x')) // down
+    else if (keycode == 115) // down
     {
-        data->Player.x -= sin(data->map_info.direction) * PLAYERVET;
-        data->Player.y -= cos(data->map_info.direction) * PLAYERVET;
+        step.x -= cos(data->map_info.direction) * PLAYERVET;
+        step.y -= sin(data->map_info.direction) * PLAYERVET;
     }
-    else if (keycode == 100 && CheckWalls(*data, 'y')) // right
+    else if (keycode == 100 ) // right
     {
-        data->Player.x += sin(data->map_info.direction + M_PI / 2) * PLAYERVET;
-        data->Player.y += cos(data->map_info.direction + M_PI / 2) * PLAYERVET;
+        step.x += cos(data->map_info.direction + M_PI / 2) * PLAYERVET;
+        step.y += sin(data->map_info.direction + M_PI / 2) * PLAYERVET;
     }
-    else if (keycode == 97 && CheckWalls(*data, 'y')) // left
+    else if (keycode == 97 ) // left
     {
-        data->Player.x += sin(data->map_info.direction - M_PI / 2) * PLAYERVET;
-        data->Player.y += cos(data->map_info.direction - M_PI / 2) * PLAYERVET;
+        step.x += cos(data->map_info.direction - M_PI / 2) * PLAYERVET;
+        step.y += sin(data->map_info.direction - M_PI / 2) * PLAYERVET;
     }
     else if (keycode == LEFT)
     {
@@ -66,8 +86,11 @@ int key_hook(int keycode, void *data1)
     {
         data->map_info.direction += ANGLE;
     }
-
-    // Normalize the direction within [0, 2 * M_PI]
+    if (CheckWalls(data->map_info.map, step, keycode))
+    {
+        data->Player.x = step.x;
+        data->Player.y = step.y;
+    }
     if (data->map_info.direction >= 2 * M_PI)
         data->map_info.direction -= 2 * M_PI;
     else if (data->map_info.direction < 0)
