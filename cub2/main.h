@@ -6,6 +6,7 @@
 # include <X11/keysym.h>
 # include <fcntl.h>
 # include <math.h>
+# include <limits.h>
 # include <mlx.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -24,19 +25,19 @@
 # define DOWN 65364
 # define RIGHT 65363
 # define LEFT 65361
-
+//////////////////
 
 ////// colors
 # define GRAY 0x767676
 //////////////
 
 //////PLAYER CARACTERS
-#define PLAYERVET 10
+#define PLAYERVET 2
 typedef struct s_cordonate
 {
     double  x;
     double  y;
-    char    view;
+    double   dist;
 }               t_cordonate;
 
 typedef struct s_vector
