@@ -6,13 +6,13 @@
 /*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 11:01:39 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/12 18:32:21 by afadouac         ###   ########.fr       */
+/*   Updated: 2024/07/13 12:36:09 by afadouac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-int	CheckWalls(char **map, t_cordonate step, int keycode)
+int	CheckWalls(t_mlx *data ,char **map, t_cordonate step, int keycode)
 {
     long long x;
     long long y;
@@ -23,10 +23,14 @@ int	CheckWalls(char **map, t_cordonate step, int keycode)
         return (0);
 	if (map[y][x] != '0' && !IsPlayer(map[y][x]))
 		return (0);
+
+    if (((step.y + 1) / SCALE < data->map_info.height &&  map[(long long)((step.y + 1)/SCALE)][(long long)(step.x / SCALE)] == '1') ||\
+         ((step.x + 1) / SCALE < data->map_info.width && map[(long long)((step.y)/SCALE)][(long long)((step.x + 1) / SCALE)] == '1'))
+         {
+             return (0);
+         }
+        
     return (1);
-
-
-
 }
 
 // int	CheckWalls(t_mlx data, char mv)
@@ -86,7 +90,7 @@ int key_hook(int keycode, void *data1)
     {
         data->map_info.direction += ANGLE;
     }
-    if (CheckWalls(data->map_info.map, step, keycode))
+    if (CheckWalls(data, data->map_info.map, step, keycode))
     {
         data->Player.x = step.x;
         data->Player.y = step.y;
