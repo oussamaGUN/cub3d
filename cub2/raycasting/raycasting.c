@@ -6,7 +6,7 @@
 /*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 17:31:10 by afadouac          #+#    #+#             */
-/*   Updated: 2024/07/12 18:01:14 by afadouac         ###   ########.fr       */
+/*   Updated: 2024/07/13 16:03:17 by afadouac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ int	IsWall(t_cordonate Inter, char **map)
 	return (map[(int)(Inter.x / SCALE)][(int)(Inter.y / SCALE)] == '1');
 }
 
-///just for testing
+
 void draw_line(t_mlx *mlx, int x0, int y0, int x1, int y1, int color)
 {
     double dx = abs(x1 - x0);
@@ -176,6 +176,7 @@ void draw_line(t_mlx *mlx, int x0, int y0, int x1, int y1, int color)
         }
     }
 }
+
 //// end test function
 
 ///////////////////////////
@@ -191,6 +192,11 @@ int	is_wall(t_mlx *data, t_cordonate A)
 	y = A.y / SCALE;
     if (x < 0 || y < 0 || x >= data->map_info.width || y >= data->map_info.height || map[y][x] == '1')
 	    return (1);
+    if (((A.y + 1) / SCALE < data->map_info.height &&  map[(long long)((A.y + 1)/SCALE)][(long long)(A.x / SCALE)] == '1') ||\
+         ((A.x + 1) / SCALE < data->map_info.width && map[(long long)((A.y)/SCALE)][(long long)((A.x + 1) / SCALE)] == '1'))
+         {
+             return (1);
+         }
     return (0);
 }
 
@@ -295,16 +301,16 @@ void   RayCasting(t_mlx *data)
     P.x = data->Player.x;
     P.y = data->Player.y;
     i = -0.523599;
+    int count = 0;
     while (i <= 0.523599)
     {
         InterSectionH = HorizontalIntersection(data, i);
         InterSectionV = VerticalIntersection(data, i);
         InterSection = min_of(InterSectionH, InterSectionV);
-
         if (InterSection.x < 0 || InterSection.y < 0)
             InterSection = max_of(InterSectionH, InterSectionV);
         draw_line(data, P.x, P.y, InterSection.x, InterSection.y, 0x000);
-        i += 0.01; 
+        i += (M_PI / 3) / (WIDTH - 1.);
     }
 }
 
