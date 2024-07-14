@@ -14,9 +14,11 @@
 # include <unistd.h>
 #include "libft/libft.h"
 
-# define WIDTH 1800
-# define HEIGHT 1800
+///// 
+# define WIDTH 1280
+# define HEIGHT 720
 # define SCALE 20
+//
 # define PI 3.14159265358979
 
 //////// keys for key hook
@@ -79,9 +81,27 @@ typedef struct s_vars
     int length;
     char *ft_split;
     int count;
-}t_vars;
+}               t_vars;
+
+typedef struct s_img
+{
+    void        *win;
+	void		*img;
+	char		*addr;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
+}               t_img;
 typedef struct s_mlx
 {
+    /////
+    void        *win3d;
+	void		*img3d;
+	char		*addr3d;
+	int			bits_per_pixel3d;
+	int			line_length3d;
+	int			endian3d;
+    /////
     void        *mlx;
     void        *win;
 	void		*img;
@@ -132,6 +152,6 @@ void	check_player_conditions(int x, int y, t_mlx *mlx_data);
 void	initialize(t_mlx	*mlx);
 t_cordonate GetPlayerPosition(char **map);
 void    StandardMap(t_mlx *mlx_data);
-void	my_mlx_pixel_put(t_mlx *data, int x, int y, int color);
+void	my_mlx_pixel_put(t_mlx *data, int x, int y, int color, int wind);
 int IsPlayer(char c);
 #endif 
