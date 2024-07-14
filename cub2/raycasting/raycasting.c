@@ -6,7 +6,7 @@
 /*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 17:31:10 by afadouac          #+#    #+#             */
-/*   Updated: 2024/07/13 16:03:17 by afadouac         ###   ########.fr       */
+/*   Updated: 2024/07/14 14:02:59 by afadouac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void PlayerAdder(t_mlx *data)
         while ( x <= x0 + r)
         {
             if ((x - x0) * (x - x0) + (y - y0) * (y - y0) <= r * r)
-                my_mlx_pixel_put(data, x, y, 0xE91111);
+                my_mlx_pixel_put(data, x, y, 0xE91111, 2);
             x++;
         }
         y++;
@@ -136,7 +136,7 @@ void DirectionAdder(t_mlx *data)
             {
 				data->ToMouve.x = i;
 				data->ToMouve.y = j;
-                my_mlx_pixel_put(data, j, i, GRAY);
+                my_mlx_pixel_put(data, j, i, GRAY, 2);
             }
 			j++;
         }
@@ -150,7 +150,7 @@ int	IsWall(t_cordonate Inter, char **map)
 }
 
 
-void draw_line(t_mlx *mlx, int x0, int y0, int x1, int y1, int color)
+void draw_line(t_mlx *mlx, int x0, int y0, int x1, int y1, int color, int wind)
 {
     double dx = abs(x1 - x0);
     double dy = abs(y1 - y0);
@@ -160,7 +160,7 @@ void draw_line(t_mlx *mlx, int x0, int y0, int x1, int y1, int color)
 
     while (1)
     {
-        my_mlx_pixel_put(mlx, x0, y0, color);
+        my_mlx_pixel_put(mlx, x0, y0, color, wind);
 
         if (x0 == x1 && y0 == y1) break;
         double e2 = 2 * err;
@@ -309,7 +309,8 @@ void   RayCasting(t_mlx *data)
         InterSection = min_of(InterSectionH, InterSectionV);
         if (InterSection.x < 0 || InterSection.y < 0)
             InterSection = max_of(InterSectionH, InterSectionV);
-        draw_line(data, P.x, P.y, InterSection.x, InterSection.y, 0x000);
+        draw_line(data, P.x, P.y, InterSection.x, InterSection.y, 0x000, 2);
+        draw_line(data, P.x, P.y, InterSection.x, InterSection.y, 0xFFFF, 3);
         i += (M_PI / 3) / (WIDTH - 1.);
     }
 }
@@ -321,24 +322,23 @@ void    StandardMap(t_mlx *data)
     int         j;
 
     i = 0;
-
     while (i < data->map_info.height * SCALE)
     {
         j = 0;
         while (j < data->map_info.width * SCALE)
         {
             if (i % SCALE == 0 || j % SCALE == 0)
-                 my_mlx_pixel_put(data, j, i, 0x767676);
+                 my_mlx_pixel_put(data, j, i, 0x767676, 2);
             else if (data->map_info.map[i / SCALE][j / SCALE] == '1')//
-                my_mlx_pixel_put(data, j, i, 0x00ff);
+                my_mlx_pixel_put(data, j, i, 0x00ff, 2);
             else if ((i / SCALE) < data->map_info.height && (j / SCALE) < data->map_info.width &&
                  data->map_info.map[i / SCALE][j / SCALE] == '1')
-                my_mlx_pixel_put(data, j, i, 0x00ff);
+                my_mlx_pixel_put(data, j, i, 0x00ff, 2);
             else if (data->map_info.map[i / SCALE][j / SCALE] == '0' \
                     || IsPlayer(data->map_info.map[i / SCALE][j / SCALE]))
-                my_mlx_pixel_put(data, j, i, 0xFFFFFF);
+                my_mlx_pixel_put(data, j, i, 0xFFFFFF, 2);
             else
-                my_mlx_pixel_put(data, j , i , 0x0);
+                my_mlx_pixel_put(data, j , i , 0x0, 2);
             j++;
         }
         i++;
@@ -347,4 +347,5 @@ void    StandardMap(t_mlx *data)
     // DirectionAdder(data);
     RayCasting(data);
     mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
+    mlx_put_image_to_window(data->mlx, data->win3d, data->img3d, 0, 0);
 }
