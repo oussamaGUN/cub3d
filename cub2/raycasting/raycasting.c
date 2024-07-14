@@ -6,7 +6,7 @@
 /*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 17:31:10 by afadouac          #+#    #+#             */
-/*   Updated: 2024/07/14 14:02:59 by afadouac         ###   ########.fr       */
+/*   Updated: 2024/07/14 22:48:42 by afadouac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,11 +192,11 @@ int	is_wall(t_mlx *data, t_cordonate A)
 	y = A.y / SCALE;
     if (x < 0 || y < 0 || x >= data->map_info.width || y >= data->map_info.height || map[y][x] == '1')
 	    return (1);
-    if (((A.y + 1) / SCALE < data->map_info.height &&  map[(long long)((A.y + 1)/SCALE)][(long long)(A.x / SCALE)] == '1') ||\
-         ((A.x + 1) / SCALE < data->map_info.width && map[(long long)((A.y)/SCALE)][(long long)((A.x + 1) / SCALE)] == '1'))
-         {
-             return (1);
-         }
+    // if (((A.y + 1) / SCALE < data->map_info.height &&  map[(long long)((A.y + 1)/SCALE)][(long long)(A.x / SCALE)] == '1') ||\
+    //      ((A.x + 1) / SCALE < data->map_info.width && map[(long long)((A.y)/SCALE)][(long long)((A.x + 1) / SCALE)] == '1'))
+    //      {
+    //          return (1);
+    //      }
     return (0);
 }
 
@@ -226,7 +226,7 @@ t_cordonate	HorizontalIntersection(t_mlx *data, double angle_dif)
     }
     else  // ray facing up
     {
-        A.y = floor(P.y / SCALE) * SCALE - 1;
+        A.y = floor(P.y / SCALE) * SCALE - 0.00001;
 		deff.y = -1 * SCALE;
     }
     A.x = ((A.y - P.y) / tan (angle)) + P.x;
@@ -255,7 +255,7 @@ t_cordonate	VerticalIntersection(t_mlx *data, double angle_dif)
     if (angle > M_PI_2 && angle < 3 *M_PI_2)  // ray facing left
     {
         deff.x = -1 * SCALE;
-        A.x = floor(P.x / SCALE) * SCALE - 1;
+        A.x = floor(P.x / SCALE) * SCALE - 0.00001;
     }
     else //ray facing right
     {
@@ -297,11 +297,12 @@ void   RayCasting(t_mlx *data)
     t_cordonate InterSection;
     double      i;
     t_cordonate P;
+    double      wall;
 
     P.x = data->Player.x;
     P.y = data->Player.y;
     i = -0.523599;
-    int count = 0;
+    int X = 0;
     while (i <= 0.523599)
     {
         InterSectionH = HorizontalIntersection(data, i);
@@ -309,12 +310,29 @@ void   RayCasting(t_mlx *data)
         InterSection = min_of(InterSectionH, InterSectionV);
         if (InterSection.x < 0 || InterSection.y < 0)
             InterSection = max_of(InterSectionH, InterSectionV);
+        if (InterSection.dist > 0)
+        {
+            wall = (SCALE / 3 * HEIGHT / InterSection.dist) / cos(fabs(i));
+            if ((HEIGHT / 2) - wall > 0 && (HEIGHT / 2) + wall < HEIGHT)
+            {
+                draw_line(data, X, 0, X, (HEIGHT / 2) - wall , 0x476DCD, 3);
+                draw_line(data, X, (HEIGHT / 2) - wall, X, (HEIGHT / 2) + wall , 0xED0101, 3);    
+                draw_line(data, X, (HEIGHT / 2) + wall, X, HEIGHT , 0x259B05, 3);    
+            }
+            else
+                draw_line(data, X, 0, X, HEIGHT  , 0xED0101, 3);
+        }
+        else
+            {
+            draw_line(data, X, 0, X, HEIGHT  , 0xED0101, 3);    
+            }
         draw_line(data, P.x, P.y, InterSection.x, InterSection.y, 0x000, 2);
-        draw_line(data, P.x, P.y, InterSection.x, InterSection.y, 0xFFFF, 3);
+        // draw_line(data, P.x, P.y, InterSection.x, InterSection.y, 0xFFFF, 3);
+        
         i += (M_PI / 3) / (WIDTH - 1.);
+        X++;
     }
 }
-
 
 void    StandardMap(t_mlx *data)
 {
@@ -339,6 +357,17 @@ void    StandardMap(t_mlx *data)
                 my_mlx_pixel_put(data, j, i, 0xFFFFFF, 2);
             else
                 my_mlx_pixel_put(data, j , i , 0x0, 2);
+            j++;
+        }
+        i++;
+    }
+    i = 0;
+    while (i < HEIGHT)
+    {
+        j = 0;
+        while (j < WIDTH)
+        {
+            my_mlx_pixel_put(data, j , i , 0x0, 3);
             j++;
         }
         i++;
