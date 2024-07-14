@@ -6,7 +6,7 @@
 /*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 11:01:39 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/14 14:10:18 by afadouac         ###   ########.fr       */
+/*   Updated: 2024/07/14 15:13:46 by afadouac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,8 @@ int key_hook(int keycode, void *data1)
     else if (data->map_info.direction < 0)
         data->map_info.direction += 2 * M_PI;
 
-    mlx_clear_window(data->mlx, data->win3d);
-    mlx_clear_window(data->mlx, data->win);
+    //mlx_clear_window(data->mlx, data->win3d);
+    //mlx_clear_window(data->mlx, data->win);
     StandardMap(data);
     return (0);
 }
@@ -119,6 +119,7 @@ int	main(int ac, char *av[])
     StandardMap(&mlx_data);
     // mlx_key_hook(mlx_data.win, key_hook, &mlx_data);
     mlx_hook(mlx_data.win,2, 1l>>0, key_hook, &mlx_data);
+    mlx_hook(mlx_data.win3d,2, 1l>>0, key_hook, &mlx_data);
 	mlx_loop(mlx_data.mlx);
 	free(mlx_data.map_file.av);
 	free_infos(&mlx_data);
