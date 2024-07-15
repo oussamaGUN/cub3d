@@ -27,6 +27,7 @@
 # define DOWN 65364
 # define RIGHT 65363
 # define LEFT 65361
+# define ESC 65307
 //////////////////
 
 ////// colors
@@ -34,7 +35,7 @@
 //////////////
 
 //////PLAYER CARACTERS
-#define PLAYERVET 2
+#define PLAYERVET 1
 typedef struct s_cordonate
 {
     double  x;
