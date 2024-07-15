@@ -1,10 +1,12 @@
 SRC = main.c get_next_line/get_next_line.c get_next_line/get_next_line_utils.c parsing/parsing.c parsing/reading_texture.c \
 		parsing/map_parsing.c parsing/map_rules.c parsing/parsing_tools.c parsing/parsing_tools_two.c parsing/map_parsing_tools.c \
-		raycasting/initializer.c raycasting/raycasting.c raycasting/mlxes.c
+		raycasting/initializer.c raycasting/raycasting.c raycasting/mlxes.c 
 
 OBJ = $(SRC:.c=.o)
 
 LIBFT= libft/libft.a
+
+FLAGS = #-Wall -Wextra -Werror
 
 MLX_FLAGS = -lXext -lX11 -lm -lmlx 
 
@@ -13,11 +15,11 @@ NAME = cub
 all: $(NAME) $(LIBFT)
 
 %.o: %.c
-	@$(CC) -c $< -o $@
+	@$(CC) $(FLAGS) -c $< -o $@
 	@echo "Compiled" $< "successfully"
 
 $(NAME): $(OBJ)
-	@$(CC) $(OBJ) $(LIBFT) $(MLX_FLAGS) -o $(NAME) #-fsanitize=address
+	@$(CC) $(OBJ) $(LIBFT) $(MLX_FLAGS) -o $(NAME) -fsanitize=address
 	@echo "cub compiled"
 
 
