@@ -6,7 +6,7 @@
 /*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 17:31:10 by afadouac          #+#    #+#             */
-/*   Updated: 2024/07/14 22:48:42 by afadouac         ###   ########.fr       */
+/*   Updated: 2024/07/14 23:52:06 by afadouac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -315,9 +315,9 @@ void   RayCasting(t_mlx *data)
             wall = (SCALE / 3 * HEIGHT / InterSection.dist) / cos(fabs(i));
             if ((HEIGHT / 2) - wall > 0 && (HEIGHT / 2) + wall < HEIGHT)
             {
-                draw_line(data, X, 0, X, (HEIGHT / 2) - wall , 0x476DCD, 3);
+                draw_line(data, X, 0, X, (HEIGHT / 2) - wall , data->ceil.color, 3);
                 draw_line(data, X, (HEIGHT / 2) - wall, X, (HEIGHT / 2) + wall , 0xED0101, 3);    
-                draw_line(data, X, (HEIGHT / 2) + wall, X, HEIGHT , 0x259B05, 3);    
+                draw_line(data, X, (HEIGHT / 2) + wall, X, HEIGHT ,data->floor.color, 3);    
             }
             else
                 draw_line(data, X, 0, X, HEIGHT  , 0xED0101, 3);
