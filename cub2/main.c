@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 11:01:39 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/14 15:13:46 by afadouac         ###   ########.fr       */
+/*   Updated: 2024/07/15 11:40:51 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,12 @@ int key_hook(int keycode, void *data1)
     data = (t_mlx *)data1;
     step.x = data->Player.x;
     step.y = data->Player.y;
-    if (keycode == 119) // up
+    if (keycode == ESC)
+    {
+        // free functions here
+        exit(0);
+    }
+    else if (keycode == 119) // up
     {
         step.x += cos(data->map_info.direction) * PLAYERVET;
         step.y += sin(data->map_info.direction) * PLAYERVET;
@@ -105,7 +110,24 @@ int key_hook(int keycode, void *data1)
     StandardMap(data);
     return (0);
 }
-
+int mouse_move(t_mlx *data)
+{
+    int x;
+    int y;
+    mlx_mouse_get_pos(data->mlx, data->win3d, &x, &y);
+    if (x >= 0 && x <= 300)
+    {
+        data->map_info.direction -= (ANGLE / 5);
+    }
+    else if (x >= 950 && x <= 1280)
+        data->map_info.direction += (ANGLE / 5);
+    if (data->map_info.direction >= 2 * M_PI)
+        data->map_info.direction -= 2 * M_PI;
+    else if (data->map_info.direction < 0)
+        data->map_info.direction += 2 * M_PI;
+    StandardMap(data);
+    return 0;
+}
 int	main(int ac, char *av[])
 {
 	t_mlx	mlx_data;
@@ -120,6 +142,8 @@ int	main(int ac, char *av[])
     // mlx_key_hook(mlx_data.win, key_hook, &mlx_data);
     mlx_hook(mlx_data.win,2, 1l>>0, key_hook, &mlx_data);
     mlx_hook(mlx_data.win3d,2, 1l>>0, key_hook, &mlx_data);
+    mouse_move(&mlx_data);
+    mlx_loop_hook(mlx_data.mlx, mouse_move, &mlx_data);
 	mlx_loop(mlx_data.mlx);
 	free(mlx_data.map_file.av);
 	free_infos(&mlx_data);
