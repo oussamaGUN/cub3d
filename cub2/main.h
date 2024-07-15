@@ -56,6 +56,8 @@ typedef struct s_map_file
     char *av;
 }t_map_file;
 
+
+
 typedef struct s_map_info
 {
     char *NO;
@@ -84,6 +86,14 @@ typedef struct s_vars
     int count;
 }               t_vars;
 
+
+typedef struct s_color
+{
+    int     r;
+    int     g;
+    int     b;
+    int     color;
+}               t_color;
 typedef struct s_img
 {
     void        *win;
@@ -102,7 +112,7 @@ typedef struct s_mlx
 	int			bits_per_pixel3d;
 	int			line_length3d;
 	int			endian3d;
-    /////
+    
     void        *mlx;
     void        *win;
 	void		*img;
@@ -115,6 +125,8 @@ typedef struct s_mlx
     t_vars      vars;
     t_cordonate	Player;
     t_cordonate ToMouve;
+    t_color ceil;
+    t_color floor;
 }               t_mlx;
 
 // parsing functions
@@ -143,6 +155,7 @@ void	check_player_count(t_mlx *mlx_data, int count);
 void ft_free_two(t_mlx *mlx_data, char **split);
 void check_errors(t_mlx *mlx_data);
 void	check_player_conditions(int x, int y, t_mlx *mlx_data);
+int color_value(t_mlx *data, int flag);
 
 
 // raycasting
