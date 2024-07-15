@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reading_texture.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 10:44:17 by oussama           #+#    #+#             */
-/*   Updated: 2024/07/01 16:29:49 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/14 23:44:14 by afadouac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	parse_color(char **texture, t_mlx *mlx_data)
 			return (printf("no texture for F "), 0);
 		mlx_data->map_info.texture_number++;
 		mlx_data->map_info.F = ft_strdup(texture[1]);
+		if (!color_value(mlx_data, 1))
+			return (0);
 		return (1);
 	}
 	else if (!ft_strncmp(texture[0], "C", 2))
@@ -30,6 +32,8 @@ int	parse_color(char **texture, t_mlx *mlx_data)
 			return (printf("no texture for C "), 0);
 		mlx_data->map_info.texture_number++;
 		mlx_data->map_info.C = ft_strdup(texture[1]);
+		if (!color_value(mlx_data, 2))
+			return (0);
 		return (1);
 	}
 	return (0);
