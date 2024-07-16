@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 11:01:39 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/16 16:26:12 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/16 17:16:01 by afadouac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,10 +134,13 @@ int mouse_move(t_mlx *data)
         data->map_info.direction -= (ANGLE / 5);
     // for the jump view
     if (y > old_y)
-        data->jump += (ANGLE / 5);
+        data->jump -= ((ANGLE) * 20);
     else if (y < old_y)
-        data->jump -= (ANGLE / 5);
-
+        data->jump += ((ANGLE) * 20);
+    if (data->jump > (ANGLE) * 2000)
+        data->jump = (ANGLE) * 2000;
+    else if (data->jump < - (ANGLE) * 2000)
+        data->jump = - (ANGLE) * 2000;
     old_x = x;
     old_y = y;
     if (data->map_info.direction >= 2 * M_PI)
