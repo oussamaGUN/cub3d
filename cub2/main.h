@@ -14,6 +14,17 @@
 # include <unistd.h>
 #include "libft/libft.h"
 
+//// minimap
+
+# define MINIW 180
+# define MINIH 120
+
+# define MINIW2 360
+# define MINIH2 240
+
+////////////
+
+
 ///// 
 # define WIDTH 1280
 # define HEIGHT 720
@@ -41,6 +52,7 @@ typedef struct s_cordonate
     double  x;
     double  y;
     double   dist;
+    int     view;
 }               t_cordonate;
 
 typedef struct s_vector
@@ -75,6 +87,7 @@ typedef struct s_map_info
     int arr_len;
     char *mapstr;
     double direction;
+    int     maptype;
 }           t_map_info;
 
 typedef struct s_vars
@@ -94,6 +107,7 @@ typedef struct s_color
     int     b;
     int     color;
 }               t_color;
+
 typedef struct s_img
 {
     void        *win;
@@ -103,6 +117,7 @@ typedef struct s_img
 	int			line_length;
 	int			endian;
 }               t_img;
+
 typedef struct s_mlx
 {
     /////
