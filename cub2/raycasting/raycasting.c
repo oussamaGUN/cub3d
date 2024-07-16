@@ -6,7 +6,7 @@
 /*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 17:31:10 by afadouac          #+#    #+#             */
-/*   Updated: 2024/07/16 17:09:45 by afadouac         ###   ########.fr       */
+/*   Updated: 2024/07/16 18:17:07 by afadouac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,14 +253,14 @@ void   RayCasting(t_mlx *data)
         // InterSection.dist = dist to wall;
         // InterSection.vew = UP DOWN LEFT RIGHT;
         ////
-        if ((HEIGHT / 2) - wall  > 0 && (HEIGHT / 2) + wall  < HEIGHT)
-        {
+        // if ((HEIGHT / 2) - wall + data->jump > 0 && (HEIGHT / 2) + wall + data->jump < HEIGHT)
+        // {
             draw_line(data, X, 0, X, (HEIGHT / 2) - wall + data->jump, data->ceil.color, 3);
             draw_line(data, X, (HEIGHT / 2) - wall + data->jump, X, (HEIGHT / 2) + wall + data->jump , 0xED0101, 3);    
             draw_line(data, X, (HEIGHT / 2) + wall + data->jump, X, HEIGHT ,data->floor.color, 3);    
-        }
-        else
-            draw_line(data, X, 0, X, HEIGHT  , 0xED0101, 3);
+        // }
+        // else
+        //     draw_line(data, X, 0, X, HEIGHT  , 0xED0101, 3);
         i += (M_PI / 3) / (WIDTH - 1.);
         X++;
     }
