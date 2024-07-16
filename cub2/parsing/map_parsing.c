@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 14:21:28 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/01 16:21:32 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/16 16:44:20 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	line_rules(t_mlx *mlx_data)
 	i = -1;
 	while (mlx_data->map_info.line[++i])
 	{
-		if (!ft_strchr("10NSEW \n", mlx_data->map_info.line[i]))
+		if (!ft_strchr("10NSEWD \n", mlx_data->map_info.line[i]))
 			return (0);
 	}
 	mlx_data->map_info.mapstr = ft_strjoin(mlx_data->map_info.mapstr,

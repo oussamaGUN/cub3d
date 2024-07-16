@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_rules.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 12:03:08 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/04 22:46:56 by afadouac         ###   ########.fr       */
+/*   Updated: 2024/07/16 16:52:58 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,11 @@ void	check_empty_blocks(t_mlx *mlx_data)
 		x = 0;
 		while (mlx_data->map_info.map[y][x])
 		{
-			if (mlx_data->map_info.map[y][x] == '0')
+			if (mlx_data->map_info.map[y][x] == '0'
+				|| mlx_data->map_info.map[y][x] == 'D')
 			{
-				if (!ft_strchr("10NWSE", mlx_data->map_info.map[y - 1][x])
-					|| !ft_strchr("10NWSE", mlx_data->map_info.map[y + 1][x]))
+				if (!ft_strchr("10NWSED", mlx_data->map_info.map[y - 1][x])
+					|| !ft_strchr("10NWSED", mlx_data->map_info.map[y + 1][x]))
 				{
 					printf("map should be surrounded by walls\n");
 					ft_free_two(mlx_data, mlx_data->map_info.map);
@@ -74,7 +75,7 @@ void	check_line(t_mlx *mlx_data, char **split)
 			length = ft_strlen(split[i]) - 1;
 			if ((split[i][x] == '0' || split[i][x] == 'N'
 				|| split[i][x] == 'S' || split[i][x] == 'E'
-				|| split[i][x] == 'W')
+				|| split[i][x] == 'W' || split[i][x] == 'D')
 				&& (x == 0 || mlx_data->vars.y == 0 || x == length
 				|| mlx_data->vars.y == mlx_data->map_info.height - 1))
 			{
