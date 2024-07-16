@@ -127,7 +127,7 @@ typedef struct s_mlx
 	int			bits_per_pixel3d;
 	int			line_length3d;
 	int			endian3d;
-    
+    double jump;
     void        *mlx;
     void        *win;
 	void		*img;

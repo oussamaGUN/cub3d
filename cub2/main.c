@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 11:01:39 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/16 00:21:45 by afadouac         ###   ########.fr       */
+/*   Updated: 2024/07/16 16:26:12 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,8 @@ int key_hook(int keycode, void *data1)
 
 int mouse_move(t_mlx *data)
 {
+    static int old_x = 0;
+    static int old_y = 0;
     int x;
     int y;
 
@@ -121,14 +123,23 @@ int mouse_move(t_mlx *data)
     data->map_info.maptype = 1;
     if (x > WIDTH - MINIW - 5 && x < WIDTH && y > HEIGHT - MINIH - 5 && y < HEIGHT)
         data->map_info.maptype = 2;
-    else if (x >= 0 && x <= 300)
-    {
+    // for the ANGLE view
+    if (x < 0)
         data->map_info.direction -= (ANGLE / 5);
-    }
-    else if (x >= 950 && x <= 1280)
+    else if (x > 1280)
         data->map_info.direction += (ANGLE / 5);
-    
+    if (x > old_x)
+        data->map_info.direction += (ANGLE / 5);
+    else if (x < old_x)
+        data->map_info.direction -= (ANGLE / 5);
+    // for the jump view
+    if (y > old_y)
+        data->jump += (ANGLE / 5);
+    else if (y < old_y)
+        data->jump -= (ANGLE / 5);
 
+    old_x = x;
+    old_y = y;
     if (data->map_info.direction >= 2 * M_PI)
         data->map_info.direction -= 2 * M_PI;
     else if (data->map_info.direction < 0)
