@@ -6,7 +6,7 @@
 /*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 17:31:10 by afadouac          #+#    #+#             */
-/*   Updated: 2024/07/16 15:09:00 by afadouac         ###   ########.fr       */
+/*   Updated: 2024/07/16 17:09:45 by afadouac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,26 @@ t_cordonate GetPlayerPosition(char **map)
     return (pos);
 }
 
+void    ranging(int *x0, int *y0, int *x1, int *y1)
+{
+    if (*x0 < 0)
+        *x0 = 0;
+    if (*x0 > WIDTH)
+        *x0 = WIDTH;
+    if (*x1 < 0)
+        *x1 = 0;
+    if (*x1 > WIDTH)
+        *x1 = WIDTH;
+    if (*y0 < 0)
+        *y0 = 0;
+    if (*y0 > HEIGHT)
+        *y0 = HEIGHT;
+    if (*y1 < 0)
+        *y1 = 0;
+    if (*y1 > HEIGHT)
+        *y1 = HEIGHT;
+}
+
 void draw_line(t_mlx *mlx, int x0, int y0, int x1, int y1, int color, int wind)
 {
     double dx;;
@@ -55,6 +75,7 @@ void draw_line(t_mlx *mlx, int x0, int y0, int x1, int y1, int color, int wind)
     double sy;
     double err;
 
+    ranging(&x0, &y0, &x1, &y1);
     dx = abs(x1 - x0);
     dy = abs(y1 - y0);
     err = dx - dy;
@@ -232,11 +253,11 @@ void   RayCasting(t_mlx *data)
         // InterSection.dist = dist to wall;
         // InterSection.vew = UP DOWN LEFT RIGHT;
         ////
-        if ((HEIGHT / 2) - wall > 0 && (HEIGHT / 2) + wall < HEIGHT)
+        if ((HEIGHT / 2) - wall  > 0 && (HEIGHT / 2) + wall  < HEIGHT)
         {
-            draw_line(data, X, 0, X, (HEIGHT / 2) - wall, data->ceil.color, 3);
-            draw_line(data, X, (HEIGHT / 2) - wall, X, (HEIGHT / 2) + wall, 0xED0101, 3);    
-            draw_line(data, X, (HEIGHT / 2) + wall, X, HEIGHT ,data->floor.color, 3);    
+            draw_line(data, X, 0, X, (HEIGHT / 2) - wall + data->jump, data->ceil.color, 3);
+            draw_line(data, X, (HEIGHT / 2) - wall + data->jump, X, (HEIGHT / 2) + wall + data->jump , 0xED0101, 3);    
+            draw_line(data, X, (HEIGHT / 2) + wall + data->jump, X, HEIGHT ,data->floor.color, 3);    
         }
         else
             draw_line(data, X, 0, X, HEIGHT  , 0xED0101, 3);
