@@ -142,6 +142,7 @@ typedef struct s_mlx
     t_cordonate ToMouve;
     t_color ceil;
     t_color floor;
+    double  face;
 }               t_mlx;
 
 // parsing functions
