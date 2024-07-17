@@ -6,7 +6,7 @@
 /*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 17:31:10 by afadouac          #+#    #+#             */
-/*   Updated: 2024/07/16 18:17:07 by afadouac         ###   ########.fr       */
+/*   Updated: 2024/07/17 19:02:20 by afadouac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ t_cordonate	HorizontalIntersection(t_mlx *data, double angle_dif)
     angle = (data->map_info.direction + angle_dif);
     if (angle > 2 * M_PI)
         angle -= 2 * M_PI;
+    A.view = angle;
 	if (tan(angle) == 0)
 	{
         A.x = 0;
@@ -176,6 +177,7 @@ t_cordonate	VerticalIntersection(t_mlx *data, double angle_dif)
     angle = (data->map_info.direction + angle_dif);
     if (angle > 2 * M_PI)
         angle -= 2 * M_PI;
+    A.view = angle;
     if (angle > M_PI_2 && angle < 3 *M_PI_2)  // ray facing left
     {
         deff.x = -1 * SCALE;
@@ -202,13 +204,13 @@ t_cordonate min_of(t_cordonate H, t_cordonate V)
 {
     if (H.dist < V.dist)
     {
-        if (H.view > M_PI && H.view < M_PI * 2)
+        if (H.view > M_PI && H.view < (M_PI * 2))
             H.view = UP;
         else
             H.view = DOWN;
         return (H);
     }
-    if (V.view > M_PI_2 && V.view < 3 * M_PI_2)
+    if (V.view > M_PI_2 && V.view < (3 * M_PI_2))
         V.view = LEFT;
     else
         V.view = RIGHT;
@@ -219,17 +221,43 @@ t_cordonate max_of(t_cordonate H, t_cordonate V)
 {
     if (H.dist > V.dist)
     {
-        if (H.view > M_PI && H.view < M_PI * 2)
+        if (H.view > M_PI && H.view < (M_PI * 2))
             H.view = UP;
         else
             H.view = DOWN;
         return (H);
     }
-    if (V.view > M_PI_2 && V.view < 3 * M_PI_2)
+    if (V.view > M_PI_2 && V.view < (3 * M_PI_2))
         V.view = LEFT;
     else
         V.view = RIGHT;
     return (V);
+}
+
+int get_texel(t_mlx *data ,char *texture, int x, int y)
+{
+	char	*pixel;
+
+		pixel = data->addr3d + (y * data->line_length3d + x * \
+			(data->bits_per_pixel3d / 8));
+		return (*(unsigned int *)pixel);
+}
+
+void putingTexture(t_mlx *data, double wall, t_cordonate Intersection, int x)
+{
+    int color;
+    int i;
+    int j = 0;
+
+    i = 0;
+    // i = data->map_info.SO;
+    while (i < wall)
+    {
+        color = get_texel(data , data->map_info.SO , Intersection.x ,j);
+        my_mlx_pixel_put(data, x, i, color, 3);
+        i++;
+        j += wall / 64;
+    }
 }
 
 void   RayCasting(t_mlx *data)
@@ -243,12 +271,20 @@ void   RayCasting(t_mlx *data)
     P.y = data->Player.y;
     i = -0.523599;
     int X = 0;
+    // double best = 0.523599; 
+    // double best2 = -0.523599; 
     while (i <= 0.523599)
     {
         InterSection = min_of(HorizontalIntersection(data, i),VerticalIntersection(data, i));
         if (InterSection.x < 0 || InterSection.y < 0)
             InterSection = max_of(HorizontalIntersection(data, i), VerticalIntersection(data, i));
         wall = (SCALE / 3 * HEIGHT / InterSection.dist) / cos(fabs(i));
+        if (i <= 0.000409 && i >= -0.000410)
+            data->face = InterSection.view;
+        // if (i >= 0 && i < best)
+        //     best = i;
+        // else if (i < 0 && i > best2)
+        //     best2 = i;
         ////
         // InterSection.dist = dist to wall;
         // InterSection.vew = UP DOWN LEFT RIGHT;
@@ -256,14 +292,27 @@ void   RayCasting(t_mlx *data)
         // if ((HEIGHT / 2) - wall + data->jump > 0 && (HEIGHT / 2) + wall + data->jump < HEIGHT)
         // {
             draw_line(data, X, 0, X, (HEIGHT / 2) - wall + data->jump, data->ceil.color, 3);
+            
+            // putingTexture(data, wall, InterSection, X);
+            ///this line going to be delleted
             draw_line(data, X, (HEIGHT / 2) - wall + data->jump, X, (HEIGHT / 2) + wall + data->jump , 0xED0101, 3);    
+            ///
             draw_line(data, X, (HEIGHT / 2) + wall + data->jump, X, HEIGHT ,data->floor.color, 3);    
         // }
         // else
         //     draw_line(data, X, 0, X, HEIGHT  , 0xED0101, 3);
+        
         i += (M_PI / 3) / (WIDTH - 1.);
         X++;
     }
+    if (data->face == UP)
+        puts("UP");
+    else if (data->face == DOWN)
+        puts("DOWN");
+    else if (data->face == LEFT)
+        puts("LEFT");
+    else if (data->face == RIGHT)
+        puts("RIGHT");
 }
 
 void    AddDirection(t_mlx *data, int W, int H)
