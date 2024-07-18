@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 11:01:39 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/18 13:56:47 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/18 14:54:18 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,8 +177,8 @@ int	main(int ac, char *av[])
 	if (ac != 2 || ft_check_extension((char *)av[1], ".cub") == 0)
 		return (printf("invalid argument\n"), 1);
 	mlx_data.map_file.av = ft_strdup(av[1]);
-	parsing(&mlx_data);
     initialize(&mlx_data);
+	parsing(&mlx_data);
 	mlx_data.Player = GetPlayerPosition(mlx_data.map_info.map);
     // StandardMap(&mlx_data);
     // mlx_key_hook(mlx_data.win, key_hook, &mlx_data);
