@@ -68,7 +68,16 @@ typedef struct s_map_file
     char *av;
 }t_map_file;
 
-
+typedef struct s_texture
+{
+    void    *img;
+    char    *addr;
+    int     bits_per_pixel;
+    int     line_length;
+    int     endian;
+    int     width;
+    int     height;
+}           t_texture;
 
 typedef struct s_map_info
 {
@@ -78,8 +87,6 @@ typedef struct s_map_info
     char *EA;
     char *F;
     char *C;
-    int img_w;
-    int img_h;
     char **map;
     int map_index;
     int texture_number;
@@ -137,6 +144,7 @@ typedef struct s_mlx
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
+    double  face;
     t_map_file  map_file;
     t_map_info  map_info;
     t_vars      vars;
@@ -144,7 +152,10 @@ typedef struct s_mlx
     t_cordonate ToMouve;
     t_color ceil;
     t_color floor;
-    double  face;
+    t_texture   NO;
+    t_texture   SO;
+    t_texture   WE;
+    t_texture   EA;
 }               t_mlx;
 
 // parsing functions
@@ -174,6 +185,7 @@ void ft_free_two(t_mlx *mlx_data, char **split);
 void check_errors(t_mlx *mlx_data);
 void	check_player_conditions(int x, int y, t_mlx *mlx_data);
 int color_value(t_mlx *data, int flag);
+void texture_init(t_mlx *mlx_data);
 
 
 // raycasting
