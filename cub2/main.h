@@ -78,6 +78,8 @@ typedef struct s_map_info
     char *EA;
     char *F;
     char *C;
+    int img_w;
+    int img_h;
     char **map;
     int map_index;
     int texture_number;
