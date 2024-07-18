@@ -3,33 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 11:01:39 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/16 17:16:01 by afadouac         ###   ########.fr       */
+/*   Updated: 2024/07/18 13:56:47 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-int	CheckWalls(t_mlx *data ,char **map, t_cordonate step, int keycode)
+int	CheckWalls(t_mlx *data ,char **map, t_cordonate *step, int keycode)
 {
     long long x;
     long long y;
 
-	x = (long long)(step.x / SCALE);
-	y = (long long)(step.y / SCALE); 
-    if (keycode != 119 && keycode != 115 && keycode != 100 && keycode != 97)
-        return (0);
-	if (map[y][x] != '0' && !IsPlayer(map[y][x]))
-		return (0);
+	x = (long long)(step->x / SCALE);
+	y = (long long)(step->y / SCALE); 
+    // if (keycode != 119 && keycode != 115 && keycode != 100 && keycode != 97)
+    //     return (0);
 
-    if (((step.y + 1) / SCALE < data->map_info.height &&  map[(long long)((step.y + 1)/SCALE)][(long long)(step.x / SCALE)] == '1') ||\
-         ((step.x + 1) / SCALE < data->map_info.width && map[(long long)((step.y)/SCALE)][(long long)((step.x + 1) / SCALE)] == '1'))
-         {
-             return (0);
-         }
-        
+
+
+    // Check if the next step is outside the map boundaries
+
+    if (map[y][x] != '0' && !IsPlayer(map[y][x]) && 
+        ((step->y + 1) / SCALE < data->map_info.height &&  map[(long long)((step->y + 1)/SCALE)][(long long)(step->x / SCALE)] == '1') ||\
+        ((step->x + 1) / SCALE < data->map_info.width && map[(long long)((step->y)/SCALE)][(long long)((step->x + 1) / SCALE)] == '1'))
+    {
+        if (keycode == 119) // up
+        {
+            if (data->face == DOWN || data->face == UP)
+            {
+                step->y -= sin(data->map_info.direction) * PLAYERVET;
+                if (map[(long long)(step->y / SCALE)][(long long)(step->x / SCALE)] == '1')
+                    return (0);
+            }
+            else if (data->face == RIGHT || data->face == LEFT)
+            {
+                step->x -= cos(data->map_info.direction) * PLAYERVET;
+                if (map[(long long)(step->y / SCALE)][(long long)(step->x / SCALE)] == '1')
+                    return (0);
+            }
+        }
+        else 
+            return (0);
+    }
     return (1);
 }
 
@@ -96,7 +114,7 @@ int key_hook(int keycode, void *data1)
     {
         data->map_info.direction += ANGLE;
     }
-    if (CheckWalls(data, data->map_info.map, step, keycode))
+    if (CheckWalls(data, data->map_info.map, &step, keycode))
     {
         data->Player.x = step.x;
         data->Player.y = step.y;
