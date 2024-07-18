@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 11:03:55 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/06 20:38:18 by afadouac         ###   ########.fr       */
+/*   Updated: 2024/07/18 14:31:16 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,7 @@ void	parsing(t_mlx *mlx_data)
 	reading_textures(mlx_data);
 	parsing_map(mlx_data);
 	check_player_direction(mlx_data);
+	texture_init(mlx_data);
+	printf("%d\n", mlx_data->SO.width);
 	close(mlx_data->map_file.fd);
 }
