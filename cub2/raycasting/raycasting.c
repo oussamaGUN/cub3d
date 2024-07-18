@@ -6,7 +6,7 @@
 /*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 17:31:10 by afadouac          #+#    #+#             */
-/*   Updated: 2024/07/17 19:02:20 by afadouac         ###   ########.fr       */
+/*   Updated: 2024/07/18 18:10:17 by afadouac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,27 +238,51 @@ int get_texel(t_mlx *data ,char *texture, int x, int y)
 {
 	char	*pixel;
 
-		pixel = data->addr3d + (y * data->line_length3d + x * \
-			(data->bits_per_pixel3d / 8));
+		pixel = data->NO.addr + (y * data->NO.line_length + x * \
+			(data->NO.bits_per_pixel / 8));
 		return (*(unsigned int *)pixel);
 }
 
 void putingTexture(t_mlx *data, double wall, t_cordonate Intersection, int x)
 {
     int color;
-    int i;
     int j = 0;
+    int tex_x;
+    int tex_y;
 
-    i = 0;
-    // i = data->map_info.SO;
-    while (i < wall)
+    if (Intersection.view == LEFT || Intersection.view == RIGHT)
     {
-        color = get_texel(data , data->map_info.SO , Intersection.x ,j);
-        my_mlx_pixel_put(data, x, i, color, 3);
-        i++;
-        j += wall / 64;
+        tex_x = fabs(fmod(Intersection.y, SCALE) / SCALE) * data->NO.width; // Vertical wall
+    }
+    else
+    {
+        tex_x = fabs(fmod(Intersection.x, SCALE) / SCALE) * data->NO.width; // Horizontal wall
+    }
+
+    int point_y = (HEIGHT / 2) - wall + data->jump;
+    // if (point_y < 0)
+    //     point_y = 0;
+    int end = (HEIGHT / 2) + wall + data->jump;
+    // if (end >= HEIGHT)
+    //     end = HEIGHT;
+
+    while (point_y < end)
+    {
+        tex_y = (j * data->NO.height) / (2 * wall); 
+
+        
+        color = get_texel(data, data->map_info.SO, tex_x, tex_y);
+
+        my_mlx_pixel_put(data, x, point_y, color, 3);
+
+        point_y++;
+        j++;
+        if (point_y > WIDTH || point_y < 0 )
+            break ;
     }
 }
+
+
 
 void   RayCasting(t_mlx *data)
 {
@@ -293,9 +317,9 @@ void   RayCasting(t_mlx *data)
         // {
             draw_line(data, X, 0, X, (HEIGHT / 2) - wall + data->jump, data->ceil.color, 3);
             
-            // putingTexture(data, wall, InterSection, X);
+            putingTexture(data, wall, InterSection, X);
             ///this line going to be delleted
-            draw_line(data, X, (HEIGHT / 2) - wall + data->jump, X, (HEIGHT / 2) + wall + data->jump , 0xED0101, 3);    
+            // draw_line(data, X, (HEIGHT / 2) - wall + data->jump, X, (HEIGHT / 2) + wall + data->jump , 0xED0101, 3);    
             ///
             draw_line(data, X, (HEIGHT / 2) + wall + data->jump, X, HEIGHT ,data->floor.color, 3);    
         // }
