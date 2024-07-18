@@ -6,7 +6,7 @@
 /*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 22:06:05 by afadouac          #+#    #+#             */
-/*   Updated: 2024/07/14 13:29:42 by afadouac         ###   ########.fr       */
+/*   Updated: 2024/07/18 17:51:04 by afadouac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@ void	my_mlx_pixel_put(t_mlx *data, int x, int y, int color, int wind)
 {
 	char	*pixel;
 
+	if (x < 0 || y < 0)
+		return ;
+	if (x > WIDTH || y > HEIGHT)
+		return ;
 	if (wind == 3)
 	{
 		pixel = data->addr3d + (y * data->line_length3d + x * \
