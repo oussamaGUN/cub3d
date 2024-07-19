@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture_init.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 14:13:53 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/19 12:48:47 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/19 14:27:12 by afadouac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@ void get_img_addr(t_mlx *mlx_data)
         freeing(mlx_data);
     mlx_data->EA.addr = mlx_get_data_addr(mlx_data->EA.img, &mlx_data->EA.bits_per_pixel, &mlx_data->EA.line_length, &mlx_data->EA.endian);
     if (!mlx_data->EA.addr)
+        freeing(mlx_data);
+    mlx_data->door.addr = mlx_get_data_addr(mlx_data->door.img, &mlx_data->door.bits_per_pixel, &mlx_data->door.line_length, &mlx_data->door.endian);
+    if (!mlx_data->door.addr)
         freeing(mlx_data);
 }
 void texture_init(t_mlx *mlx_data)
