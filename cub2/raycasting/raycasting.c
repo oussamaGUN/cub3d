@@ -6,7 +6,7 @@
 /*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 17:31:10 by afadouac          #+#    #+#             */
-/*   Updated: 2024/07/18 22:31:32 by afadouac         ###   ########.fr       */
+/*   Updated: 2024/07/19 12:24:30 by afadouac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,8 @@ int	is_wall(t_mlx *data, t_cordonate A)
 	y = A.y / SCALE;
     if (x < 0 || y < 0 || x >= data->map_info.width || y >= data->map_info.height || map[y][x] == '1')
 	    return (1);
+    if (map[y][x] == 'D')
+        return (2);
     return (0);
 }
 
@@ -163,6 +165,8 @@ t_cordonate	HorizontalIntersection(t_mlx *data, double angle_dif)
 		A.x += deff.x;
 		A.y += deff.y;
     }
+    if (is_wall(data, A) == 2)
+        A.view = DOOR;
 	A.dist = sqrt((A.x - P.x) * (A.x - P.x) + (A.y - P.y) * (A.y - P.y));
 	return (A);
 }
@@ -200,6 +204,8 @@ t_cordonate	VerticalIntersection(t_mlx *data, double angle_dif)
 		A.x += deff.x;
 		A.y += deff.y;
     }
+    if (is_wall(data, A) == 2)
+        A.view = DOOR;
     A.dist = sqrt((A.x - P.x) * (A.x - P.x) + (A.y - P.y) * (A.y - P.y));
     return (A);
 }
@@ -208,16 +214,8 @@ t_cordonate min_of(t_cordonate H, t_cordonate V)
 {
     if (H.dist < V.dist)
     {
-        // if (H.view > M_PI && H.view < (M_PI * 2))
-        //     H.view = UP;
-        // else
-        //     H.view = DOWN;
         return (H);
     }
-    // if (V.view > M_PI_2 && V.view < (3 * M_PI_2))
-    //     V.view = LEFT;
-    // else
-    //     V.view = RIGHT;
     return (V);
 }
 
@@ -225,16 +223,8 @@ t_cordonate max_of(t_cordonate H, t_cordonate V)
 {
     if (H.dist > V.dist)
     {
-        // if (H.view > M_PI && H.view < (M_PI * 2))
-        //     H.view = UP;
-        // else
-        //     H.view = DOWN;
         return (H);
     }
-    // if (V.view > M_PI_2 && V.view < (3 * M_PI_2))
-    //     V.view = LEFT;
-    // else
-    //     V.view = RIGHT;
     return (V);
 }
 
@@ -280,15 +270,13 @@ void putingTexture(t_mlx *data, double wall, t_cordonate Intersection, int x)
     j = 0;
     while (point_y < end)
     {
-        tex_y = (j * data->NO.height) / (2 * wall); 
+        tex_y = (j * tex.height) / (2 * wall); 
         color = get_texel(data, tex, tex_x, tex_y);
         my_mlx_pixel_put(data, x, point_y, color, 3);
         point_y++;
         j++;
     }
 }
-
-
 
 void   RayCasting(t_mlx *data)
 {
