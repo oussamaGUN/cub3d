@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 11:03:55 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/19 12:48:12 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/19 15:34:41 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ void	parsing(t_mlx *mlx_data)
 	reading_textures(mlx_data);
 	parsing_map(mlx_data);
 	check_player_direction(mlx_data);
+	doors_check(mlx_data);
 	texture_init(mlx_data);
 	close(mlx_data->map_file.fd);
 }

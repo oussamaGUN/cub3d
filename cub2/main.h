@@ -192,6 +192,7 @@ void	check_player_conditions(int x, int y, t_mlx *mlx_data);
 int color_value(t_mlx *data, int flag);
 void texture_init(t_mlx *mlx_data);
 void freeing(t_mlx *mlx_data);
+void doors_check(t_mlx *mlx_data);
 
 
 // raycasting
