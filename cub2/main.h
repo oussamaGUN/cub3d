@@ -47,6 +47,10 @@
 
 //////PLAYER CARACTERS
 #define PLAYERVET 1
+
+/// door
+
+# define DOOR 1337
 typedef struct s_cordonate
 {
     double  x;
@@ -156,6 +160,7 @@ typedef struct s_mlx
     t_texture   SO;
     t_texture   WE;
     t_texture   EA;
+    t_texture door;
 }               t_mlx;
 
 // parsing functions
