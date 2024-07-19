@@ -6,7 +6,7 @@
 /*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 17:31:10 by afadouac          #+#    #+#             */
-/*   Updated: 2024/07/19 12:24:30 by afadouac         ###   ########.fr       */
+/*   Updated: 2024/07/19 20:38:29 by afadouac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,19 +110,36 @@ void draw_line(t_mlx *mlx, int x0, int y0, int x1, int y1, int color, int wind)
 
 ///////////////////////////
 
-int	is_wall(t_mlx *data, t_cordonate A)
+int isNeer(t_cordonate *A, t_cordonate Player)
+{
+    double dist;
+    double  diff_x;
+    double  diff_y;
+
+    diff_x = A->x - Player.x;
+    diff_y = A->y - Player.y;
+    dist = sqrt(diff_x * diff_x + diff_y * diff_y);
+    return (dist >= DISTDOOR);
+}
+
+int	is_wall(t_mlx *data, t_cordonate *A)
 {
 	long long	x;
 	long long	y;
     char **map;
 
     map = data->map_info.map;
-	x = A.x /SCALE;
-	y = A.y / SCALE;
+    A->is_door = 0;
+	x = A->x /SCALE;
+	y = A->y / SCALE;
     if (x < 0 || y < 0 || x >= data->map_info.width || y >= data->map_info.height || map[y][x] == '1')
 	    return (1);
-    if (map[y][x] == 'D')
-        return (2);
+    A->is_door = 0;
+    if (map[y][x] == 'D' && isNeer(A, data->Player))
+    {
+        A->is_door = 1;
+        return (1);
+    }
     return (0);
 }
 
@@ -160,13 +177,14 @@ t_cordonate	HorizontalIntersection(t_mlx *data, double angle_dif)
     }
     A.x = ((A.y - P.y) / tan (angle)) + P.x;
 	deff.x = deff.y / tan(angle);
-	while (!is_wall(data, A))
+	while (!is_wall(data, &A))
 	{
 		A.x += deff.x;
 		A.y += deff.y;
     }
-    if (is_wall(data, A) == 2)
-        A.view = DOOR;
+    // A.is_door = 0;
+    // if (is_wall(data, A) == 2)
+    //     A.is_door = 2;
 	A.dist = sqrt((A.x - P.x) * (A.x - P.x) + (A.y - P.y) * (A.y - P.y));
 	return (A);
 }
@@ -199,13 +217,14 @@ t_cordonate	VerticalIntersection(t_mlx *data, double angle_dif)
     A.y = P.y - (P.x - A.x) * tan(angle);
     deff.y = deff.x * tan(angle);
     int i = 0;
-    while (!is_wall(data, A))
+    while (!is_wall(data, &A))
     {
 		A.x += deff.x;
 		A.y += deff.y;
     }
-    if (is_wall(data, A) == 2)
-        A.view = DOOR;
+    // A.is_door = 0;
+    // if (is_wall(data, A) == 2)
+    //     A.is_door = 1;
     A.dist = sqrt((A.x - P.x) * (A.x - P.x) + (A.y - P.y) * (A.y - P.y));
     return (A);
 }
@@ -247,7 +266,11 @@ void putingTexture(t_mlx *data, double wall, t_cordonate Intersection, int x)
     int tex_y;
     t_texture tex;
 
-    if (Intersection.view == UP)
+    if (Intersection.is_door == 1)
+        tex = data->door;
+    // else if (Intersection.is_door == 2)
+    //     return ;
+    else if (Intersection.view == UP)
         tex = data->NO;
     else if (Intersection.view == DOWN)
         tex = data->SO;
@@ -255,6 +278,8 @@ void putingTexture(t_mlx *data, double wall, t_cordonate Intersection, int x)
         tex = data->EA;
     else if (Intersection.view == RIGHT)
         tex = data->WE;
+    else if (Intersection.view == DOOR)
+        tex = data->door;
     if (Intersection.view == LEFT || Intersection.view == RIGHT)
     {
         tex_x = fabs(fmod(Intersection.y, SCALE) / SCALE) * tex.width; // Vertical wall
@@ -296,9 +321,19 @@ void   RayCasting(t_mlx *data)
         InterSection = min_of(HorizontalIntersection(data, i),VerticalIntersection(data, i));
         // if (InterSection.x < 0 || InterSection.y < 0)
         //     InterSection = max_of(HorizontalIntersection(data, i), VerticalIntersection(data, i));
-        wall = (SCALE / 3 * HEIGHT / InterSection.dist) / cos(fabs(i));
         if (i <= 0.000409 && i >= -0.000410)
             data->face = InterSection.view;
+        // if (InterSection.is_door == 1 && InterSection.dist <= DISTDOOR)
+        //     data->map_info.map[(int)(InterSection.y / SCALE)][(int)(InterSection.x / SCALE)] = 'O';
+        // if (data->map_info.map[(int)(InterSection.y / SCALE)][(int)(InterSection.x / SCALE)] == 'O')
+        // {
+        //     puts("doooooooooooooooooooooooor");
+        //     data->map_info.map[InterSection.y_door][InterSection.x_door] = 'D';
+        //     InterSection.dist = sqrt( pow(InterSection.y_door, 2) + pow(InterSection.x_door, 2) );
+        //     InterSection.x = InterSection.x_door;
+        //     InterSection.y = InterSection.y_door; 
+        // }
+        wall = (SCALE / 3 * HEIGHT / InterSection.dist) / cos(fabs(i));
             draw_line(data, X, 0, X, (HEIGHT / 2) - wall + data->jump, data->ceil.color, 3);
             
             putingTexture(data, wall, InterSection, X);
@@ -309,14 +344,14 @@ void   RayCasting(t_mlx *data)
         i += (M_PI / 3) / (WIDTH - 1.);
         X++;
     }
-    if (data->face == UP)
-        puts("UP");
-    else if (data->face == DOWN)
-        puts("DOWN");
-    else if (data->face == LEFT)
-        puts("LEFT");
-    else if (data->face == RIGHT)
-        puts("RIGHT");
+    // if (data->face == UP)
+    //     puts("UP");
+    // else if (data->face == DOWN)
+    //     puts("DOWN");
+    // else if (data->face == LEFT)
+    //     puts("LEFT");
+    // else if (data->face == RIGHT)
+    //     puts("RIGHT");
 }
 
 void    AddDirection(t_mlx *data, int W, int H)
