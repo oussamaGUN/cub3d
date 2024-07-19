@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 11:01:39 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/18 14:54:18 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/18 23:05:15 by afadouac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	CheckWalls(t_mlx *data ,char **map, t_cordonate *step, int keycode)
 
 	x = (long long)(step->x / SCALE);
 	y = (long long)(step->y / SCALE); 
-    // if (keycode != 119 && keycode != 115 && keycode != 100 && keycode != 97)
-    //     return (0);
+    if (keycode != 119 && keycode != 115 && keycode != 100 && keycode != 97)
+        return (0);
 
 
 
@@ -177,8 +177,9 @@ int	main(int ac, char *av[])
 	if (ac != 2 || ft_check_extension((char *)av[1], ".cub") == 0)
 		return (printf("invalid argument\n"), 1);
 	mlx_data.map_file.av = ft_strdup(av[1]);
-    initialize(&mlx_data);
+    mlx_data.mlx = mlx_init();
 	parsing(&mlx_data);
+    initialize(&mlx_data);
 	mlx_data.Player = GetPlayerPosition(mlx_data.map_info.map);
     // StandardMap(&mlx_data);
     // mlx_key_hook(mlx_data.win, key_hook, &mlx_data);
