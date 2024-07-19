@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 14:13:53 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/19 10:50:43 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/19 12:48:47 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void freeing(t_mlx *mlx_data)
 {
-    printf("error in texture\n");
     if (mlx_data->NO.img)
         mlx_destroy_image(mlx_data->mlx, mlx_data->NO.img);
     if (mlx_data->SO.img)
@@ -23,6 +22,8 @@ void freeing(t_mlx *mlx_data)
         mlx_destroy_image(mlx_data->mlx, mlx_data->WE.img);
     if (mlx_data->EA.img)
         mlx_destroy_image(mlx_data->mlx, mlx_data->EA.img);
+    if (mlx_data->door.img)
+        mlx_destroy_image(mlx_data->mlx, mlx_data->door.img);
     ft_free_two(mlx_data, mlx_data->map_info.map);
     exit(1);
 }
@@ -54,6 +55,9 @@ void texture_init(t_mlx *mlx_data)
         freeing(mlx_data);
     mlx_data->EA.img = mlx_xpm_file_to_image(mlx_data->mlx, mlx_data->map_info.EA, &mlx_data->EA.width, &mlx_data->EA.height);
     if (!mlx_data->EA.img)
+        freeing(mlx_data);
+    mlx_data->door.img = mlx_xpm_file_to_image(mlx_data->mlx, "./textures/textures/wood.xpm", &mlx_data->door.width, &mlx_data->door.height);
+    if (!mlx_data->door.img)
         freeing(mlx_data);
     get_img_addr(mlx_data);
 }

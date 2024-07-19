@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 11:01:39 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/18 23:05:15 by afadouac         ###   ########.fr       */
+/*   Updated: 2024/07/19 12:48:37 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,14 @@ int mouse_move(t_mlx *data)
     StandardMap(data);
     return (0);
 }
+int close_win(void *data)
+{
+    t_mlx *mlx_data;
+
+    mlx_data = (t_mlx *)data;
+    freeing(mlx_data);
+    exit(0);
+}
 
 int	main(int ac, char *av[])
 {
@@ -187,6 +195,7 @@ int	main(int ac, char *av[])
     mlx_hook(mlx_data.win3d,2, 1l>>0, key_hook, &mlx_data);
     mouse_move(&mlx_data);
     mlx_loop_hook(mlx_data.mlx, mouse_move, &mlx_data);
+    mlx_hook(mlx_data.win3d, 17, 0, close_win, &mlx_data);
 	mlx_loop(mlx_data.mlx);
 	free(mlx_data.map_file.av);
 	free_infos(&mlx_data);

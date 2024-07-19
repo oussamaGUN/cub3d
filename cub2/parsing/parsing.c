@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 11:03:55 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/19 10:49:29 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/19 12:48:12 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	vars_init(t_mlx *mlx_data)
 	mlx_data->NO.img = NULL;
 	mlx_data->EA.img = NULL;
 	mlx_data->WE.img = NULL;
+	mlx_data->door.img = NULL;
 	mlx_data->map_info.map_index = 0;
 }
 
