@@ -49,7 +49,7 @@
 #define PLAYERVET 1
 
 /// door
-
+# define DISTDOOR 20
 # define DOOR 1337
 typedef struct s_cordonate
 {
@@ -57,6 +57,9 @@ typedef struct s_cordonate
     double  y;
     double   dist;
     int     view;
+    int      is_door;
+    int        x_door;
+    int        y_door;
 }               t_cordonate;
 
 typedef struct s_vector
