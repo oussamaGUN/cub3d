@@ -6,7 +6,7 @@
 /*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 17:31:10 by afadouac          #+#    #+#             */
-/*   Updated: 2024/07/19 20:38:29 by afadouac         ###   ########.fr       */
+/*   Updated: 2024/07/22 14:31:07 by afadouac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void draw_line(t_mlx *mlx, int x0, int y0, int x1, int y1, int color, int wind)
     double sx;
     double sy;
     double err;
+    static int counter = 0;
 
     ranging(&x0, &y0, &x1, &y1);
     dx = abs(x1 - x0);
@@ -103,6 +104,10 @@ void draw_line(t_mlx *mlx, int x0, int y0, int x1, int y1, int color, int wind)
             err += dx;
             y0 += sy;
         }
+        // if (counter == 2 || counter == 1)
+        //     printf("%d\n", counter);
+        // counter++;
+        // counter %= 9000;
     }
 }
 
@@ -172,7 +177,7 @@ t_cordonate	HorizontalIntersection(t_mlx *data, double angle_dif)
     else  // ray facing up
     {
         A.view = UP;
-        A.y = floor(P.y / SCALE) * SCALE - 0.00001;
+        A.y = floor(P.y / SCALE) * SCALE - 0.0000001;
 		deff.y = -1 * SCALE;
     }
     A.x = ((A.y - P.y) / tan (angle)) + P.x;
@@ -182,9 +187,6 @@ t_cordonate	HorizontalIntersection(t_mlx *data, double angle_dif)
 		A.x += deff.x;
 		A.y += deff.y;
     }
-    // A.is_door = 0;
-    // if (is_wall(data, A) == 2)
-    //     A.is_door = 2;
 	A.dist = sqrt((A.x - P.x) * (A.x - P.x) + (A.y - P.y) * (A.y - P.y));
 	return (A);
 }
@@ -206,7 +208,7 @@ t_cordonate	VerticalIntersection(t_mlx *data, double angle_dif)
     {
         A.view = LEFT;
         deff.x = -1 * SCALE;
-        A.x = floor(P.x / SCALE) * SCALE - 0.00001;
+        A.x = floor(P.x / SCALE) * SCALE - 0.0000001;
     }
     else //ray facing right
     {
@@ -222,9 +224,6 @@ t_cordonate	VerticalIntersection(t_mlx *data, double angle_dif)
 		A.x += deff.x;
 		A.y += deff.y;
     }
-    // A.is_door = 0;
-    // if (is_wall(data, A) == 2)
-    //     A.is_door = 1;
     A.dist = sqrt((A.x - P.x) * (A.x - P.x) + (A.y - P.y) * (A.y - P.y));
     return (A);
 }
@@ -262,8 +261,8 @@ void putingTexture(t_mlx *data, double wall, t_cordonate Intersection, int x)
 {
     int color;
     int j;
-    int tex_x;
-    int tex_y;
+    double tex_x;
+    double tex_y;
     t_texture tex;
 
     if (Intersection.is_door == 1)
@@ -289,18 +288,52 @@ void putingTexture(t_mlx *data, double wall, t_cordonate Intersection, int x)
         tex_x = fabs(fmod(Intersection.x, SCALE) / SCALE) * tex.width; // Horizontal wall
     }
 
-    int point_y = (HEIGHT / 2) - wall + data->jump;
+    double point_y = (HEIGHT / 2) - wall + data->jump;
 
-    int end = (HEIGHT / 2) + wall + data->jump;
+    double end = (HEIGHT / 2) + wall + data->jump;
     j = 0;
     while (point_y < end)
     {
+        if (!wall)
+            puts("zeeeeeeeeeeeeeeeeeerrrooooooooooo");
         tex_y = (j * tex.height) / (2 * wall); 
         color = get_texel(data, tex, tex_x, tex_y);
         my_mlx_pixel_put(data, x, point_y, color, 3);
         point_y++;
         j++;
     }
+}
+
+
+void    fillmouves(t_mlx *data)
+{
+    t_cordonate InterSection;
+    double      i;
+
+//down
+    i = -1 * M_PI;
+    InterSection = min_of(HorizontalIntersection(data, i),VerticalIntersection(data, i));
+    if (InterSection.x < 0 || InterSection.y < 0)
+        InterSection = max_of(HorizontalIntersection(data, i), VerticalIntersection(data, i));
+    data->mouves.down = InterSection.dist;
+///up
+    i = 0;
+    InterSection = min_of(HorizontalIntersection(data, i),VerticalIntersection(data, i));
+    if (InterSection.x < 0 || InterSection.y < 0)
+        InterSection = max_of(HorizontalIntersection(data, i), VerticalIntersection(data, i));
+    data->mouves.up = InterSection.dist;
+///left
+    i = -1 * M_PI_2;
+    InterSection = min_of(HorizontalIntersection(data, i),VerticalIntersection(data, i));
+    if (InterSection.x < 0 || InterSection.y < 0)
+        InterSection = max_of(HorizontalIntersection(data, i), VerticalIntersection(data, i));
+    data->mouves.left = InterSection.dist;
+///right
+    i =  M_PI_2;
+    InterSection = min_of(HorizontalIntersection(data, i),VerticalIntersection(data, i));
+    if (InterSection.x < 0 || InterSection.y < 0)
+        InterSection = max_of(HorizontalIntersection(data, i), VerticalIntersection(data, i));
+    data->mouves.right = InterSection.dist;
 }
 
 void   RayCasting(t_mlx *data)
@@ -316,6 +349,7 @@ void   RayCasting(t_mlx *data)
     int X = 0;
     // double best = 0.523599; 
     // double best2 = -0.523599; 
+    fillmouves(data);
     while (i <= 0.523599)
     {
         InterSection = min_of(HorizontalIntersection(data, i),VerticalIntersection(data, i));
@@ -334,24 +368,21 @@ void   RayCasting(t_mlx *data)
         //     InterSection.y = InterSection.y_door; 
         // }
         wall = (SCALE / 3 * HEIGHT / InterSection.dist) / cos(fabs(i));
-            draw_line(data, X, 0, X, (HEIGHT / 2) - wall + data->jump, data->ceil.color, 3);
+        draw_line(data, X, 0, X, (HEIGHT / 2) - wall + data->jump, data->ceil.color, 3);
             
-            putingTexture(data, wall, InterSection, X);
-            ///this line going to be delleted
+        putingTexture(data, wall, InterSection, X);
+        //////this line going to be delleted////////////////////
             // draw_line(data, X, (HEIGHT / 2) - wall + data->jump, X, (HEIGHT / 2) + wall + data->jump , 0xED0101, 3);    
-            ///
-            draw_line(data, X, (HEIGHT / 2) + wall + data->jump, X, HEIGHT ,data->floor.color, 3);    
+            ////////////////////////////
+
+            // putingTexture(data, wall, InterSection, X);
+    
+
+        
+        draw_line(data, X, (HEIGHT / 2) + wall + data->jump, X, HEIGHT ,data->floor.color, 3);    
         i += (M_PI / 3) / (WIDTH - 1.);
         X++;
     }
-    // if (data->face == UP)
-    //     puts("UP");
-    // else if (data->face == DOWN)
-    //     puts("DOWN");
-    // else if (data->face == LEFT)
-    //     puts("LEFT");
-    // else if (data->face == RIGHT)
-    //     puts("RIGHT");
 }
 
 void    AddDirection(t_mlx *data, int W, int H)
@@ -387,7 +418,7 @@ void    DrowMiniMap(t_mlx *data, int W, int H)
             {
                 if (i % SCALE == 0 || j % SCALE == 0)
                     my_mlx_pixel_put(data, x, y, 0x767676, 3);
-                else if (i >= data->Player.y - 3 && i <= data->Player.y + 3 && j >= data->Player.x - 3 && j <= data->Player.x + 3)
+                else if (i >= data->Player.y - 2 && i <= data->Player.y + 2 && j >= data->Player.x - 2 && j <= data->Player.x + 2)
                     my_mlx_pixel_put(data, x, y, 0xEE1D1D, 3);
                 else if (data->map_info.map[i / SCALE][j / SCALE] == '1')//
                     my_mlx_pixel_put(data, x, y, 0x00ff, 3);
