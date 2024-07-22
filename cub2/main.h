@@ -51,6 +51,8 @@
 /// door
 # define DISTDOOR 20
 # define DOOR 1337
+
+# define MAXWALL 500
 typedef struct s_cordonate
 {
     double  x;
@@ -134,6 +136,15 @@ typedef struct s_img
 	int			endian;
 }               t_img;
 
+typedef struct s_mouves
+{
+    double  left;
+    double  right;
+    double  up;
+    double  down;
+}              t_mouves;
+
+
 typedef struct s_mlx
 {
     /////
@@ -152,6 +163,7 @@ typedef struct s_mlx
 	int			line_length;
 	int			endian;
     double  face;
+    t_mouves    mouves;
     t_map_file  map_file;
     t_map_info  map_info;
     t_vars      vars;
