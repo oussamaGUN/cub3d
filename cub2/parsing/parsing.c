@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 11:03:55 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/19 15:34:41 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/22 14:59:07 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,30 +71,6 @@ void	reading_textures(t_mlx *mlx_data)
 		parse_line(mlx_data, mlx_data->map_info.line);
 		free(mlx_data->map_info.line);
 	}
-}
-void check_player_direction(t_mlx *mlx_data)
-{
-    int i;
-    int j;
-
-    j = 0;
-    while (mlx_data->map_info.map[j])
-    {
-        i = 0;
-        while (mlx_data->map_info.map[j][i])
-        {
-            if (mlx_data->map_info.map[j][i] == 'N')
-                mlx_data->map_info.direction = (3. * M_PI) / 2.;
-            else if (mlx_data->map_info.map[j][i] == 'W')
-                mlx_data->map_info.direction = M_PI;
-            else if (mlx_data->map_info.map[j][i] == 'S')
-                mlx_data->map_info.direction = M_PI / 2.;
-            else if (mlx_data->map_info.map[j][i] == 'E')
-                mlx_data->map_info.direction = 0;
-            i++;
-        }
-        j++;
-    }
 }
 
 void	parsing(t_mlx *mlx_data)

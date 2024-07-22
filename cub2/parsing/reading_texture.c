@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 10:44:17 by oussama           #+#    #+#             */
-/*   Updated: 2024/07/18 15:40:21 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/22 14:19:56 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	parse_color(char **texture, t_mlx *mlx_data)
 			return (printf("no texture for F "), 0);
 		mlx_data->map_info.texture_number++;
 		mlx_data->map_info.F = ft_strdup(texture[1]);
-		if (!color_value(mlx_data, 1))
+		if (!floor_color_value(mlx_data))
 			return (0);
 		return (1);
 	}
@@ -32,7 +32,7 @@ int	parse_color(char **texture, t_mlx *mlx_data)
 			return (printf("no texture for C "), 0);
 		mlx_data->map_info.texture_number++;
 		mlx_data->map_info.C = ft_strdup(texture[1]);
-		if (!color_value(mlx_data, 2))
+		if (!ceil_color_value(mlx_data))
 			return (0);
 		return (1);
 	}

@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 12:18:02 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/16 16:49:32 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/22 14:11:37 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	check_errors(t_mlx *mlx_data)
 	{
 		free(mlx_data->map_info.mapstr);
 		ft_free_one(mlx_data, mlx_data->map_info.line,
-			"invalid character in map"); // get_next_line leak
+			"invalid character in map");
 	}
 }
 

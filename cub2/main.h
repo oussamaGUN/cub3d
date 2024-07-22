@@ -176,6 +176,7 @@ typedef struct s_mlx
     t_texture   WE;
     t_texture   EA;
     t_texture door;
+    t_texture torch[14];
 }               t_mlx;
 
 // parsing functions
@@ -208,8 +209,13 @@ int color_value(t_mlx *data, int flag);
 void texture_init(t_mlx *mlx_data);
 void freeing(t_mlx *mlx_data);
 void doors_check(t_mlx *mlx_data);
-
-
+int torch_animation(t_mlx *mlx_data);
+int floor_color_value(t_mlx *data);
+int ceil_color_value(t_mlx *data);
+int torch_animation(t_mlx *mlx_data);
+void torch_texture_innit(t_mlx *mlx_data);
+void	get_img_addr(t_mlx *mlx_data);
+void check_player_direction(t_mlx *mlx_data);
 // raycasting
 
 
@@ -220,4 +226,5 @@ t_cordonate GetPlayerPosition(char **map);
 void    StandardMap(t_mlx *mlx_data);
 void	my_mlx_pixel_put(t_mlx *data, int x, int y, int color, int wind);
 int IsPlayer(char c);
+int get_texel(t_mlx *data ,t_texture texture, int x, int y);
 #endif 
