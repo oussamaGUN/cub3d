@@ -6,7 +6,7 @@
 /*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 11:01:39 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/21 17:00:57 by afadouac         ###   ########.fr       */
+/*   Updated: 2024/07/22 15:15:36 by afadouac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	CheckWalls(t_mlx *data ,char **map, t_cordonate *step, int keycode)
     if (keycode != 119 && keycode != 115 && keycode != 100 && keycode != 97)
         return (0);
 
-
+  
     // Check if the next step is outside the map boundaries
 
     // if (map[y][x] != '0' && !IsPlayer(map[y][x]) && 
