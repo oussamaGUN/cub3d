@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 14:13:53 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/22 14:42:58 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/22 17:54:14 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	freeing(t_mlx *mlx_data)
 {
+	if (mlx_data->door.img)
+		mlx_destroy_image(mlx_data->mlx, mlx_data->door.img);
 	if (mlx_data->NO.img)
 		mlx_destroy_image(mlx_data->mlx, mlx_data->NO.img);
 	if (mlx_data->SO.img)
@@ -29,6 +31,10 @@ void	freeing(t_mlx *mlx_data)
 
 void	wall_texture_innit(t_mlx *mlx_data)
 {
+	mlx_data->door.img = mlx_xpm_file_to_image(mlx_data->mlx,
+			"./textures/game_texture/WALL1.xpm", &mlx_data->door.width, &mlx_data->door.height);
+	if (!mlx_data->door.img)
+		freeing(mlx_data);
 	mlx_data->NO.img = mlx_xpm_file_to_image(mlx_data->mlx,
 			mlx_data->map_info.NO, &mlx_data->NO.width, &mlx_data->NO.height);
 	if (!mlx_data->NO.img)

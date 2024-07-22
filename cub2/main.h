@@ -217,6 +217,7 @@ int torch_animation(t_mlx *mlx_data);
 void torch_texture_innit(t_mlx *mlx_data);
 void	get_img_addr(t_mlx *mlx_data);
 void check_player_direction(t_mlx *mlx_data);
+int gate_animation(t_mlx *data);
 // raycasting
 
 

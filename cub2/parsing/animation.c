@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 14:30:35 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/22 14:56:39 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/22 18:12:10 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,100 @@ int	torch_animation(t_mlx *mlx_data)
 		frame = frame_num_one(mlx_data, frame);
 	else if (frame < 110)
 		frame = frame_num_two(mlx_data, frame);
+	frame++;
+	return (0);
+}
+
+int gate_animation(t_mlx *mlx_data)
+{
+	static int frame = 0;
+	if (frame < 8)
+	{
+		mlx_data->door.img = mlx_xpm_file_to_image(mlx_data->mlx,
+			"./textures/game_texture/door9.xpm", &mlx_data->door.width,
+			&mlx_data->door.height);
+		if (!mlx_data->door.img)
+			freeing(mlx_data);
+	}
+	else if (frame < 16)
+	{
+		mlx_data->door.img = mlx_xpm_file_to_image(mlx_data->mlx,
+			"./textures/game_texture/door8.xpm", &mlx_data->door.width,
+			&mlx_data->door.height);
+		if (!mlx_data->door.img)
+			freeing(mlx_data);
+	}
+	else if (frame < 24)
+	{
+		mlx_data->door.img = mlx_xpm_file_to_image(mlx_data->mlx,
+			"./textures/game_texture/door7.xpm", &mlx_data->door.width,
+			&mlx_data->door.height);
+		if (!mlx_data->door.img)
+			freeing(mlx_data);
+	}
+	else if (frame < 32)
+	{
+		mlx_data->door.img = mlx_xpm_file_to_image(mlx_data->mlx,
+			"./textures/game_texture/door6.xpm", &mlx_data->door.width,
+			&mlx_data->door.height);
+		if (!mlx_data->door.img)
+			freeing(mlx_data);
+	}
+	else if (frame < 40)
+	{
+		mlx_data->door.img = mlx_xpm_file_to_image(mlx_data->mlx,
+			"./textures/game_texture/door5.xpm", &mlx_data->door.width,
+			&mlx_data->door.height);
+		if (!mlx_data->door.img)
+			freeing(mlx_data);
+	}
+	else if (frame < 48)
+	{
+		mlx_data->door.img = mlx_xpm_file_to_image(mlx_data->mlx,
+			"./textures/game_texture/door4.xpm", &mlx_data->door.width,
+			&mlx_data->door.height);
+		if (!mlx_data->door.img)
+			freeing(mlx_data);
+	}
+	else if (frame < 56)
+	{
+		mlx_data->door.img = mlx_xpm_file_to_image(mlx_data->mlx,
+			"./textures/game_texture/door3.xpm", &mlx_data->door.width,
+			&mlx_data->door.height);
+		if (!mlx_data->door.img)
+			freeing(mlx_data);
+	}
+	else if (frame < 62)
+	{
+		mlx_data->door.img = mlx_xpm_file_to_image(mlx_data->mlx,
+			"./textures/game_texture/door2.xpm", &mlx_data->door.width,
+			&mlx_data->door.height);
+		if (!mlx_data->door.img)
+			freeing(mlx_data);
+	}
+	else if (frame < 70)
+	{
+		mlx_data->door.img = mlx_xpm_file_to_image(mlx_data->mlx,
+			"./textures/game_texture/door1.xpm", &mlx_data->door.width,
+			&mlx_data->door.height);
+		if (!mlx_data->door.img)
+			freeing(mlx_data);
+	}
+	else if (frame < 78)
+	{
+		mlx_data->door.img = mlx_xpm_file_to_image(mlx_data->mlx,
+			"./textures/game_texture/door0.xpm", &mlx_data->door.width,
+			&mlx_data->door.height);
+		if (!mlx_data->door.img)
+			freeing(mlx_data);
+		if (frame == 77)
+			frame = 0;
+	}
+	mlx_data->door.addr = mlx_get_data_addr(mlx_data->door.img,
+		&mlx_data->door.bits_per_pixel, &mlx_data->door.line_length,
+		&mlx_data->door.endian);
+	if (!mlx_data->door.addr)
+		freeing(mlx_data);
 	frame++;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 14:35:25 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/22 16:37:04 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/22 17:26:44 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 
 void	torch_texture_innit_part_one(t_mlx *mlx_data)
 {
-	mlx_data->door.img = mlx_xpm_file_to_image(mlx_data->mlx,
-			"./textures/game_texture/gate.xpm", &mlx_data->door.width,
-			&mlx_data->door.height);
-	if (!mlx_data->door.img)
-		freeing(mlx_data);
 	mlx_data->torch[0].img = mlx_xpm_file_to_image(mlx_data->mlx,
 			"./textures/torch/torch1.xpm", &mlx_data->torch[0].width,
 			&mlx_data->torch[0].height);

@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 15:23:29 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/22 15:23:31 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/22 17:56:05 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,6 +225,7 @@ int mouse_move(t_mlx *data)
     mlx_clear_window(data->mlx, data->win3d);
     StandardMap(data);
     torch_animation(data);
+    gate_animation(data);
     return (0);
 }
 int close_win(void *data)
