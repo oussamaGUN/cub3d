@@ -43,6 +43,7 @@
 
 ////// colors
 # define GRAY 0x767676
+# define DARKFACTOR 30
 //////////////
 
 //////PLAYER CARACTERS
