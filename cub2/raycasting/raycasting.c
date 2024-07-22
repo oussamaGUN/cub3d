@@ -6,7 +6,7 @@
 /*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 17:31:10 by afadouac          #+#    #+#             */
-/*   Updated: 2024/07/22 14:31:07 by afadouac         ###   ########.fr       */
+/*   Updated: 2024/07/22 17:07:34 by afadouac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,6 +257,24 @@ int get_texel(t_mlx *data ,t_texture texture, int x, int y)
 		return (*(unsigned int *)pixel);
 }
 
+int adjust_alpha(unsigned int color, double dist)
+{
+    unsigned char r;
+    unsigned char g;
+    unsigned char b;
+
+    dist /= DARKFACTOR;
+    if (dist > 255)
+        dist = 255;
+    if (dist < 1.1)
+        dist = 1.1;
+    r = ((color >> 16) & 0xFF) / dist;
+    g = ((color >> 8) & 0xFF) / dist;
+    b = (color & 0xFF) / dist;
+
+    return (r << 16) | (g << 8) | b ;
+}
+
 void putingTexture(t_mlx *data, double wall, t_cordonate Intersection, int x)
 {
     int color;
@@ -294,10 +312,10 @@ void putingTexture(t_mlx *data, double wall, t_cordonate Intersection, int x)
     j = 0;
     while (point_y < end)
     {
-        if (!wall)
-            puts("zeeeeeeeeeeeeeeeeeerrrooooooooooo");
+        
         tex_y = (j * tex.height) / (2 * wall); 
         color = get_texel(data, tex, tex_x, tex_y);
+        color = adjust_alpha(color, Intersection.dist);
         my_mlx_pixel_put(data, x, point_y, color, 3);
         point_y++;
         j++;
