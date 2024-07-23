@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 17:31:10 by afadouac          #+#    #+#             */
-/*   Updated: 2024/07/22 17:07:34 by afadouac         ###   ########.fr       */
+/*   Updated: 2024/07/23 21:59:57 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,6 @@ void draw_line(t_mlx *mlx, int x0, int y0, int x1, int y1, int color, int wind)
             err += dx;
             y0 += sy;
         }
-        // if (counter == 2 || counter == 1)
-        //     printf("%d\n", counter);
-        // counter++;
-        // counter %= 9000;
     }
 }
 
@@ -281,6 +277,8 @@ void putingTexture(t_mlx *data, double wall, t_cordonate Intersection, int x)
     int j;
     double tex_x;
     double tex_y;
+    double point_y;
+    double end;
     t_texture tex;
 
     if (Intersection.is_door == 1)
@@ -306,13 +304,12 @@ void putingTexture(t_mlx *data, double wall, t_cordonate Intersection, int x)
         tex_x = fabs(fmod(Intersection.x, SCALE) / SCALE) * tex.width; // Horizontal wall
     }
 
-    double point_y = (HEIGHT / 2) - wall + data->jump;
+    point_y = (HEIGHT / 2) - wall + data->jump;
 
-    double end = (HEIGHT / 2) + wall + data->jump;
+    end = (HEIGHT / 2) + wall + data->jump;
     j = 0;
     while (point_y < end)
     {
-        
         tex_y = (j * tex.height) / (2 * wall); 
         color = get_texel(data, tex, tex_x, tex_y);
         color = adjust_alpha(color, Intersection.dist);
@@ -329,7 +326,7 @@ void    fillmouves(t_mlx *data)
     double      i;
 
 //down
-    i = -1 * M_PI;
+    i =  M_PI;
     InterSection = min_of(HorizontalIntersection(data, i),VerticalIntersection(data, i));
     if (InterSection.x < 0 || InterSection.y < 0)
         InterSection = max_of(HorizontalIntersection(data, i), VerticalIntersection(data, i));
@@ -354,6 +351,30 @@ void    fillmouves(t_mlx *data)
     data->mouves.right = InterSection.dist;
 }
 
+void    drow_floor(t_mlx *mlx, int x, int y, int color)
+{
+    double  dist;
+
+    while (y < HEIGHT)
+    {
+        my_mlx_pixel_put(mlx, x, y, color, 3);
+        y++;
+    }
+}
+
+void    drow_ciell(t_mlx *mlx, int x, int y, int color)
+{
+    double  pos;
+
+    pos = 0;
+    while (pos < y)
+    {
+        my_mlx_pixel_put(mlx, x, pos, color, 3);
+        pos++;
+    }
+    
+}
+
 void   RayCasting(t_mlx *data)
 {
     t_cordonate InterSection;
@@ -365,39 +386,17 @@ void   RayCasting(t_mlx *data)
     P.y = data->Player.y;
     i = -0.523599;
     int X = 0;
-    // double best = 0.523599; 
-    // double best2 = -0.523599; 
     fillmouves(data);
     while (i <= 0.523599)
     {
         InterSection = min_of(HorizontalIntersection(data, i),VerticalIntersection(data, i));
-        // if (InterSection.x < 0 || InterSection.y < 0)
-        //     InterSection = max_of(HorizontalIntersection(data, i), VerticalIntersection(data, i));
         if (i <= 0.000409 && i >= -0.000410)
             data->face = InterSection.view;
-        // if (InterSection.is_door == 1 && InterSection.dist <= DISTDOOR)
-        //     data->map_info.map[(int)(InterSection.y / SCALE)][(int)(InterSection.x / SCALE)] = 'O';
-        // if (data->map_info.map[(int)(InterSection.y / SCALE)][(int)(InterSection.x / SCALE)] == 'O')
-        // {
-        //     puts("doooooooooooooooooooooooor");
-        //     data->map_info.map[InterSection.y_door][InterSection.x_door] = 'D';
-        //     InterSection.dist = sqrt( pow(InterSection.y_door, 2) + pow(InterSection.x_door, 2) );
-        //     InterSection.x = InterSection.x_door;
-        //     InterSection.y = InterSection.y_door; 
-        // }
         wall = (SCALE / 3 * HEIGHT / InterSection.dist) / cos(fabs(i));
-        draw_line(data, X, 0, X, (HEIGHT / 2) - wall + data->jump, data->ceil.color, 3);
-            
-        putingTexture(data, wall, InterSection, X);
-        //////this line going to be delleted////////////////////
-            // draw_line(data, X, (HEIGHT / 2) - wall + data->jump, X, (HEIGHT / 2) + wall + data->jump , 0xED0101, 3);    
-            ////////////////////////////
-
-            // putingTexture(data, wall, InterSection, X);
-    
-
+        drow_ciell(data, X, (HEIGHT / 2) - wall + data->jump, data->ceil.color);
         
-        draw_line(data, X, (HEIGHT / 2) + wall + data->jump, X, HEIGHT ,data->floor.color, 3);    
+        putingTexture(data, wall, InterSection, X);
+        drow_floor(data, X, (HEIGHT / 2) + wall + data->jump, data->floor.color);   
         i += (M_PI / 3) / (WIDTH - 1.);
         X++;
     }
@@ -412,9 +411,17 @@ void    AddDirection(t_mlx *data, int W, int H)
     Player.x = WIDTH - W / 2 - 5;
     Player.y = HEIGHT - H / 2 - 5;
     length = 18;
-    dist.x = Player.x + length * cos(data->map_info.direction);
-    dist.y = Player.y + length * sin(data->map_info.direction);
-    draw_line(data, Player.x, Player.y, dist.x, dist.y, 0xEE1D1D, 3);
+    // dist.x = Player.x + length * cos(data->map_info.direction);
+    // dist.y = Player.y + length * sin(data->map_info.direction);
+    int n = 0;
+	while (n < 20)
+	{
+        Player.x += cos(data->map_info.direction);
+        Player.y += sin(data->map_info.direction);
+        my_mlx_pixel_put(data, Player.x, Player.y, 0xFF, 3);
+        n++;
+	}
+    // draw_line(data, dist.x, dist.y, Player.x, Player.y, 0xEE1D1D, 3);
 }
 
 void    DrowMiniMap(t_mlx *data, int W, int H)
@@ -462,12 +469,12 @@ void    StandardMap(t_mlx *data)
     if (data->map_info.maptype == 1)
     {
         DrowMiniMap(data,  MINIW, MINIH);
-        // AddDirection(data, MINIW, MINIH);
+        AddDirection(data, MINIW, MINIH);
     }
     else
     {
         DrowMiniMap(data, MINIW2, MINIH2);
-        // AddDirection(data, MINIW2, MINIH2);
+        AddDirection(data, MINIW2, MINIH2);
     }
     mlx_put_image_to_window(data->mlx, data->win3d, data->img3d, 0, 0);
 }
