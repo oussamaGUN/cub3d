@@ -6,7 +6,7 @@
 /*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 17:31:10 by afadouac          #+#    #+#             */
-/*   Updated: 2024/07/24 05:54:25 by afadouac         ###   ########.fr       */
+/*   Updated: 2024/07/24 19:20:11 by afadouac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -440,22 +440,51 @@ void    AddDirection(t_mlx *data, int W, int H)
 	}
 }
 
-int is_in_range(t_cordonate Player, int W, int H, int i, int j)
+int is_in_range(t_cordonate Player, int maptype, int i, int j)
 {
+    int     W;
+    int     H;
+
+    if (maptype == 1)
+    {
+        W = MINIW;
+        H = MINIH;
+    }
+    else
+    {
+        W = MINIW2;
+        H = MINIH2;
+    }
+    
     return (i >= Player.y - H / 2 && i <= Player.y + H / 2 && \
          j >= Player.x - W / 2 && j <= Player.x + W / 2);
 }
 
-void    putColorToMini(t_mlx *data, int W, int H, int i, int j)
+void    fill_WH(t_cordonate *WH, int maptype)
+{
+    if (maptype == 1)
+    {
+        WH->x = MINIW;
+        WH->y = MINIH;
+    }
+    else
+    {
+        WH->x = MINIW2;
+        WH->y = MINIH2;
+    }    
+}
+
+void    putColorToMini(t_mlx *data, int i, int j)
 {
     int x;
     int y;
-    
-    x = j - (data->Player.x - W / 2) + WIDTH - W - 5;
-    y = i - (data->Player.y - H / 2) + HEIGHT - H - 5;
-    
+    t_cordonate WH;
+
+    fill_WH(&WH, data->map_info.maptype);
+    x = j - (data->Player.x - WH.x / 2) + WIDTH - WH.x - 5;
+    y = i - (data->Player.y - WH.y / 2) + HEIGHT - WH.y - 5;
     if (i % SCALE == 0 || j % SCALE == 0)
-        my_mlx_pixel_put(data, x, y, 0x767676, 3);
+        my_mlx_pixel_put(data, x, y, GRAY, 3);
     else if (i >= data->Player.y - 2 && i <= data->Player.y + 2 &&\
          j >= data->Player.x - 2 && j <= data->Player.x + 2)
         my_mlx_pixel_put(data, x, y, 0xEE1D1D, 3);
@@ -473,12 +502,10 @@ void    putColorToMini(t_mlx *data, int W, int H, int i, int j)
         my_mlx_pixel_put(data, x, y, 0x0, 3);
 }
 
-void    DrowMiniMap(t_mlx *data, int W, int H)
+void    DrowMiniMap(t_mlx *data)
 {
     int         i;
     int         j;
-    int         x;
-    int         y;
 
     i = 0;
     while (i < data->map_info.height * SCALE)
@@ -486,26 +513,8 @@ void    DrowMiniMap(t_mlx *data, int W, int H)
         j = 0;
         while (j < data->map_info.width * SCALE)
         {
-            // x = j - (data->Player.x - W / 2) + WIDTH - W - 5;
-            // y = i - (data->Player.y - H / 2) + HEIGHT - H - 5;
-            if (is_in_range(data->Player, W, H, i, j))
-            {
-                putColorToMini(data, W, H, i, j);
-                // if (i % SCALE == 0 || j % SCALE == 0)
-                //     my_mlx_pixel_put(data, x, y, 0x767676, 3);
-                // else if (i >= data->Player.y - 2 && i <= data->Player.y + 2 && j >= data->Player.x - 2 && j <= data->Player.x + 2)
-                //     my_mlx_pixel_put(data, x, y, 0xEE1D1D, 3);
-                // else if (data->map_info.map[i / SCALE][j / SCALE] == '1')//
-                //     my_mlx_pixel_put(data, x, y, 0x00ff, 3);
-                // else if ((i / SCALE) < data->map_info.height && (j / SCALE) < data->map_info.width &&
-                //     data->map_info.map[i / SCALE][j / SCALE] == '1')
-                //     my_mlx_pixel_put(data, x, y, 0x00ff, 3);
-                // else if (data->map_info.map[i / SCALE][j / SCALE] == '0' \
-                //         || IsPlayer(data->map_info.map[i / SCALE][j / SCALE]))
-                //     my_mlx_pixel_put(data, x, y, 0xFFFFFF, 3);
-                // else
-                //     my_mlx_pixel_put(data, x, y, 0x0, 3);
-            }
+            if (is_in_range(data->Player, data->map_info.maptype, i, j))
+                putColorToMini(data, i, j);
             j++;
         }
         i++;
@@ -514,16 +523,14 @@ void    DrowMiniMap(t_mlx *data, int W, int H)
 
 void    StandardMap(t_mlx *data)
 {
-
     RayCasting(data);
+    DrowMiniMap(data);
     if (data->map_info.maptype == 1)
     {
-        DrowMiniMap(data,  MINIW, MINIH);
         AddDirection(data, MINIW, MINIH);
     }
     else
     {
-        DrowMiniMap(data, MINIW2, MINIH2);
         AddDirection(data, MINIW2, MINIH2);
     }
     mlx_put_image_to_window(data->mlx, data->win3d, data->img3d, 0, 0);
