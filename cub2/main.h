@@ -226,7 +226,7 @@ int gate_animation(t_mlx *data);
 void	initialize(t_mlx	*mlx);
 t_cordonate GetPlayerPosition(char **map);
 void    StandardMap(t_mlx *mlx_data);
-void	my_mlx_pixel_put(t_mlx *data, int x, int y, int color, int wind);
+void	my_mlx_pixel_put(t_mlx *data, int x, int y, int color);
 int IsPlayer(char c);
 int get_texel(t_mlx *data ,t_texture texture, int x, int y);
 #endif 
