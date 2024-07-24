@@ -205,13 +205,13 @@
             data->map_info.direction -= (ANGLE / 5);
         // for the jump view
         if (y > old_y)
-            data->jump -= ((ANGLE) * 20);
+            data->jump -= ((ANGLE) * 30);
         else if (y < old_y)
-            data->jump += ((ANGLE) * 20);
-        if (data->jump > (ANGLE) * 2000)
-            data->jump = (ANGLE) * 2000;
-        else if (data->jump < - (ANGLE) * 2000)
-            data->jump = - (ANGLE) * 2000;
+            data->jump += ((ANGLE) * 30);
+        if (data->jump > (ANGLE) * 3000)
+            data->jump = (ANGLE) * 3000;
+        else if (data->jump < - (ANGLE) * 3000)
+            data->jump = - (ANGLE) * 3000;
         old_x = x;
         old_y = y;
         if (data->map_info.direction >= 2 * M_PI)
