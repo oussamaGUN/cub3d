@@ -74,10 +74,6 @@
 
         if (keycode == 97 && dist < data->mouves.left - 3)
             return (1);
-        static int  a = 0;
-        if (keycode == 115)
-            printf("dist is %f  mouve is %f\n", dist, data->mouves.down - 3);
-
     /////
 
         if (keycode == 119) // up
