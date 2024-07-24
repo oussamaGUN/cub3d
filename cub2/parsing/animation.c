@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 14:30:35 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/23 21:53:50 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/24 12:29:12 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,8 @@ int	torch_animation(t_mlx *mlx_data)
 	return (0);
 }
 
-int gate_animation(t_mlx *mlx_data)
+void first_door_frame(t_mlx *mlx_data, int frame)
 {
-	static int frame = 0;
-	mlx_destroy_image(mlx_data->mlx, mlx_data->door.img);
 	if (frame < 5)
 	{
 		mlx_data->door.img = mlx_xpm_file_to_image(mlx_data->mlx,
@@ -103,7 +101,10 @@ int gate_animation(t_mlx *mlx_data)
 		if (!mlx_data->door.img)
 			freeing(mlx_data);
 	}
-	else if (frame < 20)
+}
+void second_door_frame(t_mlx *mlx_data, int frame)
+{
+	if (frame < 20)
 	{
 		mlx_data->door.img = mlx_xpm_file_to_image(mlx_data->mlx,
 			"./textures/game_texture/4.xpm", &mlx_data->door.width,
@@ -127,7 +128,11 @@ int gate_animation(t_mlx *mlx_data)
 		if (!mlx_data->door.img)
 			freeing(mlx_data);
 	}
-	else if (frame < 35)
+}
+
+void third_door_frame(t_mlx *mlx_data, int frame)
+{
+	if (frame < 35)
 	{
 		mlx_data->door.img = mlx_xpm_file_to_image(mlx_data->mlx,
 			"./textures/game_texture/7.xpm", &mlx_data->door.width,
@@ -151,7 +156,11 @@ int gate_animation(t_mlx *mlx_data)
 		if (!mlx_data->door.img)
 			freeing(mlx_data);
 	}
-	else if (frame < 50)
+}
+
+void fifth_door_frame(t_mlx *mlx_data, int frame)
+{
+	if (frame < 50)
 	{
 		mlx_data->door.img = mlx_xpm_file_to_image(mlx_data->mlx,
 			"./textures/game_texture/10.xpm", &mlx_data->door.width,
@@ -175,8 +184,11 @@ int gate_animation(t_mlx *mlx_data)
 		if (!mlx_data->door.img)
 			freeing(mlx_data);
 	}
-	else if (frame < 65)
-	{
+}
+void sixth_door_frame(t_mlx *mlx_data, int frame)
+{
+	if (frame < 65)
+{
 		mlx_data->door.img = mlx_xpm_file_to_image(mlx_data->mlx,
 			"./textures/game_texture/13.xpm", &mlx_data->door.width,
 			&mlx_data->door.height);
@@ -199,7 +211,10 @@ int gate_animation(t_mlx *mlx_data)
 		if (!mlx_data->door.img)
 			freeing(mlx_data);
 	}
-	else if (frame < 80)
+}
+void eighth_door_frame(t_mlx *mlx_data, int frame)
+{
+	if (frame < 80)
 	{
 		mlx_data->door.img = mlx_xpm_file_to_image(mlx_data->mlx,
 			"./textures/game_texture/16.xpm", &mlx_data->door.width,
@@ -222,15 +237,18 @@ int gate_animation(t_mlx *mlx_data)
 			&mlx_data->door.height);
 		if (!mlx_data->door.img)
 			freeing(mlx_data);
-	}	
-	else if (frame < 95)
+	}
+}
+void ninth_door_frame(t_mlx *mlx_data, int frame)
+{
+	if (frame < 95)
 	{
 		mlx_data->door.img = mlx_xpm_file_to_image(mlx_data->mlx,
 			"./textures/game_texture/19.xpm", &mlx_data->door.width,
 			&mlx_data->door.height);
 		if (!mlx_data->door.img)
 			freeing(mlx_data);
-	}	
+	}
 	else if (frame < 100)
 	{
 		mlx_data->door.img = mlx_xpm_file_to_image(mlx_data->mlx,
@@ -238,7 +256,7 @@ int gate_animation(t_mlx *mlx_data)
 			&mlx_data->door.height);
 		if (!mlx_data->door.img)
 			freeing(mlx_data);
-	}	
+	}
 	else if (frame < 105)
 	{
 		mlx_data->door.img = mlx_xpm_file_to_image(mlx_data->mlx,
@@ -246,8 +264,11 @@ int gate_animation(t_mlx *mlx_data)
 			&mlx_data->door.height);
 		if (!mlx_data->door.img)
 			freeing(mlx_data);
-	}	
-	else if (frame < 110)
+	}
+}
+int tenth_door_frame(t_mlx *mlx_data, int frame)
+{
+	if (frame < 110)
 	{
 		mlx_data->door.img = mlx_xpm_file_to_image(mlx_data->mlx,
 			"./textures/game_texture/22.xpm", &mlx_data->door.width,
@@ -264,13 +285,39 @@ int gate_animation(t_mlx *mlx_data)
 			freeing(mlx_data);
 		if (frame == 114)
 			frame = 0;
-	}	
-
+	}
+	return (frame);
+}
+void get_door_addr(t_mlx *mlx_data)
+{
 	mlx_data->door.addr = mlx_get_data_addr(mlx_data->door.img,
 		&mlx_data->door.bits_per_pixel, &mlx_data->door.line_length,
 		&mlx_data->door.endian);
 	if (!mlx_data->door.addr)
 		freeing(mlx_data);
+}
+int gate_animation(t_mlx *mlx_data)
+{
+	static int frame = 0;
+
+	mlx_destroy_image(mlx_data->mlx, mlx_data->door.img);	
+	if (frame < 15)
+		first_door_frame(mlx_data, frame);
+	else if (frame < 30)
+		second_door_frame(mlx_data, frame);
+	else if (frame < 45)
+		third_door_frame(mlx_data, frame);
+	else if (frame < 60)
+		fifth_door_frame(mlx_data, frame);
+	else if (frame < 75)
+		sixth_door_frame(mlx_data, frame);
+	else if (frame < 90)
+		eighth_door_frame(mlx_data, frame);
+	else if (frame < 100)
+		ninth_door_frame(mlx_data, frame);
+	else if (frame < 115)
+		frame = tenth_door_frame(mlx_data, frame);
+	get_door_addr(mlx_data);
 	frame++;
 	return (0);
 }
