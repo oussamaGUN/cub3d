@@ -1,8 +1,8 @@
-F 50,50,50
-NO ./textures/game_texture/WALL1.xpm
+F       50,50,50
+NO ./textures/game_texture/NO.xpm
 SO ./textures/game_texture/WALL1.xpm
-WE ./textures/game_texture/WALL1.xpm
-EA ./textures/game_texture/WALL1.xpm
+WE ./textures/game_texture/abdoo.xpm
+EA ./textures/game_texture/EA.xpm
 C 0,33,70
 
         111111111111111111111 11111
