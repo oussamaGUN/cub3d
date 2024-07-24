@@ -6,7 +6,7 @@
 /*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 17:31:10 by afadouac          #+#    #+#             */
-/*   Updated: 2024/07/24 19:20:11 by afadouac         ###   ########.fr       */
+/*   Updated: 2024/07/24 21:19:05 by afadouac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,14 +254,16 @@ int shadding(unsigned int color, double dist, int factor)
 t_texture *init_texture(t_mlx *data, t_cordonate Intersection)
 {
     t_texture *tex;
-    int         i = 0;
+    int         i;
+    int         numb;
 
-    tex = malloc(sizeof(t_texture) * 2);
-    // if (!tex)
-    // {
-        ///free needed
-    // }
-    while (i < 2)
+    if (Intersection.is_door == 1)
+        numb = 2;
+    else
+        numb = 1;
+    tex = malloc(sizeof(t_texture) * numb);
+    i = 0;
+    while (i < numb)
     {
         if (Intersection.view == UP)
             tex[i] = data->NO;
@@ -285,27 +287,32 @@ int max(int a, int b)
     return (b);
 }
 
-int    puttexel(t_mlx *data ,t_texture *texture, t_cordonate tex_cord[], double dist)
+int    puttexel(t_mlx *data ,t_texture *texture, t_cordonate tex_cord[], int is_door)
 {
        int     color[2];
     
-        color[0] = get_texel(data, texture[1], tex_cord[0].x, tex_cord[0].y);
-        color[1] = get_texel(data, texture[0], tex_cord[1].x, tex_cord[1].y);
-        color[0] = shadding(max(color[0], color[1]), dist, 1);
-        return (color[0]);    
+        color[0] = get_texel(data, texture[0], tex_cord[0].x, tex_cord[0].y);
+        if (is_door == 1)
+        {
+            color[1] = get_texel(data, texture[1], tex_cord[1].x, tex_cord[1].y);
+            color[0] = max(color[0], color[1]);
+        }
+        return (color[0]);
 }
 
 void init_texture_coords(t_cordonate Intersection, t_texture *textures, t_cordonate tex_cord[2])
 {
     if (Intersection.view == LEFT || Intersection.view == RIGHT)
     {
-        tex_cord[1].x = fabs(fmod(Intersection.y, SCALE) / SCALE) * textures[0].width; // Vertical wall
-        tex_cord[0].x = fabs(fmod(Intersection.y, SCALE) / SCALE) * textures[1].width; // Vertical wall
+        tex_cord[0].x = fabs(fmod(Intersection.y, SCALE) / SCALE) * textures[0].width; // Vertical wall
+        if (Intersection.is_door == 1)
+            tex_cord[1].x = fabs(fmod(Intersection.y, SCALE) / SCALE) * textures[1].width; // Vertical wall
     }
     else
     {
-        tex_cord[1].x = fabs(fmod(Intersection.x, SCALE) / SCALE) * textures[0].width; // Horizontal wall
-        tex_cord[0].x = fabs(fmod(Intersection.x, SCALE) / SCALE) * textures[1].width; // Horizontal wall
+        tex_cord[0].x = fabs(fmod(Intersection.x, SCALE) / SCALE) * textures[0].width; // Horizontal wall
+        if (Intersection.is_door == 1)
+            tex_cord[1].x = fabs(fmod(Intersection.x, SCALE) / SCALE) * textures[1].width; // Horizontal wall
     }
 }
 
@@ -322,10 +329,12 @@ void putingTexture(t_mlx *data, double wall, t_cordonate Intersection, int x)
     point.y = 0;
     while (point.x < (HEIGHT / 2) + wall + data->jump)
     {
-        tex_cord[0].y = (point.y * textuere[1].height) / (2 * wall);
-        tex_cord[1].y =  (point.y * textuere[0].height) / (2 * wall);
-        color = puttexel(data, textuere, tex_cord, Intersection.dist);
-        my_mlx_pixel_put(data, x, point.x, color, 3);
+        tex_cord[0].y = (point.y * textuere[0].height) / (2 * wall);
+        if (Intersection.is_door == 1)
+            tex_cord[1].y =  (point.y * textuere[1].height) / (2 * wall);
+        color = puttexel(data, textuere, tex_cord, Intersection.is_door);
+        color = shadding(color, Intersection.dist, 1);
+        my_mlx_pixel_put(data, x, point.x, color);
         point.x++;
         point.y++;
     }
@@ -378,7 +387,7 @@ void    drow_floor(t_mlx *mlx, int color)
         {
             dist = sqrt((x - (WIDTH / 2) + WIDTH / 4) * (x - (WIDTH / 2) + WIDTH / 4) + (y - HEIGHT ) * (y - HEIGHT ));
             collor = shadding(color, dist, 8);
-            my_mlx_pixel_put(mlx, x, y, collor, 3);
+            my_mlx_pixel_put(mlx, x, y, collor);
             x++;
         }
         y++;
@@ -392,10 +401,9 @@ void    drow_ciell(t_mlx *mlx, int x, int y, int color)
     pos = 0;
     while (pos < y)
     {
-        my_mlx_pixel_put(mlx, x, pos, color, 3);
+        my_mlx_pixel_put(mlx, x, pos, color);
         pos++;
     }
-    
 }
 
 void   RayCasting(t_mlx *data)
@@ -435,7 +443,7 @@ void    AddDirection(t_mlx *data, int W, int H)
 	{
         Player.x += cos(data->map_info.direction);
         Player.y += sin(data->map_info.direction);
-        my_mlx_pixel_put(data, Player.x, Player.y, 0xFF, 3);
+        my_mlx_pixel_put(data, Player.x, Player.y, 0xFF);
         n++;
 	}
 }
@@ -484,22 +492,22 @@ void    putColorToMini(t_mlx *data, int i, int j)
     x = j - (data->Player.x - WH.x / 2) + WIDTH - WH.x - 5;
     y = i - (data->Player.y - WH.y / 2) + HEIGHT - WH.y - 5;
     if (i % SCALE == 0 || j % SCALE == 0)
-        my_mlx_pixel_put(data, x, y, GRAY, 3);
+        my_mlx_pixel_put(data, x, y, GRAY);
     else if (i >= data->Player.y - 2 && i <= data->Player.y + 2 &&\
          j >= data->Player.x - 2 && j <= data->Player.x + 2)
-        my_mlx_pixel_put(data, x, y, 0xEE1D1D, 3);
+        my_mlx_pixel_put(data, x, y, 0xEE1D1D);
     else if (data->map_info.map[i / SCALE][j / SCALE] == '1')//
-        my_mlx_pixel_put(data, x, y, 0x00ff, 3);
+        my_mlx_pixel_put(data, x, y, 0x00ff);
     else if ((i / SCALE) < data->map_info.height && (j / SCALE) < data->map_info.width &&
         data->map_info.map[i / SCALE][j / SCALE] == '1')
-        my_mlx_pixel_put(data, x, y, 0x00ff, 3);
+        my_mlx_pixel_put(data, x, y, 0x00ff);
     else if (data->map_info.map[i / SCALE][j / SCALE] == '0' \
             || IsPlayer(data->map_info.map[i / SCALE][j / SCALE]))
-        my_mlx_pixel_put(data, x, y, 0xFFFFFF, 3);
+        my_mlx_pixel_put(data, x, y, 0xFFFFFF);
     else if (data->map_info.map[i / SCALE][j / SCALE] == 'D')//
-        my_mlx_pixel_put(data, x, y, 0x00FFFF, 3);
+        my_mlx_pixel_put(data, x, y, 0x00FFFF);
     else
-        my_mlx_pixel_put(data, x, y, 0x0, 3);
+        my_mlx_pixel_put(data, x, y, 0x0);
 }
 
 void    DrowMiniMap(t_mlx *data)
