@@ -3,8 +3,8 @@ SRC = main.c get_next_line/get_next_line.c get_next_line/get_next_line_utils.c p
 		raycasting/initializer.c raycasting/raycasting.c raycasting/mlxes.c parsing/texture_init.c parsing/doors_check.c \
 		parsing/color_parsing.c parsing/animation.c parsing/torch_texture_innit.c parsing/texture_get_addr.c \
 		raycasting/textures.c raycasting/PlayerHelpers.c raycasting/minimap.c raycasting/intersection.c raycasting/drowers.c raycasting/directionsAndWalls.c \
-		raycasting/comparaison.c 
-		parsing/color_parsing.c parsing/animation.c parsing/torch_texture_innit.c parsing/texture_get_addr.c parsing/frames.c \
+		raycasting/comparaison.c \
+		 parsing/frames.c \
 		parsing/frames_1.c
 
 OBJ = $(SRC:.c=.o)
