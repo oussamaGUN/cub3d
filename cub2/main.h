@@ -54,6 +54,10 @@
 # define DOOR 1337
 
 # define MAXWALL 500
+# define W_KEY 119
+# define S_KEY 115
+# define A_KEY 97
+# define D_KEY 100
 typedef struct s_cordonate
 {
     double  x;
@@ -64,7 +68,11 @@ typedef struct s_cordonate
     int        x_door;
     int        y_door;
 }               t_cordonate;
-
+typedef struct s_mouse
+{
+    int x;
+    int y;
+}               t_mouse;
 typedef struct s_vector
 {
     double  x;
@@ -178,6 +186,7 @@ typedef struct s_mlx
     t_texture   EA;
     t_texture door;
     t_texture torch[14];
+    t_mouse mouse;
 }               t_mlx;
 
 // parsing functions
@@ -238,4 +247,8 @@ void    StandardMap(t_mlx *mlx_data);
 void	my_mlx_pixel_put(t_mlx *data, int x, int y, int color, int wind);
 int IsPlayer(char c);
 int get_texel(t_mlx *data ,t_texture texture, int x, int y);
+int key_hook(int keycode, void *data1);
+int mouse_move(t_mlx *data);
+int close_win(void *data);
+int	checkwalls(t_mlx *data ,char **map, t_cordonate *step, int keycode);
 #endif 
