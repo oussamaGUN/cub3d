@@ -218,6 +218,15 @@ void torch_texture_innit(t_mlx *mlx_data);
 void	get_img_addr(t_mlx *mlx_data);
 void check_player_direction(t_mlx *mlx_data);
 int gate_animation(t_mlx *data);
+void	first_door_frame(t_mlx *mlx_data, int frame);
+void	second_door_frame(t_mlx *mlx_data, int frame);
+void	third_door_frame(t_mlx *mlx_data, int frame);
+void	fifth_door_frame(t_mlx *mlx_data, int frame);
+void	sixth_door_frame(t_mlx *mlx_data, int frame);
+void	get_door_addr(t_mlx *mlx_data);
+void	eighth_door_frame(t_mlx *mlx_data, int frame);
+void	ninth_door_frame(t_mlx *mlx_data, int frame);
+int	tenth_door_frame(t_mlx *mlx_data, int frame);
 // raycasting
 
 
