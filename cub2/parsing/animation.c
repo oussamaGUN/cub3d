@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   animation.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/22 14:30:35 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/25 09:36:52 by ousabbar         ###   ########.fr       */
+/*   Created: 2024/07/25 18:54:32 by afadouac          #+#    #+#             */
+/*   Updated: 2024/07/25 18:54:34 by afadouac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../main.h"
 
@@ -26,7 +27,7 @@ void	torch_puts(t_mlx *mlx_data, int pic_num, int up)
 		{
 			color = get_texel(mlx_data, mlx_data->torch[pic_num], x, i);
 			if (color != 0 && color != -16777216)
-				my_mlx_pixel_put(mlx_data, x - 400, i + up, color, 3);
+				my_mlx_pixel_put(mlx_data, x - 400, i + up, color);
 			x++;
 		}
 		i++;

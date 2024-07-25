@@ -2,7 +2,11 @@ SRC = main.c get_next_line/get_next_line.c get_next_line/get_next_line_utils.c p
 		parsing/map_parsing.c parsing/map_rules.c parsing/parsing_tools.c parsing/parsing_tools_two.c parsing/map_parsing_tools.c \
 		raycasting/initializer.c raycasting/raycasting.c raycasting/mlxes.c parsing/texture_init.c parsing/doors_check.c \
 		parsing/color_parsing.c parsing/animation.c parsing/torch_texture_innit.c parsing/texture_get_addr.c parsing/frames.c \
-		parsing/frames_1.c hooks/key_hook.c hooks/mouse_hook.c hooks/wall_collision.c 
+		parsing/frames_1.c hooks/key_hook.c hooks/mouse_hook.c hooks/wall_collision.c \
+		raycasting/textures.c raycasting/PlayerHelpers.c raycasting/minimap.c raycasting/intersection.c raycasting/drowers.c raycasting/directionsAndWalls.c \
+		raycasting/comparaison.c \
+
+
 
 OBJ = $(SRC:.c=.o)
 
