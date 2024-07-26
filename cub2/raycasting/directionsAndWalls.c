@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   directionsAndWalls.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 23:20:07 by afadouac          #+#    #+#             */
-/*   Updated: 2024/07/24 23:38:09 by afadouac         ###   ########.fr       */
+/*   Updated: 2024/07/26 22:57:49 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ranging(int *x0, int *y0, int *x1, int *y1)
 		*y1 = HEIGHT;
 }
 
-int	isNeer(t_cordonate *A, t_cordonate Player)
+int	is_neer(t_cordonate *A, t_cordonate Player)
 {
 	double	dist;
 	double	diff_x;
@@ -52,12 +52,13 @@ int	is_wall(t_mlx *data, t_cordonate *A)
 
 	map = data->map_info.map;
 	A->is_door = 0;
-	x = A->x /SCALE;
+	x = A->x / SCALE;
 	y = A->y / SCALE;
-	if (x < 0 || y < 0 || x >= data->map_info.width || y >= data->map_info.height || map[y][x] == '1')
+	if (x < 0 || y < 0 || x >= data->map_info.width
+		|| y >= data->map_info.height || map[y][x] == '1')
 		return (1);
 	A->is_door = 0;
-	if (map[y][x] == 'D' && isNeer(A, data->Player))
+	if (map[y][x] == 'D' && is_neer(A, data->Player))
 	{
 		A->is_door = 1;
 		return (1);
@@ -67,27 +68,27 @@ int	is_wall(t_mlx *data, t_cordonate *A)
 
 void	fillmouves(t_mlx *data)
 {
-	t_cordonate	InterSection;
+	t_cordonate	sect;
 	double		i;
 
-	i =  M_PI;
-	InterSection = min_of(HorizontalIntersection(data, i),VerticalIntersection(data, i));
-	if (InterSection.x < 0 || InterSection.y < 0)
-		InterSection = max_of(HorizontalIntersection(data, i), VerticalIntersection(data, i));
-	data->mouves.down = InterSection.dist;
+	i = M_PI;
+	sect = min_of(h_sect(data, i), v_sect(data, i));
+	if (sect.x < 0 || sect.y < 0)
+		sect = max_of(h_sect(data, i), v_sect(data, i));
+	data->mouves.down = sect.dist;
 	i = 0;
-	InterSection = min_of(HorizontalIntersection(data, i),VerticalIntersection(data, i));
-	if (InterSection.x < 0 || InterSection.y < 0)
-		InterSection = max_of(HorizontalIntersection(data, i), VerticalIntersection(data, i));
-	data->mouves.up = InterSection.dist;
+	sect = min_of(h_sect(data, i), v_sect(data, i));
+	if (sect.x < 0 || sect.y < 0)
+		sect = max_of(h_sect(data, i), v_sect(data, i));
+	data->mouves.up = sect.dist;
 	i = -1 * M_PI_2;
-	InterSection = min_of(HorizontalIntersection(data, i),VerticalIntersection(data, i));
-	if (InterSection.x < 0 || InterSection.y < 0)
-		InterSection = max_of(HorizontalIntersection(data, i), VerticalIntersection(data, i));
-	data->mouves.left = InterSection.dist;
-	i =  M_PI_2;
-	InterSection = min_of(HorizontalIntersection(data, i),VerticalIntersection(data, i));
-	if (InterSection.x < 0 || InterSection.y < 0)
-		InterSection = max_of(HorizontalIntersection(data, i), VerticalIntersection(data, i));
-	data->mouves.right = InterSection.dist;
+	sect = min_of(h_sect(data, i), v_sect(data, i));
+	if (sect.x < 0 || sect.y < 0)
+		sect = max_of(h_sect(data, i), v_sect(data, i));
+	data->mouves.left = sect.dist;
+	i = M_PI_2;
+	sect = min_of(h_sect(data, i), v_sect(data, i));
+	if (sect.x < 0 || sect.y < 0)
+		sect = max_of(h_sect(data, i), v_sect(data, i));
+	data->mouves.right = sect.dist;
 }

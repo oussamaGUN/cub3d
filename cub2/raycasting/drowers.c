@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drowers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 23:14:54 by afadouac          #+#    #+#             */
-/*   Updated: 2024/07/25 00:01:19 by afadouac         ###   ########.fr       */
+/*   Updated: 2024/07/26 17:02:33 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	shadding(unsigned int color, double dist, int factor)
 {
-	unsigned char r;
-	unsigned char g;
-	unsigned char b;
+	unsigned char	r;
+	unsigned char	g;
+	unsigned char	b;
 
 	dist /= DARKFACTOR * factor;
 	if (dist > 255)
@@ -42,13 +42,14 @@ void	drow_floor(t_mlx *mlx, int color)
 		x = 0;
 		while (x < WIDTH)
 		{
-			dist = sqrt((x - (WIDTH / 2) + WIDTH / 4) * (x - (WIDTH / 2) + WIDTH / 4)\
-						 + (y - HEIGHT ) * (y - HEIGHT ));
+			dist = sqrt((x - (WIDTH / 2) + WIDTH / 4)
+					* (x - (WIDTH / 2) + WIDTH / 4)
+					+ (y - HEIGHT) * (y - HEIGHT));
 			collor = shadding(color, dist, 8);
 			my_mlx_pixel_put(mlx, x, y, collor);
 			x++;
 		}
-	y++;
+		y++;
 	}
 }
 

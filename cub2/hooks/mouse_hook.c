@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 17:32:32 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/26 13:03:22 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/26 23:22:16 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ void	mouse_movement(t_mlx *data, int old_x, int old_y)
 		&& data->mouse.y < HEIGHT)
 		data->map_info.maptype = 2;
 	if (data->mouse.x < 0)
-		data->map_info.direction -= (ANGLE / 5);
+		data->map_info.direction -= (ANGLE / 3);
 	else if (data->mouse.x > 1280)
-		data->map_info.direction += (ANGLE / 5);
+		data->map_info.direction += (ANGLE / 3);
 	if (data->mouse.x > old_x)
 		data->map_info.direction += (ANGLE / 5);
 	else if (data->mouse.x < old_x)
@@ -60,7 +60,7 @@ int	mouse_move(t_mlx *data)
 	else if (data->map_info.direction < 0)
 		data->map_info.direction += 2 * M_PI;
 	mlx_clear_window(data->mlx, data->win3d);
-	StandardMap(data);
+	standardmap(data);
 	torch_animation(data);
 	gate_animation(data);
 	return (0);

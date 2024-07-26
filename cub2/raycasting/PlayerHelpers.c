@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   PlayerHelpers.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 23:17:12 by afadouac          #+#    #+#             */
-/*   Updated: 2024/07/25 16:40:48 by afadouac         ###   ########.fr       */
+/*   Updated: 2024/07/26 23:20:05 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
 
-int	IsPlayer(char c)
+int	isplayer(char c)
 {
 	if (c == 'N' || c == 'S' \
 		|| c == 'E' || c == 'W')
@@ -22,7 +22,7 @@ int	IsPlayer(char c)
 	return (0);
 }
 
-t_cordonate	GetPlayerPosition(char **map)
+t_cordonate	getplayerposition(char **map)
 {
 	t_cordonate	pos;
 	int			i;
@@ -34,7 +34,7 @@ t_cordonate	GetPlayerPosition(char **map)
 		j = 0;
 		while (map[i][j])
 		{
-			if (IsPlayer(map[i][j]))
+			if (isplayer(map[i][j]))
 			{
 				pos.x = (j * SCALE) + 2;
 				pos.y = (i * SCALE) + 2;

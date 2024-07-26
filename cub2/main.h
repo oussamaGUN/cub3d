@@ -241,10 +241,10 @@ int	tenth_door_frame(t_mlx *mlx_data, int frame);
 //raycasting functions
 
 void	initialize(t_mlx	*mlx);
-t_cordonate GetPlayerPosition(char **map);
-void    StandardMap(t_mlx *mlx_data);
+t_cordonate getplayerposition(char **map);
+void    standardmap(t_mlx *mlx_data);
 void	my_mlx_pixel_put(t_mlx *data, int x, int y, int color);
-int IsPlayer(char c);
+int isplayer(char c);
 int get_texel(t_mlx *data ,t_texture texture, int x, int y);
 int key_hook(int keycode, void *data1);
 int mouse_move(t_mlx *data);
@@ -257,28 +257,28 @@ t_cordonate min_of(t_cordonate H, t_cordonate V);
 t_cordonate max_of(t_cordonate H, t_cordonate V);
 int max(int a, int b);
 void    ranging(int *x0, int *y0, int *x1, int *y1);
-int isNeer(t_cordonate *A, t_cordonate Player);
+int is_neer(t_cordonate *A, t_cordonate Player);
 int	is_wall(t_mlx *data, t_cordonate *A);
 void    fillmouves(t_mlx *data);
 int shadding(unsigned int color, double dist, int factor);
 void    drow_floor(t_mlx *mlx, int color);
 void    drow_ciell(t_mlx *mlx, int x, int y, int color);
-t_cordonate init_H_intersection(t_cordonate P, double angle, t_cordonate *deff);
-t_cordonate	HorizontalIntersection(t_mlx *data, double angle_dif);
-void init_V_intersection(t_cordonate P, double angle, t_cordonate *A, t_cordonate *deff);
-t_cordonate	VerticalIntersection(t_mlx *data, double angle_dif);
-void    AddDirection(t_mlx *data, int W, int H);
+t_cordonate init_h_intersection(t_cordonate P, double angle, t_cordonate *deff);
+t_cordonate	h_sect(t_mlx *data, double angle_dif);
+void init_v_intersection(t_cordonate P, double angle, t_cordonate *A, t_cordonate *deff);
+t_cordonate	v_sect(t_mlx *data, double angle_dif);
+void    adddirection(t_mlx *data, int W, int H);
 int is_in_range(t_cordonate Player, int maptype, int i, int j);
-void    fill_WH(t_cordonate *WH, int maptype);
-void    putColorToMini(t_mlx *data, int i, int j);
-void    DrowMiniMap(t_mlx *data);
-void   RayCasting(t_mlx *data);
-void    StandardMap(t_mlx *data);
+void    fill_wh(t_cordonate *WH, int maptype);
+void    putcolortomini(t_mlx *data, int i, int j);
+void    drowminimap(t_mlx *data);
+void   raycasting(t_mlx *data);
+void    standardmap(t_mlx *data);
 int get_texel(t_mlx *data ,t_texture texture, int x, int y);
 t_texture *init_texture(t_mlx *data, t_cordonate Intersection);
 int    puttexel(t_mlx *data ,t_texture *texture, t_cordonate tex_cord[], int is_door);
 void init_texture_coords(t_cordonate Intersection, t_texture *textures, t_cordonate tex_cord[2]);
-void putingTexture(t_mlx *data, double wall, t_cordonate Intersection, int x);
+void putingtexture(t_mlx *data, double wall, t_cordonate Intersection, int x);
 
 
 #endif 
