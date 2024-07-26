@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 17:32:15 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/25 17:32:21 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/26 11:25:45 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,9 @@ int	wall_distance(t_mlx *data, t_cordonate *step, int keycode)
 		return (1);
 	return (0);
 }
+
 int	wall_collision_norm(t_mlx *data,
-	t_cordonate *step, int keycode , char **map)
+	t_cordonate *step, int keycode, char **map)
 {
 	step->y -= sin(data->map_info.direction)
 		* PLAYERVET;
@@ -47,8 +48,9 @@ int	wall_collision_norm(t_mlx *data,
 		return (0);
 	return (1);
 }
+
 int	wall_collision_norm_1(t_mlx *data,
-	t_cordonate *step, int keycode ,char **map)
+	t_cordonate *step, int keycode, char **map)
 {
 	step->x -= cos(data->map_info.direction)
 		* PLAYERVET;
@@ -60,6 +62,7 @@ int	wall_collision_norm_1(t_mlx *data,
 		return (0);
 	return (1);
 }
+
 int	wall_collision(t_mlx *data, t_cordonate *step, int keycode, char **map)
 {
 	if (keycode == 119)
@@ -77,14 +80,11 @@ int	wall_collision(t_mlx *data, t_cordonate *step, int keycode, char **map)
 	}
 	return (0);
 }
-int	checkwalls(t_mlx *data ,char **map, t_cordonate *step, int keycode)
-{
-	long long x;
-	long long y;
 
-	x = (long long)((step->x)/ SCALE);
-	y = (long long)((step->y)/ SCALE); 
-	if (keycode != 119 && keycode != 115 && keycode != 100 && keycode != 97)
+int	checkwalls(t_mlx *data, char **map, t_cordonate *step, int keycode)
+{
+	if (keycode != W_KEY && keycode != S_KEY
+		&& keycode != D_KEY && keycode != A_KEY)
 		return (0);
 	if (wall_distance(data, step, keycode))
 		return (1);

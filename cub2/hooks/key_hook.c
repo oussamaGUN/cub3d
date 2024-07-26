@@ -6,13 +6,13 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 17:31:25 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/25 17:31:34 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/26 10:52:14 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
 
-void key_hook_movement(int keycode , t_mlx *data, t_cordonate *step)
+void	key_hook_movement(int keycode, t_mlx *data, t_cordonate *step)
 {
 	if (keycode == ESC)
 	{
@@ -40,17 +40,19 @@ void key_hook_movement(int keycode , t_mlx *data, t_cordonate *step)
 		step->y += sin(data->map_info.direction - M_PI / 2) * PLAYERVET;
 	}
 }
-void key_hook_direcion(int keycode, t_mlx *data)
+
+void	key_hook_direcion(int keycode, t_mlx *data)
 {
 	if (keycode == LEFT)
 		data->map_info.direction -= ANGLE;
 	else if (keycode == RIGHT)
 		data->map_info.direction += ANGLE;
 }
-int key_hook(int keycode, void *data1)
+
+int	key_hook(int keycode, void *data1)
 {
-	t_mlx *data;
-	t_cordonate step;
+	t_mlx		*data;
+	t_cordonate	step;
 
 	data = (t_mlx *)data1;
 	step.x = data->Player.x;

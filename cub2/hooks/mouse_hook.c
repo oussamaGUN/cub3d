@@ -6,24 +6,25 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 17:32:32 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/25 17:33:03 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/26 13:03:22 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
 
-int close_win(void *data)
+int	close_win(void *data)
 {
-	t_mlx *mlx_data;
+	t_mlx	*mlx_data;
+
 	mlx_data = (t_mlx *)data;
 	mlx_destroy_window(mlx_data->mlx, mlx_data->win3d);
 	exit(0);
 }
 
-void mouse_movement(t_mlx *data, int old_x , int old_y)
+void	mouse_movement(t_mlx *data, int old_x, int old_y)
 {
 	data->map_info.maptype = 1;
-	if (data->mouse.x > WIDTH - MINIW - 5 
+	if (data->mouse.x > WIDTH - MINIW - 5
 		&& data->mouse.x < WIDTH && data->mouse.y > HEIGHT - MINIH - 5
 		&& data->mouse.y < HEIGHT)
 		data->map_info.maptype = 2;
@@ -42,12 +43,13 @@ void mouse_movement(t_mlx *data, int old_x , int old_y)
 	if (data->jump > (ANGLE) * 2000)
 		data->jump = (ANGLE) * 2000;
 	else if (data->jump < - (ANGLE) * 2000)
-		data->jump = - (ANGLE) * 2000;
+		data->jump -= (ANGLE) * 2000;
 }
-int mouse_move(t_mlx *data)
+
+int	mouse_move(t_mlx *data)
 {
-	static int old_x = 0;
-	static int old_y = 0;
+	static int	old_x;
+	static int	old_y;
 
 	mlx_mouse_get_pos(data->mlx, data->win3d, &data->mouse.x, &data->mouse.y);
 	mouse_movement(data, old_x, old_y);
