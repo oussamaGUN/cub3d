@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 11:03:55 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/22 14:59:07 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/27 18:59:06 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ void	file_opennig(t_mlx *mlx_data)
 
 void	vars_init(t_mlx *mlx_data)
 {
-	mlx_data->map_info.C = NULL;
-	mlx_data->map_info.F = NULL;
-	mlx_data->map_info.EA = NULL;
-	mlx_data->map_info.NO = NULL;
-	mlx_data->map_info.SO = NULL;
-	mlx_data->map_info.WE = NULL;
-	mlx_data->SO.img = NULL;
-	mlx_data->NO.img = NULL;
-	mlx_data->EA.img = NULL;
-	mlx_data->WE.img = NULL;
+	mlx_data->map_info.c = NULL;
+	mlx_data->map_info.f = NULL;
+	mlx_data->map_info.ea = NULL;
+	mlx_data->map_info.no = NULL;
+	mlx_data->map_info.so = NULL;
+	mlx_data->map_info.we = NULL;
+	mlx_data->so.img = NULL;
+	mlx_data->no.img = NULL;
+	mlx_data->ea.img = NULL;
+	mlx_data->we.img = NULL;
 	mlx_data->door.img = NULL;
 	mlx_data->map_info.map_index = 0;
 }
@@ -79,6 +79,7 @@ void	parsing(t_mlx *mlx_data)
 	file_opennig(mlx_data);
 	reading_textures(mlx_data);
 	parsing_map(mlx_data);
+	fix_map(mlx_data);
 	check_player_direction(mlx_data);
 	doors_check(mlx_data);
 	texture_init(mlx_data);

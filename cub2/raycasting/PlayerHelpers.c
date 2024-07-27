@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 23:17:12 by afadouac          #+#    #+#             */
-/*   Updated: 2024/07/26 23:20:05 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/27 19:19:17 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ t_cordonate	getplayerposition(char **map)
 	int			j;
 
 	i = 0;
+	pos.x = 0;
+	pos.y = 0;
 	while (map[i])
 	{
 		j = 0;

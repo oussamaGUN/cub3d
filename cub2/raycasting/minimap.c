@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 23:10:07 by afadouac          #+#    #+#             */
-/*   Updated: 2024/07/26 23:19:47 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/27 19:01:23 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,12 @@ void	putcolortomini(t_mlx *data, int i, int j)
 	int			y;
 
 	fill_wh(&wh, data->map_info.maptype);
-	x = j - (data->Player.x - wh.x / 2) + WIDTH - wh.x - 5;
-	y = i - (data->Player.y - wh.y / 2) + HEIGHT - wh.y - 5;
+	x = j - (data->player.x - wh.x / 2) + WIDTH - wh.x - 5;
+	y = i - (data->player.y - wh.y / 2) + HEIGHT - wh.y - 5;
 	if (i % SCALE == 0 || j % SCALE == 0)
 		my_mlx_pixel_put(data, x, y, GRAY);
-	else if (i >= data->Player.y - 2 && i <= data->Player.y + 2
-		&& j >= data->Player.x - 2 && j <= data->Player.x + 2)
+	else if (i >= data->player.y - 2 && i <= data->player.y + 2
+		&& j >= data->player.x - 2 && j <= data->player.x + 2)
 		my_mlx_pixel_put(data, x, y, 0xEE1D1D);
 	else if (data->map_info.map[i / SCALE][j / SCALE] == '1')
 		my_mlx_pixel_put(data, x, y, 0x00ff);
@@ -102,7 +102,7 @@ void	drowminimap(t_mlx *data)
 		j = 0;
 		while (j < data->map_info.width * SCALE)
 		{
-			if (is_in_range(data->Player, data->map_info.maptype, i, j))
+			if (is_in_range(data->player, data->map_info.maptype, i, j))
 				putcolortomini(data, i, j);
 			j++;
 		}

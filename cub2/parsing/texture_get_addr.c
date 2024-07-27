@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 14:40:31 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/22 14:44:46 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/27 18:59:06 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,25 @@
 
 void	wall_texture_get_img_addr(t_mlx *mlx_data)
 {
-	mlx_data->NO.addr = mlx_get_data_addr(mlx_data->NO.img,
-			&mlx_data->NO.bits_per_pixel, &mlx_data->NO.line_length,
-			&mlx_data->NO.endian);
-	if (!mlx_data->NO.addr)
+	mlx_data->no.addr = mlx_get_data_addr(mlx_data->no.img,
+			&mlx_data->no.bits_per_pixel, &mlx_data->no.line_length,
+			&mlx_data->no.endian);
+	if (!mlx_data->no.addr)
 		freeing(mlx_data);
-	mlx_data->WE.addr = mlx_get_data_addr(mlx_data->WE.img,
-			&mlx_data->WE.bits_per_pixel, &mlx_data->WE.line_length,
-			&mlx_data->WE.endian);
-	if (!mlx_data->WE.addr)
+	mlx_data->we.addr = mlx_get_data_addr(mlx_data->we.img,
+			&mlx_data->we.bits_per_pixel, &mlx_data->we.line_length,
+			&mlx_data->we.endian);
+	if (!mlx_data->we.addr)
 		freeing(mlx_data);
-	mlx_data->SO.addr = mlx_get_data_addr(mlx_data->SO.img,
-			&mlx_data->SO.bits_per_pixel, &mlx_data->SO.line_length,
-			&mlx_data->SO.endian);
-	if (!mlx_data->SO.addr)
+	mlx_data->so.addr = mlx_get_data_addr(mlx_data->so.img,
+			&mlx_data->so.bits_per_pixel, &mlx_data->so.line_length,
+			&mlx_data->so.endian);
+	if (!mlx_data->so.addr)
 		freeing(mlx_data);
-	mlx_data->EA.addr = mlx_get_data_addr(mlx_data->EA.img,
-			&mlx_data->EA.bits_per_pixel, &mlx_data->EA.line_length,
-			&mlx_data->EA.endian);
-	if (!mlx_data->EA.addr)
+	mlx_data->ea.addr = mlx_get_data_addr(mlx_data->ea.img,
+			&mlx_data->ea.bits_per_pixel, &mlx_data->ea.line_length,
+			&mlx_data->ea.endian);
+	if (!mlx_data->ea.addr)
 		freeing(mlx_data);
 	mlx_data->door.addr = mlx_get_data_addr(mlx_data->door.img,
 			&mlx_data->door.bits_per_pixel, &mlx_data->door.line_length,

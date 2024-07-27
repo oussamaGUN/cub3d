@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 14:13:53 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/24 20:18:58 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/27 18:59:06 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,17 @@ void	freeing(t_mlx *mlx_data)
 {
 	if (mlx_data->door.img)
 		mlx_destroy_image(mlx_data->mlx, mlx_data->door.img);
-	if (mlx_data->NO.img)
-		mlx_destroy_image(mlx_data->mlx, mlx_data->NO.img);
-	if (mlx_data->SO.img)
-		mlx_destroy_image(mlx_data->mlx, mlx_data->SO.img);
-	if (mlx_data->WE.img)
-		mlx_destroy_image(mlx_data->mlx, mlx_data->WE.img);
-	if (mlx_data->EA.img)
-		mlx_destroy_image(mlx_data->mlx, mlx_data->EA.img);
+	if (mlx_data->no.img)
+		mlx_destroy_image(mlx_data->mlx, mlx_data->no.img);
+	if (mlx_data->so.img)
+		mlx_destroy_image(mlx_data->mlx, mlx_data->so.img);
+	if (mlx_data->we.img)
+		mlx_destroy_image(mlx_data->mlx, mlx_data->we.img);
+	if (mlx_data->ea.img)
+		mlx_destroy_image(mlx_data->mlx, mlx_data->ea.img);
 	if (mlx_data->door.img)
 		mlx_destroy_image(mlx_data->mlx, mlx_data->door.img);
-	ft_free_two(mlx_data, mlx_data->map_info.map);
+	ft_free_two(mlx_data);
 }
 
 void	wall_texture_innit(t_mlx *mlx_data)
@@ -36,21 +36,21 @@ void	wall_texture_innit(t_mlx *mlx_data)
 			&mlx_data->door.width, &mlx_data->door.height);
 	if (!mlx_data->door.img)
 		freeing(mlx_data);
-	mlx_data->NO.img = mlx_xpm_file_to_image(mlx_data->mlx,
-			mlx_data->map_info.NO, &mlx_data->NO.width, &mlx_data->NO.height);
-	if (!mlx_data->NO.img)
+	mlx_data->no.img = mlx_xpm_file_to_image(mlx_data->mlx,
+			mlx_data->map_info.no, &mlx_data->no.width, &mlx_data->no.height);
+	if (!mlx_data->no.img)
 		freeing(mlx_data);
-	mlx_data->SO.img = mlx_xpm_file_to_image(mlx_data->mlx,
-			mlx_data->map_info.SO, &mlx_data->SO.width, &mlx_data->SO.height);
-	if (!mlx_data->SO.img)
+	mlx_data->so.img = mlx_xpm_file_to_image(mlx_data->mlx,
+			mlx_data->map_info.so, &mlx_data->so.width, &mlx_data->so.height);
+	if (!mlx_data->so.img)
 		freeing(mlx_data);
-	mlx_data->WE.img = mlx_xpm_file_to_image(mlx_data->mlx,
-			mlx_data->map_info.WE, &mlx_data->WE.width, &mlx_data->WE.height);
-	if (!mlx_data->WE.img)
+	mlx_data->we.img = mlx_xpm_file_to_image(mlx_data->mlx,
+			mlx_data->map_info.we, &mlx_data->we.width, &mlx_data->we.height);
+	if (!mlx_data->we.img)
 		freeing(mlx_data);
-	mlx_data->EA.img = mlx_xpm_file_to_image(mlx_data->mlx,
-			mlx_data->map_info.EA, &mlx_data->EA.width, &mlx_data->EA.height);
-	if (!mlx_data->EA.img)
+	mlx_data->ea.img = mlx_xpm_file_to_image(mlx_data->mlx,
+			mlx_data->map_info.ea, &mlx_data->ea.width, &mlx_data->ea.height);
+	if (!mlx_data->ea.img)
 		freeing(mlx_data);
 }
 

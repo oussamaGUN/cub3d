@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 14:21:47 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/22 14:23:05 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/27 18:39:42 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	floor_color_value(t_mlx *data)
 {
 	char	**split;
 
-	split = ft_split(data->map_info.F, ',');
+	split = ft_split(data->map_info.f, ',');
 	if (!split)
 	{
 		printf("split faild");
@@ -37,7 +37,7 @@ int	ceil_color_value(t_mlx *data)
 {
 	char	**split;
 
-	split = ft_split(data->map_info.C, ',');
+	split = ft_split(data->map_info.c, ',');
 	if (!split)
 	{
 		printf("split faild");

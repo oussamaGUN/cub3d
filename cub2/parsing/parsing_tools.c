@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 11:06:37 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/01 11:15:05 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/27 18:39:42 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ void	free_split(char **split)
 
 void	free_infos(t_mlx *mlx_data)
 {
-	free(mlx_data->map_info.C);
-	free(mlx_data->map_info.F);
-	free(mlx_data->map_info.SO);
-	free(mlx_data->map_info.NO);
-	free(mlx_data->map_info.WE);
-	free(mlx_data->map_info.EA);
+	free(mlx_data->map_info.c);
+	free(mlx_data->map_info.f);
+	free(mlx_data->map_info.so);
+	free(mlx_data->map_info.no);
+	free(mlx_data->map_info.we);
+	free(mlx_data->map_info.ea);
 }
 
 void	ft_free_one(t_mlx *mlx_data, char *line, char *parse_msg)

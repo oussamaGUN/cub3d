@@ -12,7 +12,7 @@ OBJ = $(SRC:.c=.o)
 
 LIBFT= libft/libft.a
 
-FLAGS = #-Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror
 
 MLX_FLAGS = -lXext -lX11 -lm -lmlx 
 
@@ -24,8 +24,8 @@ all: $(NAME) $(LIBFT)
 	@$(CC) $(FLAGS) -c $< -o $@
 	@echo "Compiled" $< "successfully"
 
-$(NAME): $(OBJ)
-	@$(CC) $(OBJ) $(LIBFT) $(MLX_FLAGS) -o $(NAME) -fsanitize=address
+$(NAME): $(OBJ) $(LIBFT)
+	@$(CC) $(OBJ) $(LIBFT) $(MLX_FLAGS) -o $(NAME) #-fsanitize=address
 	@echo "cub compiled"
 
 
@@ -35,10 +35,12 @@ $(LIBFT):
 
 clean:
 	@rm -rf $(OBJ)
+	@make clean -C ./libft
 	@echo "Objects removed"
 
 fclean: clean
 	@rm -rf $(NAME)
+	@make fclean -C ./libft
 	@echo "cub removed"
 
 re: fclean all

@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 23:13:21 by afadouac          #+#    #+#             */
-/*   Updated: 2024/07/27 10:49:54 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/27 19:01:23 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ t_cordonate	h_inter(t_mlx *data, double angle_dif)
 	t_cordonate	deff;
 	double		angle;
 
-	p.x = data->Player.x ;
-	p.y = data->Player.y ;
+	p.x = data->player.x ;
+	p.y = data->player.y ;
 	angle = (data->map_info.direction + angle_dif);
 	if (angle > 2 * M_PI)
 		angle -= 2 * M_PI;
@@ -91,8 +91,8 @@ t_cordonate	v_inter(t_mlx *data, double angle_dif)
 	t_cordonate	deff;
 	double		angle;
 
-	p.x = data->Player.x ;
-	p.y = data->Player.y ;
+	p.x = data->player.x ;
+	p.y = data->player.y ;
 	angle = (data->map_info.direction + angle_dif);
 	if (angle > 2 * M_PI)
 		angle -= 2 * M_PI;

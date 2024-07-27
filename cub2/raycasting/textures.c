@@ -6,13 +6,13 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 23:11:27 by afadouac          #+#    #+#             */
-/*   Updated: 2024/07/26 23:22:47 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/27 21:06:35 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
 
-int	get_texel(t_mlx *data, t_texture texture, int x, int y)
+int	get_texel(t_texture texture, int x, int y)
 {
 	char	*pixel;
 
@@ -38,13 +38,13 @@ t_texture	*init_texture(t_mlx *data, t_cordonate Intersection)
 	while (i < numb)
 	{
 		if (Intersection.view == UP)
-			tex[i] = data->NO;
+			tex[i] = data->no;
 		else if (Intersection.view == DOWN)
-			tex[i] = data->SO;
+			tex[i] = data->so;
 		else if (Intersection.view == LEFT)
-			tex[i] = data->EA;
+			tex[i] = data->ea;
 		else if (Intersection.view == RIGHT)
-			tex[i] = data->WE;
+			tex[i] = data->we;
 		i++;
 	}
 	if (Intersection.is_door == 1)
@@ -52,15 +52,15 @@ t_texture	*init_texture(t_mlx *data, t_cordonate Intersection)
 	return (tex);
 }
 
-int	puttexel(t_mlx *data, t_texture *texture,
+int	puttexel(t_texture *texture,
 	t_cordonate tex_cord[], int is_door)
 {
 	int	color[2];
 
-	color[0] = get_texel(data, texture[0], tex_cord[0].x, tex_cord[0].y);
+	color[0] = get_texel(texture[0], tex_cord[0].x, tex_cord[0].y);
 	if (is_door == 1)
 	{
-		color[1] = get_texel(data, texture[1], tex_cord[1].x, tex_cord[1].y);
+		color[1] = get_texel(texture[1], tex_cord[1].x, tex_cord[1].y);
 		color[0] = max(color[0], color[1]);
 	}
 	return (color[0]);
@@ -103,7 +103,7 @@ void	putingtexture(t_mlx *data, double wall, t_cordonate Intersection, int x)
 		tex_cord[0].y = (point.y * textuere[0].height) / (2 * wall);
 		if (Intersection.is_door == 1)
 			tex_cord[1].y = (point.y * textuere[1].height) / (2 * wall);
-		color = puttexel(data, textuere, tex_cord, Intersection.is_door);
+		color = puttexel(textuere, tex_cord, Intersection.is_door);
 		color = shadding(color, Intersection.dist, 1);
 		my_mlx_pixel_put(data, x, point.x, color);
 		point.x++;

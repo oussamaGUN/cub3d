@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 12:18:02 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/22 14:11:37 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/27 17:32:05 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ void	check_player_count(t_mlx *mlx_data, int count)
 	if (count != 1)
 	{
 		printf("invalid player count\n");
-		ft_free_two(mlx_data, mlx_data->map_info.map);
+		ft_free_two(mlx_data);
 	}
 }
 
-void	ft_free_two(t_mlx *mlx_data, char **split)
+void	ft_free_two(t_mlx *mlx_data)
 {
 	free(mlx_data->map_info.mapstr);
 	free_split(mlx_data->map_info.map);
@@ -80,7 +80,7 @@ void	check_player_conditions(int x, int y, t_mlx *mlx_data)
 			&& mlx_data->map_info.map[y - 1][x] != 'D'))
 		{
 			printf("invalid player postion\n");
-			ft_free_two(mlx_data, mlx_data->map_info.map);
+			ft_free_two(mlx_data);
 		}
 		mlx_data->vars.count++;
 	}

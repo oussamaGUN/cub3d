@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 17:32:15 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/27 10:39:46 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/27 19:01:23 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	wall_distance(t_mlx *data, t_cordonate *step, int keycode)
 	double	dx;
 	double	dy;
 
-	dx = step->x - data->Player.x;
-	dy = step->y - data->Player.y;
+	dx = step->x - data->player.x;
+	dy = step->y - data->player.y;
 	dist = sqrt(dx * dx + dy * dy);
 	if (keycode == 119 && dist < data->mouves.up - 3)
 		return (1);
@@ -36,7 +36,7 @@ int	wall_distance(t_mlx *data, t_cordonate *step, int keycode)
 }
 
 int	wall_collision_norm(t_mlx *data,
-	t_cordonate *step, int keycode, char **map)
+	t_cordonate *step, char **map)
 {
 	step->y -= sin(data->map_info.direction)
 		* PLAYERVET;
@@ -50,7 +50,7 @@ int	wall_collision_norm(t_mlx *data,
 }
 
 int	wall_collision_norm_1(t_mlx *data,
-	t_cordonate *step, int keycode, char **map)
+	t_cordonate *step, char **map)
 {
 	step->x -= cos(data->map_info.direction)
 		* PLAYERVET;
@@ -69,12 +69,12 @@ int	wall_collision(t_mlx *data, t_cordonate *step, int keycode, char **map)
 	{
 		if (data->face == DOWN || data->face == UP)
 		{
-			if (wall_collision_norm(data, step, keycode, map))
+			if (wall_collision_norm(data, step, map))
 				return (1);
 		}
 		else if (data->face == RIGHT || data->face == LEFT)
 		{
-			if (wall_collision_norm_1(data, step, keycode, map))
+			if (wall_collision_norm_1(data, step, map))
 				return (1);
 		}
 	}

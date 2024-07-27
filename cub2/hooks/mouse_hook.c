@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 17:32:32 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/27 10:45:10 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/27 18:59:06 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ int	close_win(void *data)
 			i++;
 		mlx_destroy_image(mlx_data->mlx, mlx_data->torch[i++].img);
 	}
-	mlx_destroy_image(mlx_data->mlx, mlx_data->NO.img);
-	mlx_destroy_image(mlx_data->mlx, mlx_data->SO.img);
-	mlx_destroy_image(mlx_data->mlx, mlx_data->WE.img);
-	mlx_destroy_image(mlx_data->mlx, mlx_data->EA.img);
+	mlx_destroy_image(mlx_data->mlx, mlx_data->no.img);
+	mlx_destroy_image(mlx_data->mlx, mlx_data->so.img);
+	mlx_destroy_image(mlx_data->mlx, mlx_data->we.img);
+	mlx_destroy_image(mlx_data->mlx, mlx_data->ea.img);
 	mlx_destroy_image(mlx_data->mlx, mlx_data->door.img);
 	exit(0);
 }

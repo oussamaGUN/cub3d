@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 17:31:25 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/27 10:45:01 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/27 19:01:23 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ void	free_esc(t_mlx *data)
 			i++;
 		mlx_destroy_image(data->mlx, data->torch[i++].img);
 	}
-	mlx_destroy_image(data->mlx, data->NO.img);
-	mlx_destroy_image(data->mlx, data->SO.img);
-	mlx_destroy_image(data->mlx, data->WE.img);
-	mlx_destroy_image(data->mlx, data->EA.img);
+	mlx_destroy_image(data->mlx, data->no.img);
+	mlx_destroy_image(data->mlx, data->so.img);
+	mlx_destroy_image(data->mlx, data->we.img);
+	mlx_destroy_image(data->mlx, data->ea.img);
 	mlx_destroy_image(data->mlx, data->door.img);
 	exit(0);
 }
@@ -76,14 +76,14 @@ int	key_hook(int keycode, void *data1)
 	t_cordonate	step;
 
 	data = (t_mlx *)data1;
-	step.x = data->Player.x;
-	step.y = data->Player.y;
+	step.x = data->player.x;
+	step.y = data->player.y;
 	key_hook_movement(keycode, data, &step);
 	key_hook_direcion(keycode, data);
 	if (checkwalls(data, data->map_info.map, &step, keycode))
 	{
-		data->Player.x = step.x;
-		data->Player.y = step.y;
+		data->player.x = step.x;
+		data->player.y = step.y;
 	}
 	if (data->map_info.direction >= 2 * M_PI)
 		data->map_info.direction -= 2 * M_PI;

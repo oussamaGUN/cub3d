@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 11:07:56 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/22 14:22:49 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/27 17:49:16 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,19 @@ int	check_rgb(char *texture)
 		return (free_split(split), 0);
 	free_split(split);
 	return (1);
+}
+
+void	fix_map(t_mlx *mlx_data)
+{
+	int	i;
+
+	i = 0;
+	while (mlx_data->map_info.map[i])
+	{
+		while ((int)ft_strlen(mlx_data->map_info.map[i])
+			< mlx_data->map_info.width)
+			mlx_data->map_info.map[i]
+				= ft_strjoin(mlx_data->map_info.map[i], " ");
+		i++;
+	}
 }

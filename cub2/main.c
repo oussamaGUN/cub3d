@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 17:13:00 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/26 23:20:05 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/27 19:01:54 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int ac, char *av[])
 	mlx_data.mlx = mlx_init();
 	parsing(&mlx_data);
 	initialize(&mlx_data);
-	mlx_data.Player = getplayerposition(mlx_data.map_info.map);
+	mlx_data.player = getplayerposition(mlx_data.map_info.map);
 	mlx_loop_hook(mlx_data.mlx, mouse_move, &mlx_data);
 	mlx_hook(mlx_data.win3d, 2, 1l >> 0, key_hook, &mlx_data);
 	mlx_hook(mlx_data.win3d, 17, 0, close_win, &mlx_data);

@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 18:54:32 by afadouac          #+#    #+#             */
-/*   Updated: 2024/07/26 09:41:15 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/27 17:34:49 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	torch_puts(t_mlx *mlx_data, int pic_num, int up)
 		x = 0;
 		while (x < 800)
 		{
-			color = get_texel(mlx_data, mlx_data->torch[pic_num], x, i);
+			color = get_texel(mlx_data->torch[pic_num], x, i);
 			if (color != 0 && color != -16777216)
 				my_mlx_pixel_put(mlx_data, x - 400, i + up, color);
 			x++;

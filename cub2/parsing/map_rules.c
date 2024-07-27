@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 12:03:08 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/16 16:52:58 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/27 17:32:55 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	check_empty_blocks(t_mlx *mlx_data)
 					|| !ft_strchr("10NWSED", mlx_data->map_info.map[y + 1][x]))
 				{
 					printf("map should be surrounded by walls\n");
-					ft_free_two(mlx_data, mlx_data->map_info.map);
+					ft_free_two(mlx_data);
 				}
 			}
 			x++;
@@ -81,7 +81,7 @@ void	check_line(t_mlx *mlx_data, char **split)
 			{
 				printf("map should be surrounded walls 1\n");
 				free_split(split);
-				ft_free_two(mlx_data, split);
+				ft_free_two(mlx_data);
 			}
 			x++;
 		}
@@ -100,7 +100,7 @@ void	surrounded_by_wall_check(t_mlx *mlx_data)
 	{
 		split = ft_split(mlx_data->map_info.map[mlx_data->vars.y], ' ');
 		if (!split)
-			ft_free_two(mlx_data, split);
+			ft_free_two(mlx_data);
 		check_line(mlx_data, split);
 		free_split(split);
 		i = 0;
