@@ -6,15 +6,15 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 17:31:25 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/27 10:28:12 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/27 10:45:01 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
 
-void free_esc(t_mlx *data)
+void	free_esc(t_mlx *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	mlx_destroy_window(data->mlx, data->win3d);
@@ -35,6 +35,7 @@ void free_esc(t_mlx *data)
 	mlx_destroy_image(data->mlx, data->door.img);
 	exit(0);
 }
+
 void	key_hook_movement(int keycode, t_mlx *data, t_cordonate *step)
 {
 	if (keycode == ESC)

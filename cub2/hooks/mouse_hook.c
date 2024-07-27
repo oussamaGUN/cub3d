@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 17:32:32 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/27 10:21:37 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/27 10:45:10 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	close_win(void *data)
 {
 	t_mlx	*mlx_data;
-	int i;
+	int		i;
 
 	mlx_data = (t_mlx *)data;
 	i = 0;
