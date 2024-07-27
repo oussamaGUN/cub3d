@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 17:32:32 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/26 23:22:16 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/27 10:21:37 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,26 @@
 int	close_win(void *data)
 {
 	t_mlx	*mlx_data;
+	int i;
 
 	mlx_data = (t_mlx *)data;
+	i = 0;
 	mlx_destroy_window(mlx_data->mlx, mlx_data->win3d);
+	free(mlx_data->map_file.av);
+	free_infos(mlx_data);
+	free(mlx_data->map_info.mapstr);
+	free_split(mlx_data->map_info.map);
+	while (i < 12)
+	{
+		if (i == 2)
+			i++;
+		mlx_destroy_image(mlx_data->mlx, mlx_data->torch[i++].img);
+	}
+	mlx_destroy_image(mlx_data->mlx, mlx_data->NO.img);
+	mlx_destroy_image(mlx_data->mlx, mlx_data->SO.img);
+	mlx_destroy_image(mlx_data->mlx, mlx_data->WE.img);
+	mlx_destroy_image(mlx_data->mlx, mlx_data->EA.img);
+	mlx_destroy_image(mlx_data->mlx, mlx_data->door.img);
 	exit(0);
 }
 

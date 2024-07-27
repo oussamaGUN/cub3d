@@ -6,19 +6,39 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 17:31:25 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/26 10:52:14 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/27 10:28:12 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
 
+void free_esc(t_mlx *data)
+{
+	int i;
+
+	i = 0;
+	mlx_destroy_window(data->mlx, data->win3d);
+	free(data->map_file.av);
+	free_infos(data);
+	free(data->map_info.mapstr);
+	free_split(data->map_info.map);
+	while (i < 12)
+	{
+		if (i == 2)
+			i++;
+		mlx_destroy_image(data->mlx, data->torch[i++].img);
+	}
+	mlx_destroy_image(data->mlx, data->NO.img);
+	mlx_destroy_image(data->mlx, data->SO.img);
+	mlx_destroy_image(data->mlx, data->WE.img);
+	mlx_destroy_image(data->mlx, data->EA.img);
+	mlx_destroy_image(data->mlx, data->door.img);
+	exit(0);
+}
 void	key_hook_movement(int keycode, t_mlx *data, t_cordonate *step)
 {
 	if (keycode == ESC)
-	{
-		mlx_destroy_window(data->mlx, data->win3d);
-		exit(0);
-	}
+		free_esc(data);
 	else if (keycode == W_KEY)
 	{
 		step->x += cos(data->map_info.direction) * PLAYERVET;
