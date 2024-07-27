@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 23:13:21 by afadouac          #+#    #+#             */
-/*   Updated: 2024/07/26 23:05:04 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/27 10:49:54 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_cordonate	init_h_intersection(t_cordonate P, double angle, t_cordonate *deff)
 	return (a);
 }
 
-t_cordonate	h_sect(t_mlx *data, double angle_dif)
+t_cordonate	h_inter(t_mlx *data, double angle_dif)
 {
 	t_cordonate	a;
 	t_cordonate	p;
@@ -84,7 +84,7 @@ void	init_v_intersection(t_cordonate P,
 	deff->y = deff->x * tan(angle);
 }
 
-t_cordonate	v_sect(t_mlx *data, double angle_dif)
+t_cordonate	v_inter(t_mlx *data, double angle_dif)
 {
 	t_cordonate	a;
 	t_cordonate	p;

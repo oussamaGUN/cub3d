@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 17:31:10 by afadouac          #+#    #+#             */
-/*   Updated: 2024/07/26 23:22:47 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/27 10:49:54 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	raycasting(t_mlx *data)
 	drow_floor(data, data->floor.color);
 	while (i <= 0.523599)
 	{
-		intersection = min_of(h_sect(data, i), v_sect(data, i));
+		intersection = min_of(h_inter(data, i), v_inter(data, i));
 		if (i <= 0.000409 && i >= -0.000410)
 			data->face = intersection.view;
 		wall = (SCALE / 3 * HEIGHT / intersection.dist) / cos(fabs(i));
