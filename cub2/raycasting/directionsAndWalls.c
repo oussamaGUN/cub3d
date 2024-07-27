@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 23:20:07 by afadouac          #+#    #+#             */
-/*   Updated: 2024/07/27 12:34:17 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/27 13:17:09 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,7 @@ int	is_wall(t_mlx *data, t_cordonate *A)
 	x = A->x / SCALE;
 	y = A->y / SCALE;
 	if (x < 0 || y < 0 || x >= data->map_info.width
-		|| y >= data->map_info.height)
-		return (1);
-	if (map[y][x] == '1')
+		|| y >= data->map_info.height || map[y][x] == '1')
 		return (1);
 	A->is_door = 0;
 	if (map[y][x] == 'D' && is_neer(A, data->Player))
