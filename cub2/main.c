@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 17:13:00 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/27 19:01:54 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/28 16:28:04 by afadouac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	main(int ac, char *av[])
 	mlx_loop_hook(mlx_data.mlx, mouse_move, &mlx_data);
 	mlx_hook(mlx_data.win3d, 2, 1l >> 0, key_hook, &mlx_data);
 	mlx_hook(mlx_data.win3d, 17, 0, close_win, &mlx_data);
+	mlx_clear_window(mlx_data.mlx, mlx_data.win3d);
 	mlx_loop(mlx_data.mlx);
 	free(mlx_data.map_file.av);
 	free_infos(&mlx_data);
