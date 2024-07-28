@@ -16,7 +16,7 @@ FLAGS = -Wall -Wextra -Werror
 
 MLX_FLAGS = -lXext -lX11 -lm -lmlx 
 
-NAME = cub
+NAME = cub3D
 
 all: $(NAME) $(LIBFT)
 
