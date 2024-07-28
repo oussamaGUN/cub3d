@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 14:21:47 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/27 18:39:42 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/28 11:49:10 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ int	floor_color_value(t_mlx *data)
 		printf("split faild");
 		return (free_split(split), 0);
 	}
-	if (ft_atoi(split[0]) > 255 || ft_atoi(split[1]) > 255
+	if (ft_strlen(split[0]) - 1 > 3 || ft_strlen(split[1]) - 1 > 3
+		|| ft_strlen(split[2]) - 1 > 3
+		|| ft_atoi(split[0]) > 255 || ft_atoi(split[1]) > 255
 		|| ft_atoi(split[2]) > 255)
 		return (free_split(split), 0);
 	data->floor.r = ft_atoi(split[0]);
@@ -43,7 +45,9 @@ int	ceil_color_value(t_mlx *data)
 		printf("split faild");
 		return (free_split(split), 0);
 	}
-	if (ft_atoi(split[0]) > 255 || ft_atoi(split[1]) > 255
+	if (ft_strlen(split[0]) - 1 > 3 || ft_strlen(split[1]) - 1 > 3 
+		|| ft_strlen(split[2]) - 1 > 3
+		|| ft_atoi(split[0]) > 255 || ft_atoi(split[1]) > 255
 		|| ft_atoi(split[2]) > 255)
 		return (free_split(split), 0);
 	data->ceil.r = ft_atoi(split[0]);
