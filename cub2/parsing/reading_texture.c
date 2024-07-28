@@ -6,7 +6,7 @@
 /*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 10:44:17 by oussama           #+#    #+#             */
-/*   Updated: 2024/07/27 18:39:42 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/28 11:38:28 by ousabbar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int	parse_texture_part_one(char **texture, t_mlx *mlx_data)
 			return (printf("no texture for NO "), 0);
 		mlx_data->map_info.texture_number++;
 		texture[1][ft_strlen(texture[1]) - 1] = '\0';
+		if (open(texture[1], O_RDWR) == -1)
+			return (0);
 		mlx_data->map_info.no = ft_strdup(texture[1]);
 		return (1);
 	}
@@ -58,6 +60,8 @@ int	parse_texture_part_one(char **texture, t_mlx *mlx_data)
 			return (printf("no texture for SO "), 0);
 		mlx_data->map_info.texture_number++;
 		texture[1][ft_strlen(texture[1]) - 1] = '\0';
+		if (open(texture[1], O_RDWR) == -1)
+			return (0);
 		mlx_data->map_info.so = ft_strdup(texture[1]);
 		return (1);
 	}
@@ -73,6 +77,8 @@ int	parst_texture_part_two(char **texture, t_mlx *mlx_data)
 			return (printf("no texture for WE "), 0);
 		mlx_data->map_info.texture_number++;
 		texture[1][ft_strlen(texture[1]) - 1] = '\0';
+		if (open(texture[1], O_RDWR) == -1)
+			return (0);
 		mlx_data->map_info.we = ft_strdup(texture[1]);
 		return (1);
 	}
@@ -83,6 +89,8 @@ int	parst_texture_part_two(char **texture, t_mlx *mlx_data)
 			return (printf("no texture for EA "), 0);
 		mlx_data->map_info.texture_number++;
 		texture[1][ft_strlen(texture[1]) - 1] = '\0';
+		if (open(texture[1], O_RDWR) == -1)
+			return (0);
 		mlx_data->map_info.ea = ft_strdup(texture[1]);
 		return (1);
 	}
