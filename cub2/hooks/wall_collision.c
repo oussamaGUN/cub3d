@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wall_collision.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ousabbar <ousabbar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: afadouac <afadouac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 17:32:15 by ousabbar          #+#    #+#             */
-/*   Updated: 2024/07/27 19:01:23 by ousabbar         ###   ########.fr       */
+/*   Updated: 2024/07/28 16:50:08 by afadouac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@ int	wall_distance(t_mlx *data, t_cordonate *step, int keycode)
 	dx = step->x - data->player.x;
 	dy = step->y - data->player.y;
 	dist = sqrt(dx * dx + dy * dy);
-	if (keycode == 119 && dist < data->mouves.up - 3)
+	if (keycode == W_KEY && dist < data->mouves.up - 3)
 		return (1);
-	if (keycode == 115 && dist < (data->mouves.down - 3))
+	if (keycode == S_KEY && dist < (data->mouves.down - 3))
 		return (1);
-	if (keycode == 115 && dist > (data->mouves.down - 3)
+	if (keycode == S_KEY && dist > (data->mouves.down - 3)
 		&& dist > data->mouves.up - 3)
 		return (1);
-	if (keycode == 100 && dist < data->mouves.right - 3)
+	if (keycode == D_KEY && dist < data->mouves.right - 3)
 		return (1);
-	if (keycode == 97 && dist < data->mouves.left - 3)
+	if (keycode == A_KEY && dist < data->mouves.left - 3)
 		return (1);
 	return (0);
 }
